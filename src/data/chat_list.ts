@@ -233,4 +233,52 @@ export const chat_list_data = [
       text: "this is message from user this is message from user this is message from user"
     }
   },
+  {
+    id: 4444,
+    avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+    type: "dialog",
+    title: "Nina",
+    unread_msg_count: 4,
+    last_message: {
+      user: {
+        first_name: "Nina",
+        second_name: "Anin",
+        avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+      },
+      time: "12.34",
+      text: "this is message from user this is message from user this is message from user"
+    }
+  },
+  {
+    id: 4444,
+    avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+    type: "dialog",
+    title: "Nina",
+    unread_msg_count: 4,
+    last_message: {
+      user: {
+        first_name: "Nina",
+        second_name: "Anin",
+        avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+      },
+      time: "12.34",
+      text: "this is message from user this is message from user this is message from user"
+    }
+  },
+  {
+    id: 4444,
+    avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+    type: "dialog",
+    title: "Nina",
+    unread_msg_count: 4,
+    last_message: {
+      user: {
+        first_name: "Nina",
+        second_name: "Anin",
+        avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+      },
+      time: "12.34",
+      text: "this is message from user this is message from user this is message from user"
+    }
+  },
 ]

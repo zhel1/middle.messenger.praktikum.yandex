@@ -6,7 +6,7 @@ import * as Data from "./data";
 const pages = {
     'signin': [ Pages.SignInPage, ],
     'signup': [ Pages.SignUpPage,  ],
-    'messenger': [ Pages.MessengerPage, { chat_list: Data.ChatListData, conversation: Data.ConversationData }],
+    'messenger': [ Pages.MessengerPage, { chat_list: Data.ChatListData, conversation: Data.ConversationData, msg_list: Data.MsgListData }],
     '404': [ Pages.ErrorPage,  Data.Errors404Data],
     '500': [ Pages.ErrorPage, Data.Errors500Data],
     'profile': [ Pages.ProfilePage, {user: Data.UserData} ],
@@ -28,7 +28,7 @@ function navigate(page: string) {
     container.innerHTML = Handlebars.compile(source)(context);
 }
 
-document.addEventListener('DOMContentLoaded', () => navigate('profile-edit'));
+document.addEventListener('DOMContentLoaded', () => navigate('messenger'));
 
 document.addEventListener('click', e => {
     //@ts-ignore

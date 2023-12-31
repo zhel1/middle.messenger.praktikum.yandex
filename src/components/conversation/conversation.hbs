@@ -1,13 +1,17 @@
 <div class="conversation">
     <div class="conversation__header">
-        {{> Avatar user=conversation.user}}
-        <b>{{conversation.user.first_name}} {{conversation.user.second_name}}</b>
+        <div class="conversation__header--user">
+            {{> Avatar user=conversation.user}}
+            <b>{{conversation.user.first_name}} {{conversation.user.second_name}}</b>
+        </div>
         {{> Button type="settings"}}
     </div>
     <div class="conversation__scroll">
-
+        {{> MsgList msgList=msg_list}}
     </div>
-    <form class="conversation__footer">
-
-    </form>
+    <div class="conversation__footer">
+        {{> Button type="settings"}}
+        {{> Input placeholder="Message..." name="message"}}
+        {{> Button type="settings"}}
+    </div>
 </div>
