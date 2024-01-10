@@ -1,45 +1,42 @@
 import Handlebars from 'handlebars';
 import * as Components from './components';
-import * as Pages from './pages';
-import * as Data from "./data";
+import { registerComponent } from './core/registerComponent';
+import { navigate } from './core/navigate';
+//  import * as Pages from './pages';
+//  import * as Data from "./data";
 
-const pages = {
-    'signin': [ Pages.SignInPage, ],
-    'signup': [ Pages.SignUpPage,  ],
-    'messenger': [ Pages.MessengerPage, { chat_list: Data.ChatListData, conversation: Data.ConversationData, msg_list: Data.MsgListData }],
-    '404': [ Pages.ErrorPage,  Data.Errors404Data],
-    '500': [ Pages.ErrorPage, Data.Errors500Data],
-    'profile': [ Pages.ProfilePage, {user: Data.UserData} ],
-    'profile-edit': [ Pages.ProfileEditPage, {user: Data.UserData,} ],
-};
+// const pages = {
+//     'signin': [ Pages.SignInPage, ],
+//     'signup': [ Pages.SignUpPage,  ],
+//     'messenger': [ Pages.MessengerPage, { chat_list: Data.ChatListData, conversation: Data.ConversationData, msg_list: Data.MsgListData }],
+//     '404': [ Pages.ErrorPage,  Data.Errors404Data],
+//     '500': [ Pages.ErrorPage, Data.Errors500Data],
+//     'profile': [ Pages.ProfilePage, {user: Data.UserData} ],
+//     'profile-edit': [ Pages.ProfileEditPage, {user: Data.UserData,} ],
+// };
 
-Object.entries(Components).forEach(([ name, component ]) => {
-    Handlebars.registerPartial(name, component);
-});
+// Object.entries(Components).forEach(([ name, component ]) => {
+//     //@ts-ignore
+//     Handlebars.registerPartial(name, component);
+// });
 
-function navigate(page: string) {
-    //temp nav bar
-    //@ts-ignore
-    document.getElementById('nav').innerHTML = Handlebars.compile(Components.Navigator)(null);
+registerComponent('Button', Components.Button);
+registerComponent('InputAuth', Components.InputAuth);
+registerComponent('FormAuth', Components.FormAuth);
+registerComponent('Logo', Components.Logo);
 
-    //@ts-ignore
-    const [ source, context ] = pages[page];
-    const container = document.getElementById('app')!;
-    container.innerHTML = Handlebars.compile(source)(context);
-}
+document.addEventListener('DOMContentLoaded', () => navigate('signin'));
 
-document.addEventListener('DOMContentLoaded', () => navigate('messenger'));
-
-document.addEventListener('click', e => {
-    //@ts-ignore
-    const page = e.target.getAttribute('page');
-    if (page) {
-        navigate(page);
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-    }
-});
+// document.addEventListener('click', e => {
+//     //@ts-ignore
+//     const page = e.target.getAttribute('page');
+//     if (page) {
+//         navigate(page);
+//
+//         e.preventDefault();
+//         e.stopImmediatePropagation();
+//     }
+// });
 
 //helpers
 Handlebars.registerHelper('firstLetter', function (aString) {

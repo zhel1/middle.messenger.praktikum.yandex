@@ -1,7 +1,7 @@
 @import "/src/scss/variables";
 
 .input-auth {
-  padding: 10px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
   align-content: flex-end;
@@ -30,17 +30,18 @@
     }
 
     &__text-error {
+      height: 1rem;
       color: $error-color;
       font-size: 10px;
       font-weight: 400;
-      display: none;
+      visibility: hidden;
       padding-left: 15px;
     }
 }
 
 .input-auth__error {
   .input-auth__text-error {
-    display: block;
+    visibility: visible;
   }
 
   .input-auth__element {
@@ -52,4 +53,3 @@
     }
   }
 }
-
