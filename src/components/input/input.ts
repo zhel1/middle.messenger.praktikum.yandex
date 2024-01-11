@@ -4,7 +4,7 @@ interface IInputProps extends IProps {
     classes: string
     name:string
     value:string
-    type: 'text' | 'password'
+    type: 'text' | 'password' | 'email' | 'tel'
     placeholder: string
     onBlur:()=>void
 }

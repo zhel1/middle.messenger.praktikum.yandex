@@ -10,7 +10,7 @@ registerComponent('Input', Components.Input);
 registerComponent('InputAuth', Components.InputAuth);
 registerComponent('Logo', Components.Logo);
 
-document.addEventListener('DOMContentLoaded', () => navigate('signin'));
+document.addEventListener('DOMContentLoaded', () => navigate('signup'));
 
 //helpers
 Handlebars.registerHelper('firstLetter', function (aString) {

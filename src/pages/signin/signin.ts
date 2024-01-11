@@ -1,10 +1,12 @@
 import Block, {IProps} from "../../core/Block";
 import {InputAuth} from "../../components";
 import * as validators from '../../utils/validators';
+
 export interface ISignInPageProps extends IProps {
     validate: {}
     onSignIn : (event:Event) => void
 }
+
 export class SignInPage extends Block {
     constructor() {
         const props : ISignInPageProps = {

@@ -39,3 +39,43 @@ export const validatePassword = (value: string) => {
     }
     return '';
 }
+
+// Latin or Cyrillic, the first letter must be capitalized, no spaces, no numbers,
+// no special characters (only a hyphen is allowed).
+export const validateName = (value: string) => {
+    if (value.length === 0) return `Name can not be blank`;
+    if (value.length < 2) {
+        return 'Name must have minimum 2 characters'
+    }
+    if (value.length > 140) {
+        return 'Name must have maximum 140 characters'
+    }
+    if (!value.match(/^[A-Z]+/)) {
+        return 'Name must have first uppercase letter'
+    }
+    if (!value.match(/[a-z-]$/)) {
+        return 'Name must have only letters and dash'
+    }
+    return '';
+}
+
+// Latin, can include numbers and special characters like hyphens and underscores,
+// there must be a “dog” (@) and a dot after it, but there must be letters before the dot
+export const validateEmail = (value: string) => {
+    if (value.length === 0) return `Email can not be blank`;
+
+    if (!value.match(/^\S+@\S+\.\S+$/)) {
+        return 'Invalid email'
+    }
+    return '';
+}
+
+// from 10 to 15 characters, consists of numbers, may begin with a plus
+export const validatePhone = (value: string) => {
+    if (value.length === 0) return `Phone can not be blank`;
+
+    if (!value.match(/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/)) {
+        return 'Invalid Phone, example +123-456-789-1234'
+    }
+    return '';
+}
