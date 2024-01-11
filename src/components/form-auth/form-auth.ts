@@ -24,7 +24,7 @@ export class FormAuth extends Block {
             textCancel,
             pageOk,
             pageCancel
-        } = this.props as IFormAuthProps;
+        } = this._props as IFormAuthProps;
         return(`
             <form class="auth-form">
                 {{{ Logo }}}

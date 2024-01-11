@@ -1,6 +1,6 @@
 //TODO remove it
-import Handlebars from 'handlebars';
-import * as Components from '../components';
+// import Handlebars from 'handlebars';
+// import * as Components from '../components';
 
 import * as Pages from '../pages';
 import * as Data from "../data";
@@ -28,8 +28,8 @@ export function navigate(page: string) {
         app?.firstElementChild?.replaceWith(htmlElement);
 
     //TODO remove it
-    const nav = document.getElementById('nav');
-    if (nav) {
-        nav.innerHTML = (Handlebars.compile(Components.Navigator)(null));
-    }
+    // const nav = document.getElementById('nav');
+    // if (nav) {
+    //     nav.innerHTML = (Handlebars.compile(Components.Navigator)(null));
+    // }
 }

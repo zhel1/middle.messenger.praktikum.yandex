@@ -2,41 +2,15 @@ import Handlebars from 'handlebars';
 import * as Components from './components';
 import { registerComponent } from './core/registerComponent';
 import { navigate } from './core/navigate';
-//  import * as Pages from './pages';
-//  import * as Data from "./data";
 
-// const pages = {
-//     'signin': [ Pages.SignInPage, ],
-//     'signup': [ Pages.SignUpPage,  ],
-//     'messenger': [ Pages.MessengerPage, { chat_list: Data.ChatListData, conversation: Data.ConversationData, msg_list: Data.MsgListData }],
-//     '404': [ Pages.ErrorPage,  Data.Errors404Data],
-//     '500': [ Pages.ErrorPage, Data.Errors500Data],
-//     'profile': [ Pages.ProfilePage, {user: Data.UserData} ],
-//     'profile-edit': [ Pages.ProfileEditPage, {user: Data.UserData,} ],
-// };
-
-// Object.entries(Components).forEach(([ name, component ]) => {
-//     //@ts-ignore
-//     Handlebars.registerPartial(name, component);
-// });
+Handlebars.registerPartial('FormAuth', Components.FormAuth);
 
 registerComponent('Button', Components.Button);
+registerComponent('Input', Components.Input);
 registerComponent('InputAuth', Components.InputAuth);
-registerComponent('FormAuth', Components.FormAuth);
 registerComponent('Logo', Components.Logo);
 
 document.addEventListener('DOMContentLoaded', () => navigate('signin'));
-
-// document.addEventListener('click', e => {
-//     //@ts-ignore
-//     const page = e.target.getAttribute('page');
-//     if (page) {
-//         navigate(page);
-//
-//         e.preventDefault();
-//         e.stopImmediatePropagation();
-//     }
-// });
 
 //helpers
 Handlebars.registerHelper('firstLetter', function (aString) {

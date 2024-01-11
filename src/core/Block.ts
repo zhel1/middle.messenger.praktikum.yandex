@@ -16,7 +16,7 @@ class Block {
     };
 
     public id = nanoid(6);
-    protected props: IProps;
+    protected _props: IProps;
     protected refs: Record<string, Block> = {};
     public children: Record<string, Block>;
     private eventBus: () => EventBus;
@@ -28,12 +28,8 @@ class Block {
 
         const {props, children} = this._getChildrenAndProps(propsWithChildren);
 
-        // this._meta = {
-        //     props
-        // };
-
         this.children = children;
-        this.props = this._makePropsProxy(props);
+        this._props = this._makePropsProxy(props);
 
         this.eventBus = () => eventBus;
 
@@ -58,14 +54,14 @@ class Block {
     }
 
     private _addEvents() {
-        const {events = {}} = this.props as { events: Record<string, () => void> };
+        const {events = {}} = this._props as { events: Record<string, () => void> };
         Object.keys(events).forEach(eventName => {
             this._element?.addEventListener(eventName, events[eventName]);
         });
     }
 
     private _removeEvents() {
-        const {events = {}} = this.props as { events: Record<string, () => void> };
+        const {events = {}} = this._props as { events: Record<string, () => void> };
         Object.keys(events).forEach(eventName => {
             this._element?.removeEventListener(eventName, events[eventName]);
         });
@@ -124,16 +120,23 @@ class Block {
             return;
         }
 
-        Object.assign(this.props, nextProps);
+        Object.assign(this._props, nextProps);
     };
 
     get element() {
         return this._element;
     }
 
+    public getRefs() {
+        return this.refs
+    }
+    //
+    // public value() {
+    //     return this._element && (<HTMLInputElement>this._element).value ? (<HTMLInputElement>this._element).value : '';
+    // }
 
     private _render() {
-        const fragment = this.compile(this.render(), this.props);
+        const fragment = this.compile(this.render(), this._props);
 
         const newElement = fragment.firstElementChild as HTMLElement;
 
@@ -174,11 +177,15 @@ class Block {
         return '';
     }
 
+    // public value() {
+    //     return this._element && (<HTMLInputElement>this._element).value ? (<HTMLInputElement>this._element).value : '';
+    // }
+
     public getContent() {
         return this.element;
     }
 
-    private _makePropsProxy(props: any) {
+    private _makePropsProxy(props: { [index: string | symbol]: unknown }) {
         // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
         const self = this;
 
