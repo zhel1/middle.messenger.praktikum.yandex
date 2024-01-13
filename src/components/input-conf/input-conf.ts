@@ -1,6 +1,6 @@
 import Block, {IProps} from "../../core/Block";
 
-interface IInputAuthProps extends IProps {
+interface IInputConfProps extends IProps {
     placeholder: string
     name:string
     value:string
@@ -12,8 +12,8 @@ interface IInputAuthProps extends IProps {
     onBlur: (value: string) => void
 }
 
-export class InputAuth extends Block {
-    constructor(props:IInputAuthProps) {
+export class InputConf extends Block {
+    constructor(props:IInputConfProps) {
         props.errorText = '';
         props.error = false;
         props.onBlur = () => this.validate();
@@ -32,7 +32,7 @@ export class InputAuth extends Block {
     }
 
     public get props() {
-        return this._props as IInputAuthProps;
+        return this._props as IInputConfProps;
     }
 
     private validate() {
@@ -58,23 +58,25 @@ export class InputAuth extends Block {
             value,
             label,
             type,
-            error,
-            errorText
-        } = this.props as IInputAuthProps;
+            error
+        } = this.props as IInputConfProps;
 
-        return (`
-            <label class="input-auth ${error? "input-auth__error" : ""}" >
-                <span class="input-auth__label">${label}</span>
-                {{{ Input 
-                    classes="input-auth__element" 
-                    name="${name}"
-                    value='${value}'
-                    type="${type}" 
-                    placeholder="${placeholder || ''}" 
-                    onBlur=onBlur
-                    ref="input"
-                }}}
-                <span class="input-auth__text-error">${errorText}</span>
+        return (`            
+            <label class="input-conf ${error? "input-conf-error" : ""}">
+                <div class="input-conf__label"><span>${label}</span></div>
+                {{#if editable}}
+                    {{{ Input 
+                        classes="input-conf__value input-conf__value-editable"  
+                        name="${name}"
+                        value='${value}'
+                        type="${type}" 
+                        placeholder="${placeholder || ''}" 
+                        onBlur=onBlur
+                        ref="input"
+                    }}}
+                {{^}}
+                    <span class="input-conf__value">${value}</span>
+                {{/if}}
             </label>
         `)
     }

@@ -51,7 +51,6 @@ export class SignUpPage extends Block {
                 {{#> FormAuth 
                      caption="Sign up"
                      textOk="Sign up"
-                     pageOk="messenger"
                      textCancel="Sign in"
                      pageCancel="signin"
                      onClickOkButton=onSignUp }}

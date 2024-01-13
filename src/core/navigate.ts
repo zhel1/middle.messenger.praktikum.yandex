@@ -9,10 +9,9 @@ const pages = {
     'signin': [ Pages.SignInPage, ],
     'signup': [ Pages.SignUpPage,  ],
     'messenger': [ Pages.MessengerPage, { chat_list: Data.ChatListData, conversation: Data.ConversationData, msg_list: Data.MsgListData }],
-    '404': [ Pages.ErrorPage,  Data.Errors404Data],
-    '500': [ Pages.ErrorPage, Data.Errors500Data],
+    '404': [ Pages.Error404Page,  Data.Errors404Data],
+    '500': [ Pages.Error500Page, Data.Errors500Data],
     'profile': [ Pages.ProfilePage, {user: Data.UserData} ],
-    'profile-edit': [ Pages.ProfileEditPage, {user: Data.UserData,} ],
 };
 
 export function navigate(page: string) {

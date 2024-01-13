@@ -4,13 +4,29 @@ import { registerComponent } from './core/registerComponent';
 import { navigate } from './core/navigate';
 
 Handlebars.registerPartial('FormAuth', Components.FormAuth);
+Handlebars.registerPartial('FormProfile', Components.FormProfile);
 
 registerComponent('Button', Components.Button);
 registerComponent('Input', Components.Input);
 registerComponent('InputAuth', Components.InputAuth);
+registerComponent('InputConf', Components.InputConf);
 registerComponent('Logo', Components.Logo);
+registerComponent('Error', Components.Error);
 
-document.addEventListener('DOMContentLoaded', () => navigate('signup'));
+document.addEventListener('DOMContentLoaded', () => navigate('profile'));
+
+document.addEventListener('click', e => {
+    if (!e) return;
+    if(!e.target)return;
+    //@ts-ignore
+    const page = e.target.getAttribute('page');
+    if (page) {
+        navigate(page);
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    }
+});
 
 //helpers
 Handlebars.registerHelper('firstLetter', function (aString) {
