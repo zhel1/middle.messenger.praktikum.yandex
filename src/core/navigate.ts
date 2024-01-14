@@ -2,7 +2,7 @@ import * as Pages from '../pages';
 //TODO remove it
 import * as Components from '../components';
 
-const pages = {
+const pages: {[key: string]: unknown } = {
     'signin': Pages.SignInPage,
     'signup': Pages.SignUpPage,
     'messenger': Pages.MessengerPage,
@@ -14,8 +14,8 @@ const pages = {
 export function navigate(page: string) {
     const app = document.getElementById('app');
 
-    //@ts-expect-error Temp decision while we don't have router
-    const Component = pages[page]
+    //@ts-expect-error Temp decision while we don't have router.
+    const Component = new pages[page]
     const component = new Component();
     const htmlElement = component.getContent();
     if (!app?.firstElementChild)
