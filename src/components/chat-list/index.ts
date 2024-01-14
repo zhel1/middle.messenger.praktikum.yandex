@@ -1,1 +1,2 @@
-export { default as ChatList } from './chat-list.hbs?raw';
+import './chat-list.scss';
+export { ChatList as default } from './chat-list.ts';

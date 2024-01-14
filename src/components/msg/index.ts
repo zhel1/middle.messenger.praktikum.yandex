@@ -1,1 +1,2 @@
-export { default as Msg } from './msg.hbs?raw';
+import './msg.scss';
+export { Msg as default } from './msg.ts';

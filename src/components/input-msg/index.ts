@@ -1,1 +1,2 @@
-export { default as InputMsg } from './input-msg.hbs?raw';
+import './input-msg.scss';
+export { InputMsg as default } from './input-msg.ts';

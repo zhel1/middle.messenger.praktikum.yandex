@@ -7,12 +7,14 @@ interface IInputProps extends IProps {
     type: 'text' | 'password' | 'email' | 'tel'
     placeholder: string
     onBlur:()=>void
+    onInput:()=>void
 }
 
 export class Input extends Block {
     constructor(props: IInputProps) {
         props.events={
             blur: props.onBlur || (() => {}),
+            input: props.onInput || (() => {}),
         };
         super(props)
     }

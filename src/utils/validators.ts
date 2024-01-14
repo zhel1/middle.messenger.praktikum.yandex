@@ -79,3 +79,9 @@ export const validatePhone = (value: string) => {
     }
     return '';
 }
+
+//must not be empty.
+export const validateMsg = (value: string) => {
+    if (value.length === 0) return `Message can not be blank`;
+    return '';
+}

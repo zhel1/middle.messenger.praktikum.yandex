@@ -1,9 +1,10 @@
 import Block, {IProps} from "../../core/Block";
 import {InputAuth} from "../../components";
 import * as validators from '../../utils/validators';
+import {navigate} from "../../core/navigate";
 
 export interface ISignInPageProps extends IProps {
-    validate: {}
+    validate: object
     onSignIn : (event:Event) => void
 }
 
@@ -25,6 +26,11 @@ export class SignInPage extends Block {
                     login,
                     password
                 })
+
+                //if success
+                if (login !== null && password !== null) {
+                    navigate('messenger')
+                }
             }
         }
 

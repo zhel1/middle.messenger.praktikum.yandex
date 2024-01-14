@@ -5,9 +5,9 @@ import {InputAuth} from "../../components";
 import {navigate} from "../../core/navigate";
 
 export interface IProfilePageProps extends IProps {
-    validate: {}
+    validate: object
     editable: boolean
-    user: {}
+    user: object
     onChangePassword: (event:Event) => void
     onEditCancel: (event:Event) => void
     onSave: (event:Event) => void
@@ -57,6 +57,8 @@ export class ProfilePage extends Block {
                 const email = (this.getRefs().email as InputAuth).value()
                 const phone = (this.getRefs().phone as InputAuth).value()
 
+                //check if success
+
                 console.log({
                     first_name,
                     second_name,
@@ -65,6 +67,10 @@ export class ProfilePage extends Block {
                     email,
                     phone,
                 })
+
+                this.props.editable = false
+                this.setProps(this.props);
+
             },
             onLogOut: (event: Event) => {
                 event.preventDefault();

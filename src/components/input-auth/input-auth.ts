@@ -68,7 +68,7 @@ export class InputAuth extends Block {
                 {{{ Input 
                     classes="input-auth__element" 
                     name="${name}"
-                    value='${value}'
+                    value="${value}"
                     type="${type}" 
                     placeholder="${placeholder || ''}" 
                     onBlur=onBlur

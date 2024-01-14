@@ -4,7 +4,7 @@ import Handlebars from "handlebars";
 import isEqual from "../utils/isEqual";
 
 export interface IProps {
-    events?: Record<string, (evt: any) => void>
+    events?: Record<string, (evt: EventTarget) => void>
 }
 class Block {
     static EVENTS = {
@@ -29,7 +29,7 @@ class Block {
         const {props, children} = this._getChildrenAndProps(propsWithChildren);
 
         this.children = children;
-        this._props = this._makePropsProxy(props);
+        this._props = this._makePropsProxy(props, this);
 
         this.eventBus = () => eventBus;
 
@@ -112,7 +112,7 @@ class Block {
     }
 
     protected componentDidUpdate(oldProps: IProps, newProps: IProps) {
-        return isEqual(oldProps, newProps);
+        return isEqual<IProps>(oldProps as { [index: string]: IProps }, newProps as { [index: string]: IProps });
     }
 
     setProps = (nextProps: IProps) => {
@@ -149,19 +149,15 @@ class Block {
         this._addEvents();
     }
 
-    private compile(template: string, context: any) {
-        const contextAndStubs = {...context, __refs: this.refs};
-
-        Object.entries(this.children).forEach(([key, child]) => {
-            contextAndStubs[key] = `<div data-id="${child.id}"></div>`;
-        })
+    private compile(template: string, context: object) {
+        const contextAndStubs = {...context, __children: [] as Array<{ component: unknown, embed(node: DocumentFragment): void }>, __refs: this.refs};
 
         const html = Handlebars.compile(template)(contextAndStubs);
 
         const temp = document.createElement('template');
 
         temp.innerHTML = html;
-        contextAndStubs.__children?.forEach(({embed}: any) => {
+        contextAndStubs.__children?.forEach(({embed}) => {
             embed(temp.content);
         });
 
@@ -185,10 +181,7 @@ class Block {
         return this.element;
     }
 
-    private _makePropsProxy(props: { [index: string | symbol]: unknown }) {
-        // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
-        const self = this;
-
+    private _makePropsProxy(props: { [index: string | symbol]: unknown }, self: Block) {
         return new Proxy(props, {
             get(target, prop) {
                 const value = target[prop];

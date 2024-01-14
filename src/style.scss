@@ -1,20 +1,3 @@
-@import '/src/scss/variables';
-@import '/src/components/button/button';
-@import '/src/components/form-auth/form-auth';
-@import '/src/components/form-profile/form-profile';
-@import '/src/components/input-auth/input-auth';
-@import '/src/components/logo/logo';
-@import '/src/components/chat-item/chat-item';
-@import '/src/components/avatar/avatar';
-@import '/src/components/input-msg/input-msg';
-@import '/src/components/chat-list/chat-list';
-@import '/src/components/conversation/conversation';
-@import '/src/components/navigator/navigator';
-@import '/src/components/input-conf/input-conf';
-@import '/src/components/msg/msg';
-@import '/src/components/msg-list/msg-list';
-@import '/src/components/error/error';
-@import '/src/pages/signin/signin';
-@import '/src/pages/signup/signup';
-@import '/src/pages/messenger/messenger';
-@import '/src/pages/profile/profile';
+.invisible {
+  visibility: hidden;
+}

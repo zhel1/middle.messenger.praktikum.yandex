@@ -3,7 +3,7 @@ import {InputAuth} from "../../components";
 import * as validators from "../../utils/validators";
 
 export interface ISignUpPageProps extends IProps {
-    validate: {}
+    validate: object
     onSignUp : (event:Event) => void
 }
 
@@ -28,6 +28,8 @@ export class SignUpPage extends Block {
                 const phone = (this.getRefs().phone as InputAuth).value()
                 const password =  (this.getRefs().password as InputAuth).value()
                 const password2 =  (this.getRefs().password2 as InputAuth).value()
+
+                //check if success
 
                 console.log({
                     first_name,
