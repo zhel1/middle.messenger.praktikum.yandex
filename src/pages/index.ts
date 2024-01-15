@@ -1,5 +1,3 @@
-//export {SignInPage} from './signin'
-//export {SignUpPage} from './signup'
 export {default as SignInPage} from './signin'
 export {default as SignUpPage} from './signup'
 export {default as Error404Page} from './404'

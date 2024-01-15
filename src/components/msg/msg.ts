@@ -19,6 +19,7 @@ export class Msg extends Block {
                 {{#with msg}}
                     {{#if file}}
                         <article class="msg__file">
+                            <p>{{content}}</p>
                             <img src={{file.path}} alt="included_file"/>
                             <div class="msg__time">
                                 <span>{{time}}</span>
@@ -37,3 +38,4 @@ export class Msg extends Block {
         `)
     }
 }
+

@@ -130,10 +130,6 @@ class Block {
     public getRefs() {
         return this.refs
     }
-    //
-    // public value() {
-    //     return this._element && (<HTMLInputElement>this._element).value ? (<HTMLInputElement>this._element).value : '';
-    // }
 
     private _render() {
         const fragment = this.compile(this.render(), this._props);
@@ -172,10 +168,6 @@ class Block {
     protected render(): string {
         return '';
     }
-
-    // public value() {
-    //     return this._element && (<HTMLInputElement>this._element).value ? (<HTMLInputElement>this._element).value : '';
-    // }
 
     public getContent() {
         return this.element;

@@ -1,4 +1,3 @@
-
 export const msg_list= [
     {
         id: 11,
@@ -14,7 +13,7 @@ export const msg_list= [
         chat_id: 312,
         time: "2023-12-18",
         type: "text",
-        content: 'Нормулек, одобряю',
+        content: 'Как ты вывозишь весь этот материал?',
         main: true,
     },
     {
@@ -23,11 +22,11 @@ export const msg_list= [
         chat_id: 5,
         time: "2023-12-15",
         type: "file",
-        content: 1414,
+        content: "Это я учусь с нуля на мидл фронтенд разработчика в яндес практикуме. Как то так.",
         file: {
             id: 1414,
             user_id: 23,
-            path: `cat.jpg`,
+            path: `/assets/cat.jpg`,
             filename: "photo",
             content_type: "image/jpeg",
             content_size: 543672,

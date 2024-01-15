@@ -13,7 +13,7 @@ export { default as MsgList } from "./msg-list";
 export { default as SideBar } from "./side-bar";
 export { default as Msg } from "./msg";
 export { default as Navigator } from "./navigator";
+export { default as ProfileWgt } from "./profilewgt";
 
 export { FormAuth } from './form-auth'
 export { FormProfile } from './form-profile'
-

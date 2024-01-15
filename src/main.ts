@@ -21,6 +21,7 @@ registerComponent('MsgList', Components.MsgList);
 registerComponent('SideBar', Components.SideBar);
 registerComponent('Msg', Components.Msg);
 registerComponent('Navigator', Components.Navigator);
+registerComponent('ProfileWgt', Components.ProfileWgt);
 
 document.addEventListener('DOMContentLoaded', () => navigate('messenger'));
 

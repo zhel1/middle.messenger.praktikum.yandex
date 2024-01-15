@@ -1,8 +1,9 @@
 import * as Pages from '../pages';
+import Block from "./Block.ts";
 //TODO remove it
 import * as Components from '../components';
 
-const pages: {[key: string]: unknown } = {
+const pages: {[key: string]: typeof Block } = {
     'signin': Pages.SignInPage,
     'signup': Pages.SignUpPage,
     'messenger': Pages.MessengerPage,
@@ -13,15 +14,15 @@ const pages: {[key: string]: unknown } = {
 
 export function navigate(page: string) {
     const app = document.getElementById('app');
-
-    //@ts-expect-error Temp decision while we don't have router.
-    const Component = new pages[page]
-    const component = new Component();
-    const htmlElement = component.getContent();
-    if (!app?.firstElementChild)
+    if (!app?.firstElementChild) {
         app?.append(document.createElement('div'));
-    if(htmlElement)
+    }
+
+    const Component = pages[page] as unknown as typeof Block
+    const htmlElement =  new Component().getContent();
+    if (htmlElement) {
         app?.firstElementChild?.replaceWith(htmlElement);
+    }
 
     //TODO remove it
     const nav = document.getElementById('nav');
