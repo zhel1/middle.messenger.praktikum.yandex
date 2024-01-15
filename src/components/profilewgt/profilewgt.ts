@@ -59,8 +59,6 @@ export class ProfileWgt extends Block {
                 const email = (this.getRefs().email as InputAuth).value()
                 const phone = (this.getRefs().phone as InputAuth).value()
 
-                //check if success
-
                 console.log({
                     first_name,
                     second_name,
@@ -69,6 +67,15 @@ export class ProfileWgt extends Block {
                     email,
                     phone,
                 })
+
+                if (first_name == null ||
+                    second_name == null ||
+                    display_name == null ||
+                    login == null ||
+                    email == null ||
+                    phone == null) {
+                    return
+                }
 
                 this.props.editable = false
                 this.setProps(this.props);
