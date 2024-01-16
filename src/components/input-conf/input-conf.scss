@@ -2,41 +2,48 @@
 
 .input-conf {
   display: flex;
+  flex-direction: column;
   width: 100%;
-  justify-content: space-between;
-  border-bottom: 1px $border-color solid;
-  padding-top: 15px;
-
-  &-error {
-    border-bottom: 1px $error-color solid;
-  }
-
-  &__error {
-    position: absolute;
-    right: 0;
-  }
 
   * {
     font-size: 18px;
     font-family: SansSerif, serif;
   }
 
-  &__label {
+  &__pair {
     display: flex;
-    align-items: flex-end;
-  }
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px $border-color solid;
 
-  &__value {
-    display: flex;
-    align-items: flex-end;
-    border: none;
-    text-align: right;
-    outline:0;
-    color: $text-secondary-color;
-
-    &-editable {
-      color: $text-color;
+    &-label {
+      display: flex;
+      align-items: flex-end;
     }
 
+    &-value {
+      display: flex;
+      align-items: flex-end;
+      border: none;
+      text-align: right;
+      outline:0;
+      color: $text-secondary-color;
+
+      &-editable {
+        color: $text-color;
+      }
+    }
+
+    &-error {
+      border-bottom: 1px $error-color solid;
+    }
+  }
+
+  &__text-error {
+    height: 1rem;
+    color: $error-color;
+    font-size: 10px;
+    font-weight: 400;
+    text-align: right;
   }
 }
