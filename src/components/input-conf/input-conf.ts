@@ -58,25 +58,29 @@ export class InputConf extends Block {
             value,
             label,
             type,
-            error
+            error,
+            errorText
         } = this.props as IInputConfProps;
 
         return (`            
-            <label class="input-conf ${error? "input-conf-error" : ""}">
-                <div class="input-conf__label"><span>${label}</span></div>
-                {{#if editable}}
-                    {{{ Input 
-                        classes="input-conf__value input-conf__value-editable"  
-                        name="${name}"
-                        value='${value}'
-                        type="${type}" 
-                        placeholder="${placeholder || ''}" 
-                        onBlur=onBlur
-                        ref="input"
-                    }}}
-                {{^}}
-                    <span class="input-conf__value">${value}</span>
-                {{/if}}
+            <label class="input-conf">
+                <div class="input-conf__pair ${error? "input-conf__pair-error" : ""}"">
+                    <div class="input-conf__pair-label"><span>${label}</span></div>
+                    {{#if editable}}
+                        {{{ Input 
+                            classes="input-conf__pair-value input-conf__pair-value-editable"  
+                            name="${name}"
+                            value='${value}'
+                            type="${type}" 
+                            placeholder="${placeholder || ''}" 
+                            onBlur=onBlur
+                            ref="input"
+                        }}}
+                    {{^}}
+                        <span class="input-conf__pair-value">${value}</span>
+                    {{/if}}
+                </div>
+                <span class="input-conf__text-error">${errorText}</span>
             </label>
         `)
     }

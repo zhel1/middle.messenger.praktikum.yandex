@@ -22,23 +22,23 @@ function queryStringify(data: {[key: string]: string}) {
 }
 
 export class HTTPTransport {
-    get: HTTPMethod = (url, options: IOptionsRequest = {}) => {
+    get: HTTPMethod = (url, options = {}) => {
         return this.request(url, {...options, method: METHODS.GET}, options.timeout);
     };
 
-    post: HTTPMethod = (url, options: IOptionsRequest= {}) => {
+    post: HTTPMethod = (url, options = {}) => {
         return this.request(url, {...options, method: METHODS.POST}, options.timeout);
     };
 
-    put: HTTPMethod = (url, options: IOptionsRequest = {}) => {
+    put: HTTPMethod = (url, options = {}) => {
         return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
     };
 
-    delete: HTTPMethod = (url, options: IOptionsRequest = {}) => {
+    delete: HTTPMethod = (url, options = {}) => {
         return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
     };
 
-    request = (url:string, options:IOptionsRequest = {}, timeout:number = 5000) => {
+    request = (url:string, options: IOptionsRequest = {}, timeout:number = 5000) => {
         const {headers = {}, method, data} = options;
 
         return new Promise(function(resolve, reject) {
