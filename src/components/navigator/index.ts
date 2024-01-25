@@ -1,1 +1,2 @@
-export { default as Navigator } from './navigator.hbs?raw';
+import './navigator.scss';
+export { Navigator as default } from './navigator.ts';

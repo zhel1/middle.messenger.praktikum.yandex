@@ -1,1 +1,2 @@
-export {default as Conversation} from './conversation.hbs?raw'
+import './conversation.scss';
+export { Conversation as default } from './conversation';

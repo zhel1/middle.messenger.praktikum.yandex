@@ -1,1 +1,2 @@
-export { default as ProfilePage } from './profile.hbs?raw';
+import './profile.scss'
+export { ProfilePage as default } from './profile';

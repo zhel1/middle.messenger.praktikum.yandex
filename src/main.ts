@@ -1,38 +1,35 @@
 import Handlebars from 'handlebars';
 import * as Components from './components';
-import * as Pages from './pages';
-import * as Data from "./data";
+import { registerComponent } from './core/registerComponent';
+import { navigate } from './core/navigate';
 
-const pages = {
-    'signin': [ Pages.SignInPage, ],
-    'signup': [ Pages.SignUpPage,  ],
-    'messenger': [ Pages.MessengerPage, { chat_list: Data.ChatListData, conversation: Data.ConversationData }],
-    '404': [ Pages.ErrorPage,  Data.Errors404Data],
-    '500': [ Pages.ErrorPage, Data.Errors500Data],
-    'profile': [ Pages.ProfilePage, {user: Data.UserData} ],
-    'profile-edit': [ Pages.ProfileEditPage, {user: Data.UserData,} ],
-};
+Handlebars.registerPartial('FormAuth', Components.FormAuth);
+Handlebars.registerPartial('FormProfile', Components.FormProfile);
 
-Object.entries(Components).forEach(([ name, component ]) => {
-    Handlebars.registerPartial(name, component);
-});
+registerComponent('Button', Components.Button);
+registerComponent('Input', Components.Input);
+registerComponent('InputAuth', Components.InputAuth);
+registerComponent('InputConf', Components.InputConf);
+registerComponent('Logo', Components.Logo);
+registerComponent('Error', Components.Error);
+registerComponent('ChatList', Components.ChatList);
+registerComponent('ChatItem', Components.ChatItem);
+registerComponent('Avatar', Components.Avatar);
+registerComponent('InputMsg', Components.InputMsg);
+registerComponent('Conversation', Components.Conversation);
+registerComponent('MsgList', Components.MsgList);
+registerComponent('SideBar', Components.SideBar);
+registerComponent('Msg', Components.Msg);
+registerComponent('Navigator', Components.Navigator);
+registerComponent('ProfileWgt', Components.ProfileWgt);
 
-function navigate(page: string) {
-    //temp nav bar
-    //@ts-ignore
-    document.getElementById('nav').innerHTML = Handlebars.compile(Components.Navigator)(null);
-
-    //@ts-ignore
-    const [ source, context ] = pages[page];
-    const container = document.getElementById('app')!;
-    container.innerHTML = Handlebars.compile(source)(context);
-}
-
-document.addEventListener('DOMContentLoaded', () => navigate('profile-edit'));
+document.addEventListener('DOMContentLoaded', () => navigate('messenger'));
 
 document.addEventListener('click', e => {
-    //@ts-ignore
-    const page = e.target.getAttribute('page');
+    if (!e) return;
+    if(!e.target)return;
+
+    const page = (e.target as HTMLElement).getAttribute('page');
     if (page) {
         navigate(page);
 
@@ -53,3 +50,13 @@ Handlebars.registerHelper('colorByStr', function (str) {
         "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"];
     return colours[str.charAt(0).toUpperCase().charCodeAt(0) % colours.length]
 })
+
+Handlebars.registerHelper('concat', function(...args) {
+    let outStr = '';
+    for(const arg in args){
+        if(typeof args[arg]!='object'){
+            outStr += args[arg];
+        }
+    }
+    return outStr;
+});

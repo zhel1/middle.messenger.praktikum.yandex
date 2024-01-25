@@ -1,4 +1,6 @@
-export const chat_list_data = [
+import {IChat} from "../models/IChat.ts";
+
+export const chat_list_data: Array<IChat> = [
   {
     id: 1,
     avatar: `https://fikiwiki.com/uploads/posts/2022-02/1644885500_22-fikiwiki-com-p-kartinki-dlya-geimerov-na-avu-26.jpg`,
@@ -10,227 +12,306 @@ export const chat_list_data = [
         first_name: "Ivan",
         second_name: "Ivanov",
         avatar: `https://fikiwiki.com/uploads/posts/2022-02/1644885500_22-fikiwiki-com-p-kartinki-dlya-geimerov-na-avu-26.jpg`,
+        display_name: "Ivanchik",
+        login: "ivanovi",
+        phone: "88005553535",
+        email: "ivanovi@yandex.ru",
       },
       time: "12.33",
-      text: "this is message from user"
+      text: "Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day."
     }
   },
   {
     id: 22,
     title: "Neighbors",
     type: "chat",
-    unread_msg_count: 6,
+    unread_msg_count: 0,
     last_message: {
       user: {
         first_name: "Shurum",
         second_name: "Burum",
+        phone: "88005553536",
+        email:"sosed@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "Another productive way to use this tool to begin a daily writing routine. "
     }
   },
   {
-    id: 333,
+    id: 3,
     type: "dialog",
     title: "Shurum",
-    unread_msg_count: 1,
+    unread_msg_count: 0,
     last_message: {
       user: {
         first_name: "Shurum",
         second_name: "Burum",
+        phone: "89005553536",
+        email:"shurum@yandex.ru"
       },
       time: "12.34",
       text: "this is message from user this is message from user this is message from user"
     }
   },
   {
-    id: 4444,
+    id: 4,
     avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
     type: "dialog",
     title: "Nina",
-    unread_msg_count: 7,
+    unread_msg_count: 0,
     last_message: {
       user: {
         first_name: "Nina",
         second_name: "Anin",
         avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+        phone: "85005553536",
+        email:"anin@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "Another writing challenge can be to take the individual sentences in the random paragraph"
     }
   },
   {
-    id: 4444,
+    id: 5,
     type: "dialog",
     title: "Alena",
     unread_msg_count: 8,
     last_message: {
       user: {
-        first_name: "Nina",
-        second_name: "Alena",
+        first_name: "Alena",
+        second_name: "Zhirnova",
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "It's not only writers who can benefit from this free online tool."
     }
   },
   {
-    id: 4444,
-    avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+    id: 6,
+    avatar: `https://bipbap.ru/wp-content/uploads/2018/03/informer-castelldefels.jpg`,
     type: "dialog",
-    title: "Nina",
-    unread_msg_count: 4,
+    title: "Travara",
+    unread_msg_count: 0,
     last_message: {
       user: {
-        first_name: "Nina",
-        second_name: "Anin",
-        avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+        first_name: "Travara",
+        second_name: "Gibraha",
+        avatar: `https://bipbap.ru/wp-content/uploads/2018/03/informer-castelldefels.jpg`,
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "Above are a few examples of how the random paragraph generator can be beneficial."
     }
   },
   {
-    id: 4444,
+    id: 7,
     avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
     type: "dialog",
-    title: "Nina",
+    title: "Pukulek",
     unread_msg_count: 4,
     last_message: {
       user: {
-        first_name: "Nina",
-        second_name: "Anin",
+        first_name: "Pukulek",
+        second_name: "Krukulek",
         avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "Baby wipes are made of chocolate stardust"
     }
   },
   {
-    id: 4444,
-    avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+    id: 8,
     type: "dialog",
-    title: "Nina",
-    unread_msg_count: 4,
+    title: "Kokos",
+    unread_msg_count: 0,
     last_message: {
       user: {
-        first_name: "Nina",
-        second_name: "Anin",
-        avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+        first_name: "Kokos",
+        second_name: "Bananovich",
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "Fluffy pink unicorns are a popular status symbol among macho men"
+
     }
   },
   {
-    id: 4444,
+    id: 9,
     avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
     type: "dialog",
-    title: "Nina",
+    title: "Fatana",
     unread_msg_count: 4,
     last_message: {
       user: {
-        first_name: "Nina",
-        second_name: "Anin",
+        first_name: "Fatana",
+        second_name: "Kokosina",
+        phone: "8999995356",
+        email:"shurum@yandex.ru",
         avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "This is message from user this is message from user this is message from user"
     }
   },
   {
-    id: 4444,
-    avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+    id: 10,
     type: "dialog",
-    title: "Nina",
-    unread_msg_count: 4,
+    title: "Tuburet",
+    unread_msg_count: 0,
     last_message: {
       user: {
-        first_name: "Nina",
-        second_name: "Anin",
-        avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+        first_name: "Tuburet",
+        second_name: "Rehandro",
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "Always bring cinnamon buns on a deep-sea diving expedition"
     }
   },
   {
-    id: 4444,
-    avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+    id: 11,
+    avatar: `https://i.pinimg.com/280x280_RS/80/ef/ca/80efca521e9e1b8883e06ef2e8336ed9.jpg`,
     type: "dialog",
-    title: "Nina",
-    unread_msg_count: 4,
+    title: "Luka",
+    unread_msg_count: 10,
     last_message: {
       user: {
-        first_name: "Nina",
-        second_name: "Anin",
-        avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+        first_name: "Luka",
+        second_name: "Pirofanov",
+        avatar: `https://i.pinimg.com/280x280_RS/80/ef/ca/80efca521e9e1b8883e06ef2e8336ed9.jpg`,
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "You realize you're not alone as you sit in your bedroom massaging your calves after a long day of playing tug-of-war with Grandpa Joe in the hospital."
     }
   },
   {
-    id: 4444,
-    avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+    id: 12,
     type: "dialog",
-    title: "Nina",
-    unread_msg_count: 4,
+    title: "Pocan",
+    unread_msg_count: 0,
     last_message: {
       user: {
-        first_name: "Nina",
-        second_name: "Anin",
-        avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+        first_name: "Pokan",
+        second_name: "Lacotano",
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "Their argument could be heard across the parking lot."
     }
   },
   {
-    id: 4444,
-    avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+    id: 13,
     type: "dialog",
-    title: "Nina",
+    title: "Agand",
     unread_msg_count: 4,
     last_message: {
       user: {
-        first_name: "Nina",
-        second_name: "Anin",
-        avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+        first_name: "Agand",
+        second_name: "Lukant",
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "You realize you're not alone as you sit in your bedroom massaging your calves after a long day of playing tug-of-war with Grandpa Joe in the hospital."
     }
   },
   {
-    id: 4444,
+    id: 14,
     avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
     type: "dialog",
-    title: "Nina",
+    title: "Kriss",
     unread_msg_count: 4,
     last_message: {
       user: {
-        first_name: "Nina",
-        second_name: "Anin",
+        first_name: "Kriss",
+        second_name: "Pispis",
         avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "As he waited for the shower to warm, he noticed that he could hear water change temperature."
     }
   },
   {
-    id: 4444,
-    avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+    id: 15,
+    avatar: `https://i.pinimg.com/280x280_RS/fa/f1/e5/faf1e580505eebd1d5e6fd1bad2dcdf3.jpg`,
     type: "dialog",
-    title: "Nina",
+    title: "Sofi",
     unread_msg_count: 4,
     last_message: {
       user: {
-        first_name: "Nina",
-        second_name: "Anin",
-        avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
+        first_name: "Sofi",
+        second_name: "Fisola",
+        avatar: `https://i.pinimg.com/280x280_RS/fa/f1/e5/faf1e580505eebd1d5e6fd1bad2dcdf3.jpg`,
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      text: "The knives were out and she was sharpening hers."
+    }
+  },
+  {
+    id: 16,
+    avatar: `https://alyoshaminded.files.wordpress.com/2016/08/download1.jpg`,
+    type: "dialog",
+    title: "Pandalon",
+    unread_msg_count: 4,
+    last_message: {
+      user: {
+        first_name: "Pandalon",
+        second_name: "Lonotas",
+        avatar: `https://alyoshaminded.files.wordpress.com/2016/08/download1.jpg`,
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
+      },
+      time: "12.34",
+      text: "He enjoys practicing his ballet in the bathroom."
+    }
+  },
+  {
+    id: 17,
+    avatar: `https://cs6.pikabu.ru/avatars/957/v957648-838777683.jpg`,
+    type: "dialog",
+    title: "Incognit",
+    unread_msg_count: 4,
+    last_message: {
+      user: {
+        first_name: "Incognit",
+        second_name: "Kinton",
+        avatar: `https://cs6.pikabu.ru/avatars/957/v957648-838777683.jpg`,
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
+      },
+      time: "12.34",
+      text: "The toddler’s endless tantrum caused the entire plane anxiety."
+    }
+  },
+  {
+    id: 18,
+    avatar: `https://cs6.pikabu.ru/avatars/1782/v1782200-838218673.jpg`,
+    type: "dialog",
+    title: "Danil",
+    unread_msg_count: 4,
+    last_message: {
+      user: {
+        first_name: "Danil",
+        second_name: "Lanit",
+        avatar: `https://cs6.pikabu.ru/avatars/1782/v1782200-838218673.jpg`,
+        phone: "8999995356",
+        email:"shurum@yandex.ru"
+      },
+      time: "12.34",
+      text: "She finally understood that grief was her love with no place for it to go."
     }
   },
 ]

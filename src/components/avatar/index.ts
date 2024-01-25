@@ -1,1 +1,2 @@
-export { default as Avatar } from './avatar.hbs?raw';
+import './avatar.scss';
+export { Avatar as default } from './avatar';

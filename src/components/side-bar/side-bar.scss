@@ -1,0 +1,14 @@
+@import "/src/scss/variables";
+
+.side-bar {
+  max-width: 600px;
+  min-width: 600px;
+  background-color: $chat-list-color;
+  height: 100%;
+
+  &__header {
+    display: grid;
+    grid-template-columns: auto 40px;
+    width: 100%;
+  }
+}

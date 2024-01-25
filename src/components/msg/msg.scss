@@ -1,0 +1,58 @@
+@import "/src/scss/variables";
+
+.msg {
+  height: auto;
+  width: auto;
+  max-width: 80%;
+  min-width: 20px;
+  border: 1px solid $second-color;
+  border-radius: 0 15px 15px 15px;
+  box-shadow: 0 0 7px 0 rgb(0 0 0 / 15%);
+  float: left;
+  background-color: lightblue;
+
+  &__file {
+    padding: 10px;
+    width: auto;
+    height: 95%;
+
+    img {
+      object-fit: contain;
+      max-width: 700px;
+    }
+  }
+
+  &__text {
+    padding: 10px;
+    background-color:transparent;
+  }
+
+  &__time {
+    display: flex;
+    justify-content: flex-end;
+    span {
+      color: $text-secondary-color;
+    }
+  }
+}
+
+.my-msg {
+  border-radius: 15px 15px  0 15px;
+  background-color: lightgreen;
+  float: right;
+
+  .msg__time {
+    position: relative;
+
+    &::before {
+      content: "";
+      background-image: url("/icons/msg_read_mark.svg");
+      background-repeat: no-repeat;
+      width: 25px;
+      height: 20px;
+      position: absolute;
+      top:-3px;
+      right:100px;
+    }
+  }
+}
