@@ -1,14 +1,15 @@
-import Block, {IProps} from "../../core/Block";
+import Block, {IProps, RefsType} from "../../core/Block";
 import * as validators from "../../utils/validators";
-import {InputAuth} from "../../components";
+import {ChangePasswordWgt, InputConf} from "../../components";
 import {navigate} from "../../core/navigate";
 
-export interface IProfileWgtProps extends IProps {
+interface IProfileWgtProps extends IProps {
     validate: object
     editable: boolean
     opened: boolean
     user: object
     onChangePassword: (event:Event) => void
+    onChangeAvatar: (event:Event) => void
     onEditCancel: (event:Event) => void
     onSave: (event:Event) => void
     onLogOut: (event:Event) => void
@@ -16,11 +17,28 @@ export interface IProfileWgtProps extends IProps {
     onEdit: (event:Event) => void
 }
 
-export class ProfileWgt extends Block {
+type Ref = {
+    first_name: InputConf,
+    second_name: InputConf,
+    display_name: InputConf,
+    login: InputConf,
+    email: InputConf,
+    phone: InputConf,
+    changePasswordWgt: ChangePasswordWgt,
+} & RefsType
+
+export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
     constructor(props : IProfileWgtProps) {
         const newProps : IProfileWgtProps = {
             ...props,
-            events:{},
+            events:{
+                click: (evt ) => {
+                    evt.preventDefault()
+                    if (evt.target instanceof Element && evt.target.className === "profile" ) {
+                        this.props.onBack(evt)
+                    }
+                }
+            },
             editable: false,
             opened: false,
             validate: {
@@ -42,22 +60,25 @@ export class ProfileWgt extends Block {
             },
             onChangePassword: (event: Event) => {
                 event.preventDefault();
-                console.log("onChangePassword")
+                this.refs.changePasswordWgt.setProps({opened: true})
+            },
+            onChangeAvatar: (event: Event) => {
+                event.preventDefault();
+                console.log("onChangeAvatar")
             },
             onEditCancel: (event: Event) => {
                 event.preventDefault();
-                this.props.editable = false
-                this.setProps(this.props);
+                this.setProps({editable: false});
             },
             onSave: (event: Event) => {
                 event.preventDefault();
 
-                const first_name = (this.getRefs().first_name as InputAuth).value()
-                const second_name = (this.getRefs().second_name as InputAuth).value()
-                const display_name = (this.getRefs().display_name as InputAuth).value()
-                const login = (this.getRefs().login as InputAuth).value()
-                const email = (this.getRefs().email as InputAuth).value()
-                const phone = (this.getRefs().phone as InputAuth).value()
+                const first_name = this.refs.first_name.value()
+                const second_name = this.refs.second_name.value()
+                const display_name = this.refs.display_name.value()
+                const login = this.refs.login.value()
+                const email = this.refs.email.value()
+                const phone = this.refs.phone.value()
 
                 console.log({
                     first_name,
@@ -77,8 +98,7 @@ export class ProfileWgt extends Block {
                     return
                 }
 
-                this.props.editable = false
-                this.setProps(this.props);
+                this.setProps({editable: false});
 
             },
             onLogOut: (event: Event) => {
@@ -87,25 +107,32 @@ export class ProfileWgt extends Block {
             },
             onEdit: (event: Event) => {
                 event.preventDefault();
-                this.props.editable = true
-                this.setProps(this.props);
-            }
+                this.setProps({editable: true});
+            },
+            onBack: (event: Event) => {
+                event.preventDefault();
+                this.setProps({
+                    opened: false,
+                    editable: false,
+                });
+            },
         }
 
         super(newProps);
     }
 
     public get props() {
-        return this._props as IProfileWgtProps;
+        return this._props;
     }
 
     protected render(): string {
-        const { editable , opened} = this._props as IProfileWgtProps
+        const { editable , opened} = this._props
         return(`
-            <div class="profile ${opened ? '' : 'hide'}">
+            <div class="profile${opened ? '' : ' hide'}">
                 <div class="profile__widget">
                     {{#> FormProfile 
                         onChangePassword=onChangePassword
+                        onChangeAvatar=onChangeAvatar
                         onEditCancel=onEditCancel
                         onSave=onSave
                         onLogOut=onLogOut
@@ -166,6 +193,8 @@ export class ProfileWgt extends Block {
                             ref='phone' }}}
                             
                     {{/FormProfile}}
+                    
+                    {{{ ChangePasswordWgt ref='changePasswordWgt'}}}
                 </div>
             </div>
         `)

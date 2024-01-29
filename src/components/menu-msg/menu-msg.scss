@@ -1,0 +1,11 @@
+@import "/src/scss/variables";
+
+.menu-msg {
+  position: absolute;
+  left: 610px;
+  bottom: 40px;
+  padding: 0;
+  border: 2px solid $main-color;
+  border-radius: 10px;
+  background-color: white;
+}

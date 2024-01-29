@@ -1,4 +1,4 @@
-import {IProps} from "../core/Block";
+ // import {IProps} from "../core/Block";
 
 type PlainObject<T = unknown> = {
     [k in string]: T;
@@ -19,15 +19,37 @@ function isArrayOrObject(value: unknown): value is [] | PlainObject {
     return isPlainObject(value) || isArray(value);
 }
 
-function isEqual<T extends object>(lhs: { [index: string]: T }, rhs: { [index: string]: T }) {
+// function isEqual<T extends object>(lhs: { [index: string]: T }, rhs: { [index: string]: T }) {
+//     if (Object.keys(lhs).length !== Object.keys(rhs).length) {
+//         return false;
+//     }
+//
+//     for (const [key, value] of Object.entries(lhs)) {
+//         const rightValue = rhs[key];
+//         if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
+//             if (isEqual<IProps>(value as { [index: string]: IProps }, rightValue as { [index: string]: IProps })) {
+//                 continue;
+//             }
+//             return false;
+//         }
+//
+//         if (value !== rightValue) {
+//             return false;
+//         }
+//     }
+//
+//     return true;
+// }
+
+function isEqual<T extends object>(lhs:  T , rhs: T ) {
     if (Object.keys(lhs).length !== Object.keys(rhs).length) {
         return false;
     }
 
     for (const [key, value] of Object.entries(lhs)) {
-        const rightValue = rhs[key];
+        const rightValue = rhs[key as keyof T];
         if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-            if (isEqual<IProps>(value as { [index: string]: IProps }, rightValue as { [index: string]: IProps })) {
+            if (isEqual<object>(value as { [index: string]: object }, rightValue as { [index: string]: object })) {
                 continue;
             }
             return false;
@@ -40,5 +62,6 @@ function isEqual<T extends object>(lhs: { [index: string]: T }, rhs: { [index: s
 
     return true;
 }
+
 
 export default isEqual

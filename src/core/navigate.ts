@@ -3,9 +3,9 @@ import Block from "./Block.ts";
 //TODO remove it
 import * as Components from '../components';
 
-const pages: {[key: string]: typeof Block } = {
-    'signin': Pages.SignInPage,
+const pages: {[key: string ]: unknown } = {
     'signup': Pages.SignUpPage,
+    'signin': Pages.SignInPage,
     'messenger': Pages.MessengerPage,
     '404': Pages.Error404Page,
     '500': Pages.Error500Page,

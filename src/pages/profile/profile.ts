@@ -1,5 +1,4 @@
 import Block, {IProps} from "../../core/Block";
-// import {InputConf} from "../../components";
 import * as validators from "../../utils/validators";
 import {InputAuth} from "../../components";
 import {navigate} from "../../core/navigate";
@@ -16,10 +15,9 @@ export interface IProfilePageProps extends IProps {
     onEdit: (event:Event) => void
 }
 
-export class ProfilePage extends Block {
+export class ProfilePage extends Block<IProfilePageProps> {
     constructor() {
         const props : IProfilePageProps = {
-            events:{},
             editable: false,
             validate: {
                 name: validators.validateName,
@@ -50,12 +48,12 @@ export class ProfilePage extends Block {
             onSave: (event: Event) => {
                 event.preventDefault();
 
-                const first_name = (this.getRefs().first_name as InputAuth).value()
-                const second_name = (this.getRefs().second_name as InputAuth).value()
-                const display_name = (this.getRefs().display_name as InputAuth).value()
-                const login = (this.getRefs().login as InputAuth).value()
-                const email = (this.getRefs().email as InputAuth).value()
-                const phone = (this.getRefs().phone as InputAuth).value()
+                const first_name = (this.refs.first_name as InputAuth).value()
+                const second_name = (this.refs.second_name as InputAuth).value()
+                const display_name = (this.refs.display_name as InputAuth).value()
+                const login = (this.refs.login as InputAuth).value()
+                const email = (this.refs.email as InputAuth).value()
+                const phone = (this.refs.phone as InputAuth).value()
 
                 console.log({
                     first_name,

@@ -7,7 +7,7 @@ interface IButtonProps extends IProps {
     page?: string
 }
 
-export class Button extends Block {
+export class Button extends Block<IButtonProps> {
     constructor(props: IButtonProps) {
         super({
             ...props,
@@ -17,12 +17,8 @@ export class Button extends Block {
         })
     }
 
-    public get props() {
-        return this._props as IButtonProps;
-    }
-
     protected render(): string {
-        const { type, label, page } = this.props;
+        const { type, label, page } = this._props;
         return (`
             <button class="button button__${type}" ${ page ? `page="${page}"` : ''}>
                 ${label? label : ''}

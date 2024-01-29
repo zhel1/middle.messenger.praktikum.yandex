@@ -22,6 +22,10 @@ registerComponent('SideBar', Components.SideBar);
 registerComponent('Msg', Components.Msg);
 registerComponent('Navigator', Components.Navigator);
 registerComponent('ProfileWgt', Components.ProfileWgt);
+registerComponent('MenuItem', Components.MenuItem);
+registerComponent('MenuConversation', Components.MenuConversation);
+registerComponent('MenuMsg', Components.MenuMsg);
+registerComponent('ChangePasswordWgt', Components.ChangePasswordWgt);
 
 document.addEventListener('DOMContentLoaded', () => navigate('messenger'));
 

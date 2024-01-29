@@ -1,16 +1,27 @@
-import Block, {IProps} from "../../core/Block";
+import Block, {IProps, RefsType} from "../../core/Block";
 import {InputAuth} from "../../components";
 import * as validators from "../../utils/validators";
+import {navigate} from "../../core/navigate.ts";
 
 export interface ISignUpPageProps extends IProps {
     validate: object
     onSignUp : (event:Event) => void
 }
 
-export class SignUpPage extends Block {
+type Ref = {
+    first_name: InputAuth
+    second_name: InputAuth
+    login: InputAuth
+    email: InputAuth
+    phone: InputAuth
+    password: InputAuth
+    password2:InputAuth
+
+} & RefsType
+
+export class SignUpPage extends Block<ISignUpPageProps, Ref> {
     constructor() {
         const props : ISignUpPageProps = {
-            events:{},
             validate: {
                 name: validators.validateName,
                 login: validators.validateLogin,
@@ -21,15 +32,24 @@ export class SignUpPage extends Block {
             onSignUp: (event:Event) => {
                 event.preventDefault();
 
-                const first_name = (this.getRefs().first_name as InputAuth).value()
-                const second_name = (this.getRefs().second_name as InputAuth).value()
-                const login = (this.getRefs().login as InputAuth).value()
-                const email = (this.getRefs().email as InputAuth).value()
-                const phone = (this.getRefs().phone as InputAuth).value()
-                const password =  (this.getRefs().password as InputAuth).value()
-                const password2 =  (this.getRefs().password2 as InputAuth).value()
+                const first_name = this.refs.first_name.value()
+                const second_name = this.refs.second_name.value()
+                const login = this.refs.login.value()
+                const email = this.refs.email.value()
+                const phone = this.refs.phone.value()
+                const password = this.refs.password.value()
+                const password2 = this.refs.password2.value()
 
-                //check if success
+                if (first_name !== null &&
+                    second_name !== null &&
+                    login !== null &&
+                    email !== null &&
+                    phone !== null &&
+                    password !== null &&
+                    password2 !== null)
+                {
+                    navigate('messenger')
+                }
 
                 console.log({
                     first_name,

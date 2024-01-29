@@ -7,23 +7,23 @@ interface IChatItemProps extends IProps {
     onClick: (chatID: number) => void
 }
 
-export class ChatItem extends Block {
+export class ChatItem extends Block<IChatItemProps> {
     constructor(props: IChatItemProps) {
-        props.events = {
-            click: (() => {
-                if (props.onClick) {
-                    props.onClick(props.chat.id)
-                }
-            })
-        }
-        super(props);
+        super({
+            ...props,
+            events: {
+                click: ((event) => {
+                    event.preventDefault();
+                    if (props.onClick) {
+                        props.onClick(props.chat.id)
+                    }
+                })
+            }
+        });
     }
 
-    public get props() {
-        return this._props as IChatItemProps;
-    }
     protected render(): string {
-        const { unread_msg_count, last_message } = this.props.chat
+        const { unread_msg_count, last_message } = this._props.chat
         return (`
             <li class="chat-item {{#if isSelected}}chat-item--selected{{/if}}">
                 {{#with chat}}

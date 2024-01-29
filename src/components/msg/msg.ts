@@ -5,14 +5,11 @@ interface IMsgProps extends IProps {
     onClick: (chatID: number) => void
 }
 
-export class Msg extends Block {
+export class Msg extends Block<IMsgProps> {
     constructor(props: IMsgProps) {
         super(props);
     }
 
-    public get props() {
-        return this._props as IMsgProps;
-    }
     protected render(): string {
         return (`
             <li class="msg {{#if myMessage}}my-msg{{/if}}">

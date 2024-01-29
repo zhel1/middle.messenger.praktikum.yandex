@@ -7,10 +7,9 @@ export interface IMessengerPageProps extends IProps {
     msg_list: Array<object>
 }
 
-export class MessengerPage extends Block {
+export class MessengerPage extends Block<IMessengerPageProps> {
     constructor() {
         const props : IMessengerPageProps = {
-            events:{},
             chat_list: Data.ChatListData,
             conversation: Data.ConversationData,
             msg_list: Data.MsgListData
@@ -19,7 +18,7 @@ export class MessengerPage extends Block {
     }
 
     protected render(): string {
-        const msgListIsNotEmpty = (this._props as IMessengerPageProps).msg_list.length > 0
+        const msgListIsNotEmpty = this._props.msg_list.length > 0
         return(`
             <div class="messenger">
                 {{{ SideBar chat_list=chat_list}}}

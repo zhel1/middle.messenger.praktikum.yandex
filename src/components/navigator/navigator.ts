@@ -1,6 +1,6 @@
 import Block from "../../core/Block";
 
-export class Navigator extends Block {
+export class Navigator extends Block<object> {
     constructor() {
         super({});
     }

@@ -6,10 +6,9 @@ export interface IError500PageProps extends IProps {
     message: string,
 }
 
-export class Error500Page extends Block {
+export class Error500Page extends Block<IError500PageProps> {
     constructor() {
         const props : IError500PageProps = {
-            events:{},
             error: 500,
             errorText: "Oops! Internal Server Error",
             message: "The server encountered an internal error or misconfiguration and was unable to complete your request.",

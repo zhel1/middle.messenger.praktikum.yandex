@@ -1,8 +1,5 @@
 <form class="profile-form">
-    {{#if editable}}
-        <div class="profile-form__avatar-mask"></div>
-    {{/if}}
-    <input class="profile-form__avatar" type="image" name="avatar" src="{{user.avatar}}" alt="User avatar">
+    {{{ Avatar user=user editable=editable onEdit=onChangeAvatar}}}
     <h1>{{user.display_name}}</h1>
         {{> @partial-block}}
     <div class="profile-form__buttons">
@@ -13,7 +10,7 @@
         {{^}}
             {{{ Button label="edit" onClick=onEdit type="link"}}}
             {{{ Button label="Log out" onClick=onLogOut type="link"}}}
-            {{{ Button label="Back" onClick=onBack page="messenger" type="primary"}}}
+            {{{ Button label="Back" onClick=onBack type="primary"}}}
         {{/if}}
     </div>
 </form>

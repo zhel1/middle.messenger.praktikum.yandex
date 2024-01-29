@@ -1,4 +1,5 @@
-import Block, {IProps} from "../../core/Block";
+import Block, {IProps, RefsType} from "../../core/Block";
+import Input from "../input";
 
 interface IInputAuthProps extends IProps {
     placeholder: string
@@ -12,15 +13,17 @@ interface IInputAuthProps extends IProps {
     onBlur: (value: string) => void
 }
 
-export class InputAuth extends Block {
+type Ref = {
+    input: Input,
+} & RefsType
+
+export class InputAuth extends Block<IInputAuthProps, Ref> {
     constructor(props:IInputAuthProps) {
         props.errorText = '';
         props.error = false;
         props.onBlur = () => this.validate();
 
-        super({
-            ...props,
-        });
+        super(props);
     }
 
     public value() {
@@ -28,27 +31,20 @@ export class InputAuth extends Block {
             return null;
         }
 
-        return (this.refs.input.element as HTMLInputElement).value
-    }
-
-    public get props() {
-        return this._props as IInputAuthProps;
+        return this.refs.input.value()
     }
 
     private validate() {
-        const value = (this.refs.input.element as HTMLInputElement).value
-        const error = this.props.validate?.(value);
-        this.props.value = value;
-        if (error) {
-            this.props.error = true;
-            this.props.errorText = error;
-            this.setProps(this.props);
-            return false;
-        }
-        this.props.error = false;
-        this.props.errorText = '';
-        this.setProps(this.props);
-        return true;
+        const value = this.refs.input.value()
+        const errorText = this._props.validate?.(value);
+
+        this.setProps({
+            value: value,
+            error: errorText !== '',
+            errorText: errorText ? errorText : ''
+        });
+
+        return errorText === '';
     }
 
     protected render(): string {
@@ -60,7 +56,7 @@ export class InputAuth extends Block {
             type,
             error,
             errorText
-        } = this.props as IInputAuthProps;
+        } = this._props;
 
         return (`
             <label class="input-auth ${error? "input-auth__error" : ""}" >

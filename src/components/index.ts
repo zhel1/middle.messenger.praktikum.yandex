@@ -14,6 +14,10 @@ export { default as SideBar } from "./side-bar";
 export { default as Msg } from "./msg";
 export { default as Navigator } from "./navigator";
 export { default as ProfileWgt } from "./profilewgt";
+export { default as MenuItem } from "./menu-item";
+export { default as MenuConversation } from "./menu-conversation";
+export { default as MenuMsg } from "./menu-msg";
+export { default as ChangePasswordWgt } from "./change-password-wgt";
 
 export { FormAuth } from './form-auth'
 export { FormProfile } from './form-profile'

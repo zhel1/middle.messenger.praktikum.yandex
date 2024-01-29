@@ -1,10 +1,10 @@
 import Block, {IProps} from "../../core/Block";
 
-interface IMsgListProps extends IProps{
+interface IMsgListProps extends IProps {
 
 }
 
-export class MsgList extends Block {
+export class MsgList extends Block<IMsgListProps> {
     constructor(props: IMsgListProps) {
         super(props);
     }

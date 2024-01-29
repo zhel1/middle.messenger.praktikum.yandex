@@ -1,4 +1,4 @@
-import Block, {IProps} from "../../core/Block";
+import Block, {IProps, RefsType} from "../../core/Block";
 import {InputAuth} from "../../components";
 import * as validators from '../../utils/validators';
 import {navigate} from "../../core/navigate";
@@ -8,10 +8,14 @@ export interface ISignInPageProps extends IProps {
     onSignIn : (event:Event) => void
 }
 
-export class SignInPage extends Block {
+type Ref = {
+    login: InputAuth
+    password: InputAuth
+} & RefsType
+
+export class SignInPage extends Block<ISignInPageProps,Ref> {
     constructor() {
         const props : ISignInPageProps = {
-            events:{},
             validate: {
                 login: validators.validateLogin,
                 password: validators.validatePassword
@@ -19,8 +23,8 @@ export class SignInPage extends Block {
             onSignIn: (event:Event) => {
                 event.preventDefault();
 
-                const login = (this.getRefs().login as InputAuth).value()
-                const password =  (this.getRefs().password as InputAuth).value()
+                const login = this.refs.login.value()
+                const password = this.refs.password.value()
 
                 console.log({
                     login,
