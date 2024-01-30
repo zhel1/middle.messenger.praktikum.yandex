@@ -218,6 +218,17 @@ class Block<Props extends IProps, Refs extends RefsType = RefsType> {
             }
         });
     }
+
+    public hide(){
+    }
+
+    public show(){
+        const app = document.getElementById('app');
+        const htmlElement = this.getContent();
+        if (!app?.firstElementChild) app?.append(document.createElement('div'));
+        if(htmlElement)
+            app?.firstElementChild?.replaceWith(htmlElement);
+    }
 }
 
 export default Block;

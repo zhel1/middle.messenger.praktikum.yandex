@@ -2,6 +2,9 @@ import Handlebars from 'handlebars';
 import * as Components from './components';
 import { registerComponent } from './core/registerComponent';
 import { navigate } from './core/navigate';
+import Router from "./core/router";
+import * as Pages from "./pages";
+import Block from "./core/Block";
 
 Handlebars.registerPartial('FormAuth', Components.FormAuth);
 Handlebars.registerPartial('FormProfile', Components.FormProfile);
@@ -27,7 +30,7 @@ registerComponent('MenuConversation', Components.MenuConversation);
 registerComponent('MenuMsg', Components.MenuMsg);
 registerComponent('ChangePasswordWgt', Components.ChangePasswordWgt);
 
-document.addEventListener('DOMContentLoaded', () => navigate('messenger'));
+// document.addEventListener('DOMContentLoaded', () => navigate('messenger'));
 
 document.addEventListener('click', e => {
     if (!e) return;
@@ -64,3 +67,17 @@ Handlebars.registerHelper('concat', function(...args) {
     }
     return outStr;
 });
+
+export const RoutesStrs = {
+    'signin' : "/",
+    'signup' : "/sign-up",
+    'messenger' : "/messenger",
+}
+
+const router = new Router(".app");
+
+router
+    .use(RoutesStrs['signin'], Pages.SignInPage as typeof Block)
+    .use(RoutesStrs['signup'], Pages.SignUpPage as typeof Block)
+    .use(RoutesStrs['messenger'], Pages.MessengerPage as typeof Block)
+    .start();
