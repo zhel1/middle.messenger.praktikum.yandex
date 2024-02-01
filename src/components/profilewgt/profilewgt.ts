@@ -1,7 +1,8 @@
 import Block, {IProps, RefsType} from "../../core/Block";
 import * as validators from "../../utils/validators";
 import {ChangePasswordWgt, InputConf} from "../../components";
-import {navigate} from "../../core/navigate";
+import Router from "../../core/router.ts";
+import {RoutesStrs} from "../../core/config.ts";
 
 interface IProfileWgtProps extends IProps {
     validate: object
@@ -103,7 +104,7 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
             },
             onLogOut: (event: Event) => {
                 event.preventDefault();
-                navigate('signin')
+                Router.getRouter().go(RoutesStrs.signin)
             },
             onEdit: (event: Event) => {
                 event.preventDefault();

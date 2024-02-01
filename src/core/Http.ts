@@ -1,3 +1,5 @@
+import * as config from "./config.ts";
+
 enum METHODS {
     GET = 'GET',
     POST = 'POST',
@@ -13,7 +15,10 @@ type IOptionsRequest = {
     params?: object;
 }
 
-type HTTPMethod = (url: string, options?: IOptionsRequest) => Promise<unknown>
+export type TResult<TResponse> = {
+    status: number;
+    data: TResponse
+}
 
 function queryStringify(data: {[key: string]: string}) {
     return "?" + Object.keys(data).map(key => {
@@ -22,26 +27,31 @@ function queryStringify(data: {[key: string]: string}) {
 }
 
 export class HTTPTransport {
-    get: HTTPMethod = (url, options = {}) => {
-        return this.request(url, {...options, method: METHODS.GET}, options.timeout);
+    private apiUrl: string = ''
+    constructor(apiPath: string) {
+        this.apiUrl = `${config.HOST}${apiPath}`;
+    }
+
+    get<TResponse>(url: string, options: IOptionsRequest = {}): Promise<TResult<TResponse>> {
+        return this.request<TResponse>(`${this.apiUrl}${url}`, {...options, method: METHODS.GET}, options.timeout);
     };
 
-    post: HTTPMethod = (url, options = {}) => {
-        return this.request(url, {...options, method: METHODS.POST}, options.timeout);
+    post<TResponse>(url: string, options: IOptionsRequest = {}): Promise<TResult<TResponse>> {
+        return this.request<TResponse>(`${this.apiUrl}${url}`, {...options, method: METHODS.POST}, options.timeout);
     };
 
-    put: HTTPMethod = (url, options = {}) => {
-        return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
+    put<TResponse>(url: string, options: IOptionsRequest = {}): Promise<TResult<TResponse>> {
+        return this.request(`${this.apiUrl}${url}`, {...options, method: METHODS.PUT}, options.timeout);
     };
 
-    delete: HTTPMethod = (url, options = {}) => {
-        return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
+    delete<TResponse>(url: string, options: IOptionsRequest = {}) : Promise<TResult<TResponse>> {
+        return this.request<TResponse>(`${this.apiUrl}${url}`, {...options, method: METHODS.DELETE}, options.timeout);
     };
 
-    request = (url:string, options: IOptionsRequest = {}, timeout:number = 5000) => {
-        const {headers = {}, method, data} = options;
+    request<TResponse>(url:string, options: IOptionsRequest = {}, timeout:number = 5000) : Promise<TResult<TResponse>> {
+        const { headers = {}, method, data} = options;
+        return new Promise<TResult<TResponse>>(function(resolve, reject) {
 
-        return new Promise(function(resolve, reject) {
             if (!method) {
                 reject('No method');
                 return;
@@ -62,14 +72,23 @@ export class HTTPTransport {
             });
 
             xhr.onload = function() {
-                resolve(xhr);
+                // resolve(xhr as IResult<TResponse>);
+                if(xhr.getResponseHeader('content-type')?.includes('application/json')) {
+                    resolve({
+                        status: xhr.status,
+                        data:JSON.parse(xhr.responseText)
+                    });
+                } else {
+                    //TODO
+                    //resolve(xhr);
+                }
             };
 
             xhr.onabort = reject;
             xhr.onerror = reject;
+            xhr.ontimeout = reject;
 
             xhr.timeout = timeout;
-            xhr.ontimeout = reject;
 
             if (isGet || !data) {
                 xhr.send();

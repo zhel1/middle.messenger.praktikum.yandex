@@ -1,7 +1,8 @@
 import Block, {IProps} from "../../core/Block";
 import * as validators from "../../utils/validators";
 import {InputAuth} from "../../components";
-import {navigate} from "../../core/navigate";
+import {RoutesStrs} from "../../core/config.ts";
+import Router from "../../core/router.ts";
 
 export interface IProfilePageProps extends IProps {
     validate: object
@@ -79,7 +80,7 @@ export class ProfilePage extends Block<IProfilePageProps> {
             },
             onLogOut: (event: Event) => {
                 event.preventDefault();
-                navigate('signin')
+                Router.getRouter().go(RoutesStrs.signin)
             },
             onBack: (event: Event) => {
                 event.preventDefault();

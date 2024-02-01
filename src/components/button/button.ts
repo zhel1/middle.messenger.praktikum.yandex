@@ -1,10 +1,9 @@
 import Block, {IProps} from "../../core/Block";
 
 interface IButtonProps extends IProps {
-    type: 'primary' | 'link' | 'settings' | 'sendmsg',
+    type: 'primary' | 'secondary' | 'settings' | 'sendmsg',
     label: string,
     onClick?: () => void,
-    page?: string
 }
 
 export class Button extends Block<IButtonProps> {
@@ -18,9 +17,9 @@ export class Button extends Block<IButtonProps> {
     }
 
     protected render(): string {
-        const { type, label, page } = this._props;
+        const { type, label } = this._props;
         return (`
-            <button class="button button__${type}" ${ page ? `page="${page}"` : ''}>
+            <button class="button button__${type}">
                 ${label? label : ''}
             </button>
         `)

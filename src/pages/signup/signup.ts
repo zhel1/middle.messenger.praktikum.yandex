@@ -1,11 +1,15 @@
 import Block, {IProps, RefsType} from "../../core/Block";
 import {InputAuth} from "../../components";
 import * as validators from "../../utils/validators";
-import {navigate} from "../../core/navigate.ts";
+import {RoutesStrs} from "../../core/config.ts";
+import Router from "../../core/router.ts";
+import {signup} from "../../services/auth.ts";
+import {IUser} from "../../models/IUser.ts";
 
 export interface ISignUpPageProps extends IProps {
     validate: object
     onSignUp : (event:Event) => void
+    onSignIn : (event:Event) => void
 }
 
 type Ref = {
@@ -29,41 +33,54 @@ export class SignUpPage extends Block<ISignUpPageProps, Ref> {
                 phone: validators.validatePhone,
                 password: validators.validatePassword
             },
-            onSignUp: (event:Event) => {
-                event.preventDefault();
-
-                const first_name = this.refs.first_name.value()
-                const second_name = this.refs.second_name.value()
-                const login = this.refs.login.value()
-                const email = this.refs.email.value()
-                const phone = this.refs.phone.value()
-                const password = this.refs.password.value()
-                const password2 = this.refs.password2.value()
-
-                if (first_name !== null &&
-                    second_name !== null &&
-                    login !== null &&
-                    email !== null &&
-                    phone !== null &&
-                    password !== null &&
-                    password2 !== null)
-                {
-                    navigate('messenger')
-                }
-
-                console.log({
-                    first_name,
-                    second_name,
-                    login,
-                    email,
-                    phone,
-                    password,
-                    password2
-                })
-            }
+            onSignUp: (event: Event) => this.onSignUp(event),
+            onSignIn: (event: Event) => this.onSignIn(event)
         }
 
         super(props);
+    }
+
+    private onSignUp(event: Event) {
+        event.preventDefault()
+
+        const first_name = this.refs.first_name.value()
+        const second_name = this.refs.second_name.value()
+        const login = this.refs.login.value()
+        const email = this.refs.email.value()
+        const phone = this.refs.phone.value()
+        const password = this.refs.password.value()
+        const password2 = this.refs.password2.value()
+
+        if (password !== password2) {
+            const p = {
+                error: true,
+                errorText: "passwords are not equal"
+            }
+            this.refs.password.setProps(p)
+            this.refs.password2.setProps(p)
+
+            return;
+        }
+
+        const data = {
+            first_name,
+            second_name,
+            login,
+            email,
+            password,
+            phone
+        } as IUser;
+
+        if (Object.values(data).findIndex(value => value === null) === -1) {
+            signup(data)
+                .then(() => Router.getRouter().go(RoutesStrs.messenger))
+                .catch((error) => console.warn('login:', error));
+        }
+    }
+
+    private onSignIn(event: Event) {
+        event.preventDefault()
+        Router.getRouter().go(RoutesStrs.signin)
     }
 
     protected render(): string {
@@ -74,7 +91,7 @@ export class SignUpPage extends Block<ISignUpPageProps, Ref> {
                      caption="Sign up"
                      textOk="Sign up"
                      textCancel="Sign in"
-                     pageCancel="signin"
+                     onClickCancelButton=onSignIn
                      onClickOkButton=onSignUp }}
                      
                     {{{ InputAuth

@@ -1,49 +1,15 @@
 import Handlebars from 'handlebars';
 import * as Components from './components';
 import { registerComponent } from './core/registerComponent';
-import { navigate } from './core/navigate';
 import Router from "./core/router";
 import * as Pages from "./pages";
 import Block from "./core/Block";
-
-Handlebars.registerPartial('FormAuth', Components.FormAuth);
-Handlebars.registerPartial('FormProfile', Components.FormProfile);
-
-registerComponent('Button', Components.Button);
-registerComponent('Input', Components.Input);
-registerComponent('InputAuth', Components.InputAuth);
-registerComponent('InputConf', Components.InputConf);
-registerComponent('Logo', Components.Logo);
-registerComponent('Error', Components.Error);
-registerComponent('ChatList', Components.ChatList);
-registerComponent('ChatItem', Components.ChatItem);
-registerComponent('Avatar', Components.Avatar);
-registerComponent('InputMsg', Components.InputMsg);
-registerComponent('Conversation', Components.Conversation);
-registerComponent('MsgList', Components.MsgList);
-registerComponent('SideBar', Components.SideBar);
-registerComponent('Msg', Components.Msg);
-registerComponent('Navigator', Components.Navigator);
-registerComponent('ProfileWgt', Components.ProfileWgt);
-registerComponent('MenuItem', Components.MenuItem);
-registerComponent('MenuConversation', Components.MenuConversation);
-registerComponent('MenuMsg', Components.MenuMsg);
-registerComponent('ChangePasswordWgt', Components.ChangePasswordWgt);
-
-// document.addEventListener('DOMContentLoaded', () => navigate('messenger'));
-
-document.addEventListener('click', e => {
-    if (!e) return;
-    if(!e.target)return;
-
-    const page = (e.target as HTMLElement).getAttribute('page');
-    if (page) {
-        navigate(page);
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-    }
-});
+import {RoutesStrs} from "./core/config.ts";
+import {IAppState} from "./models/IAppState.ts";
+import {Store} from "./core/Store.ts";
+import {initApp} from "./services/initApp";
+// import AuthApi from "./api/auth.ts";
+// import {IUser} from "./models/IUser.ts";
 
 //helpers
 Handlebars.registerHelper('firstLetter', function (aString) {
@@ -68,16 +34,36 @@ Handlebars.registerHelper('concat', function(...args) {
     return outStr;
 });
 
-export const RoutesStrs = {
-    'signin' : "/",
-    'signup' : "/sign-up",
-    'messenger' : "/messenger",
+Handlebars.registerPartial('FormAuth', Components.FormAuth);
+Handlebars.registerPartial('FormProfile', Components.FormProfile);
+
+Object.entries(Components).forEach(
+    ([componentName, component]) => registerComponent(componentName, component as typeof Block)
+)
+
+declare global {
+    interface Window {
+        store: Store<IAppState>;
+    }
+
+    type Nullable<T> = T | null;
 }
 
-const router = new Router(".app");
+const initState: IAppState = {
+    error: null,
+    user: undefined,
+    currentChat: null,
+    chats: [],
+}
 
-router
+initApp()
+
+window.store = new Store<IAppState>(initState);
+
+new Router(".app")
     .use(RoutesStrs['signin'], Pages.SignInPage as typeof Block)
     .use(RoutesStrs['signup'], Pages.SignUpPage as typeof Block)
     .use(RoutesStrs['messenger'], Pages.MessengerPage as typeof Block)
+    .use(RoutesStrs['404'], Pages.Error404Page as typeof Block)
     .start();
+

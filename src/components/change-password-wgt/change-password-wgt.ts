@@ -94,7 +94,7 @@ export class ChangePasswordWgt extends Block<IChangePasswordWgtProps, Ref> {
                     ref='repeat_password' }}}
                     
                 {{{ Button 
-                    type='link'
+                    type='secondary'
                     label='Cancel'
                     onClick=onCancel
                     }}}

@@ -106,7 +106,6 @@ class Block<Props extends IProps, Refs extends RefsType = RefsType> {
     }
 
     protected componentDidUpdate(oldProps: Props, newProps: Props) {
-        console.log("isEqual - ", isEqual(oldProps, newProps))
          return !isEqual(oldProps, newProps);
     }
 
@@ -135,27 +134,6 @@ class Block<Props extends IProps, Refs extends RefsType = RefsType> {
 
         this._addEvents();
     }
-
-    // private compile(template: string, context: object) {
-    //     const contextAndStubs = {...context, __children: [] as Array<{ component: unknown, embed(node: DocumentFragment): void }>, __refs: this.refs};
-    //
-    //     const html = Handlebars.compile(template)(contextAndStubs);
-    //
-    //     const temp = document.createElement('template');
-    //
-    //     temp.innerHTML = html;
-    //     contextAndStubs.__children?.forEach(({embed}) => {
-    //         embed(temp.content);
-    //     });
-    //
-    //     Object.values(this.children).forEach((child) => {
-    //         const stub = temp.content.querySelector(`[data-id="${child.id}"]`);
-    //         stub?.replaceWith(child.getContent()!);
-    //     })
-    //
-    //     return temp.content;
-    // }
-
 
     private compile(template: string, context: Props) {
         const contextAndStubs: {
@@ -224,10 +202,15 @@ class Block<Props extends IProps, Refs extends RefsType = RefsType> {
 
     public show(){
         const app = document.getElementById('app');
+
+        if (!app?.firstElementChild) {
+            app?.append(document.createElement('div'));
+        }
+
         const htmlElement = this.getContent();
-        if (!app?.firstElementChild) app?.append(document.createElement('div'));
-        if(htmlElement)
+        if (htmlElement) {
             app?.firstElementChild?.replaceWith(htmlElement);
+        }
     }
 }
 

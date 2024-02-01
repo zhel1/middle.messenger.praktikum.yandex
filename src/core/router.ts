@@ -21,6 +21,10 @@ class Router {
         Router.__instance = this;
     }
 
+    public static getRouter(){
+        return this.__instance;
+    }
+
     public use(pathname: string, block: typeof Block) {
         const route = new Route(pathname, block, {rootQuery: this._rootQuery});
 
@@ -38,7 +42,11 @@ class Router {
     }
 
     private _onRoute(pathname: string) {
-        const route = this.getRoute(pathname);
+        let route = this.getRoute(pathname);
+        if (!route) {
+            route = this.getRoute("/404");
+        }
+
         if (!route) {
             return;
         }
