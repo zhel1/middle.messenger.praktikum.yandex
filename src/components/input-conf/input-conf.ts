@@ -66,14 +66,14 @@ export class InputConf extends Block<IInputConfProps, Ref> {
                         {{{ Input 
                             classes="input-conf__pair-value input-conf__pair-value-editable"  
                             name="${name}"
-                            value='${value}'
+                            value='${value? value : ''}'
                             type="${type}" 
                             placeholder="${placeholder || ''}" 
                             onBlur=onBlur
                             ref="input"
                         }}}
                     {{^}}
-                        <span class="input-conf__pair-value">${value}</span>
+                        <span class="input-conf__pair-value">${value? value : ''}</span>
                     {{/if}}
                 </div>
                 <span class="input-conf__text-error">${errorText}</span>

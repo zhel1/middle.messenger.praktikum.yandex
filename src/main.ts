@@ -8,8 +8,6 @@ import {RoutesStrs} from "./core/config.ts";
 import {IAppState} from "./models/IAppState.ts";
 import {Store} from "./core/Store.ts";
 import {initApp} from "./services/initApp";
-// import AuthApi from "./api/auth.ts";
-// import {IUser} from "./models/IUser.ts";
 
 //helpers
 Handlebars.registerHelper('firstLetter', function (aString) {
@@ -51,7 +49,7 @@ declare global {
 
 const initState: IAppState = {
     error: null,
-    user: undefined,
+    user: null,
     currentChat: null,
     chats: [],
 }

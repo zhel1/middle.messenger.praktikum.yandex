@@ -10,7 +10,7 @@ enum METHODS {
 type IOptionsRequest = {
     method?: METHODS.GET | METHODS.POST | METHODS.PUT | METHODS.DELETE;
     headers?: Record<string, string>;
-    data?: {[key: string]: string};
+    data?: {[key: string]: string} | FormData;
     timeout?: number;
     params?: object;
 }
@@ -58,11 +58,14 @@ export class HTTPTransport {
             }
 
             const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+            xhr.timeout = timeout;
+
             const isGet = method === METHODS.GET;
 
             xhr.open(
                 method,
-                isGet && !!data
+                isGet && !!data && !(data instanceof FormData)
                     ? `${url}${queryStringify(data)}`
                     : url,
             );
@@ -72,23 +75,22 @@ export class HTTPTransport {
             });
 
             xhr.onload = function() {
-                // resolve(xhr as IResult<TResponse>);
-                if(xhr.getResponseHeader('content-type')?.includes('application/json')) {
+                if (xhr.getResponseHeader('content-type')?.includes('application/json')) {
                     resolve({
                         status: xhr.status,
-                        data:JSON.parse(xhr.responseText)
+                        data: JSON.parse(xhr.responseText)
                     });
                 } else {
-                    //TODO
-                    //resolve(xhr);
+                    resolve({
+                        status: xhr.status,
+                        data: xhr.responseText as TResponse,
+                    });
                 }
             };
 
             xhr.onabort = reject;
             xhr.onerror = reject;
             xhr.ontimeout = reject;
-
-            xhr.timeout = timeout;
 
             if (isGet || !data) {
                 xhr.send();

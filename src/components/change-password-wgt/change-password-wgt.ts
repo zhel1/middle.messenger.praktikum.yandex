@@ -1,6 +1,8 @@
 import Block, {IProps, RefsType} from "../../core/Block";
 import * as validators from "../../utils/validators";
 import {InputConf} from "../index.ts";
+import {ChangePasswordInput} from "../../models/IUser.ts";
+import {updatePassword} from "../../services/users.ts";
 
 interface IChangePasswordWgtProps extends IProps {
     validate: object
@@ -43,19 +45,27 @@ export class ChangePasswordWgt extends Block<IChangePasswordWgtProps, Ref> {
         const repeat_password = this.refs.repeat_password.value()
 
 
-        console.log({
-            old_password,
-            password,
-            repeat_password,
-        })
+        if (password !== repeat_password) {
+            const p = {
+                error: true,
+                errorText: "passwords are not equal"
+            }
+            this.refs.password.setProps(p)
+            this.refs.repeat_password.setProps(p)
 
-        if (old_password == null ||
-            password == null ||
-            repeat_password == null) {
-            return
+            return;
         }
 
-        this.onCancel()
+        const data = {
+            oldPassword: old_password,
+            newPassword: password,
+        } as ChangePasswordInput;
+
+        if (Object.values(data).findIndex(value => value === null) === -1) {
+            updatePassword(data)
+                .then(() => this.onCancel())
+                .catch((error) => console.warn('change password:', error));
+        }
     }
 
     protected render(): string {

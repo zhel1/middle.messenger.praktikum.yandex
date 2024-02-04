@@ -32,11 +32,11 @@ export class Avatar extends Block<IAvatarProps> {
         const { editable, user } = this._props
         return (`
             <div class='avatar'>
-                ${user.avatar ? `
+                ${user?.avatar ? `
                     <img class="avatar__image" src=${user.avatar} alt="avatar image">
                 `:`
-                    <div class="avatar__symbol" style="background: linear-gradient(135deg, {{colorByStr '${user.first_name}' }} 0%, {{colorByStr '${user.second_name}' }} 96.52%);">
-                        {{firstLetter '${user.first_name}' }}{{ firstLetter '${user.second_name}' }}
+                    <div class="avatar__symbol" style="background: linear-gradient(135deg, {{colorByStr '${user?.first_name}' }} 0%, {{colorByStr '${user?.second_name}' }} 96.52%);">
+                        {{firstLetter '${user?.first_name}' }}{{ firstLetter '${user?.second_name}' }}
                     </div>
                 `}
                 ${editable ? `<div class="avatar__mask"></div>`:''}

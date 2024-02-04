@@ -15,3 +15,26 @@ export const responseHasError = (response: TResult<unknown>): response is TResul
         }
     }
 }
+
+export const loadNewFileFromDrag = <TEvent>(evt: TEvent, name: string = 'avatar'): FormData | null => {
+    let file = null;
+    if (evt instanceof DragEvent){
+        const dt = evt.dataTransfer;
+        if (dt) {
+            file = dt.files[0];
+        }
+    }
+
+    if (evt instanceof Event) {
+        const files = (evt.target as unknown as HTMLInputElement)?.files;
+        if(files)file=files[0];
+    }
+
+    if (file) {
+        const formData = new FormData();
+        formData.append(name, file);
+        return formData;
+    }
+
+    return null;
+}

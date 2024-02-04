@@ -23,7 +23,8 @@ export type SignInInput = {
     password: string;
 }
 
-export type GetUserInput = {
-    login: string;
-    password: string;
+export type ChangePasswordInput = {
+    oldPassword: string;
+    newPassword: string;
 }
+

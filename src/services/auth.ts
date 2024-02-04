@@ -19,7 +19,6 @@ const signin = async (data: SignInInput) => {
     if (responseHasError(response)) {
         throw Error(response.data.reason)
     }
-
     const me = await getUser();
     window.store.set({user: me});
 }
@@ -38,6 +37,8 @@ const logout = async () => {
     if (responseHasError(response)) {
         throw Error(response.data.reason)
     }
+
+    window.store.set({user: null});
 }
 
 export {

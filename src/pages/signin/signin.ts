@@ -44,8 +44,12 @@ export class SignInPage extends Block<ISignInPageProps,Ref> {
 
         if (Object.values(data).findIndex(value => value === null) === -1) {
             signin(data)
-                .then(() => Router.getRouter().go(RoutesStrs.messenger))
-                .catch((error) => console.warn('login:', error));
+                .then(() => {
+                    Router.getRouter().go(RoutesStrs.messenger)
+                    console.log("signin signin 1")
+                })
+                .catch((error) => console.warn('signin:', error));
+            console.log("signin signin 2")
         }
     }
 

@@ -3,12 +3,16 @@ import * as validators from "../../utils/validators";
 import {ChangePasswordWgt, InputConf} from "../../components";
 import Router from "../../core/router.ts";
 import {RoutesStrs} from "../../core/config.ts";
+import {StoreEvents} from "../../core/Store.ts";
+import {IUser} from "../../models/IUser.ts";
+import {logout} from "../../services/auth.ts";
+import {updateProfile} from "../../services/users.ts";
 
 interface IProfileWgtProps extends IProps {
     validate: object
     editable: boolean
     opened: boolean
-    user: object
+    user: IUser | null
     onChangePassword: (event:Event) => void
     onChangeAvatar: (event:Event) => void
     onEditCancel: (event:Event) => void
@@ -30,8 +34,11 @@ type Ref = {
 
 export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
     constructor(props : IProfileWgtProps) {
+        window.store.on(StoreEvents.Updated, () => this.onUserUpdated())
+
         const newProps : IProfileWgtProps = {
             ...props,
+            user: window.store.getState().user,
             events:{
                 click: (evt ) => {
                     evt.preventDefault()
@@ -48,16 +55,6 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
                 email: validators.validateEmail,
                 phone: validators.validatePhone,
                 password: validators.validatePassword
-            },
-            user: {
-                avatar: "https://fikiwiki.com/uploads/posts/2022-02/1644885500_22-fikiwiki-com-p-kartinki-dlya-geimerov-na-avu-26.jpg",
-                first_name: "Ivan",
-                second_name: "Ivanov",
-                display_name : "Ivanchik",
-                login: "ivan1645",
-                email: "email@gmail.com",
-                phone: "+78005553535",
-                password: "0123456789"
             },
             onChangePassword: (event: Event) => {
                 event.preventDefault();
@@ -81,15 +78,6 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
                 const email = this.refs.email.value()
                 const phone = this.refs.phone.value()
 
-                console.log({
-                    first_name,
-                    second_name,
-                    display_name,
-                    login,
-                    email,
-                    phone,
-                })
-
                 if (first_name == null ||
                     second_name == null ||
                     display_name == null ||
@@ -99,12 +87,26 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
                     return
                 }
 
-                this.setProps({editable: false});
+                const data = {
+                    first_name,
+                    second_name,
+                    display_name,
+                    login,
+                    email,
+                    phone
+                } as IUser;
 
+                if (Object.values(data).findIndex(value => value === null) === -1) {
+                    updateProfile(data)
+                        .then(() => this.setProps({editable: false}))
+                        .catch((error) => console.warn('update profile:', error));
+                }
             },
             onLogOut: (event: Event) => {
                 event.preventDefault();
-                Router.getRouter().go(RoutesStrs.signin)
+                logout()
+                    .then(() => Router.getRouter().go(RoutesStrs.signin))
+                    .catch((error) => console.warn('logout:', error));
             },
             onEdit: (event: Event) => {
                 event.preventDefault();
@@ -120,6 +122,10 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
         }
 
         super(newProps);
+    }
+
+    private onUserUpdated(){
+        this.setProps({user:  window.store.getState().user})
     }
 
     public get props() {
