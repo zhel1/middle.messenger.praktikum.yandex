@@ -1,6 +1,6 @@
 import Block, {IProps, RefsType} from "../../core/Block";
 import * as validators from "../../utils/validators";
-import {ChangePasswordWgt, InputConf} from "../../components";
+import {ChangeAvatarWgt, ChangePasswordWgt, InputConf} from "../../components";
 import Router from "../../core/router.ts";
 import {RoutesStrs} from "../../core/config.ts";
 import {StoreEvents} from "../../core/Store.ts";
@@ -30,6 +30,7 @@ type Ref = {
     email: InputConf,
     phone: InputConf,
     changePasswordWgt: ChangePasswordWgt,
+    changeAvatarWgt: ChangeAvatarWgt
 } & RefsType
 
 export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
@@ -41,7 +42,6 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
             user: window.store.getState().user,
             events:{
                 click: (evt ) => {
-                    evt.preventDefault()
                     if (evt.target instanceof Element && evt.target.className === "profile" ) {
                         this.props.onBack(evt)
                     }
@@ -62,7 +62,7 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
             },
             onChangeAvatar: (event: Event) => {
                 event.preventDefault();
-                console.log("onChangeAvatar")
+                this.refs.changeAvatarWgt.setProps({opened: true})
             },
             onEditCancel: (event: Event) => {
                 event.preventDefault();
@@ -201,7 +201,8 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
                             
                     {{/FormProfile}}
                     
-                    {{{ ChangePasswordWgt ref='changePasswordWgt'}}}
+                    {{{ ChangePasswordWgt ref='changePasswordWgt' }}}
+                    {{{ ChangeAvatarWgt oldAvatar=user.avatar ref='changeAvatarWgt' }}}
                 </div>
             </div>
         `)

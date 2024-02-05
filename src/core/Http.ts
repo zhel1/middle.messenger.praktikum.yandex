@@ -94,6 +94,8 @@ export class HTTPTransport {
 
             if (isGet || !data) {
                 xhr.send();
+            }else if (data instanceof FormData) {
+                xhr.send(data);
             } else {
                 xhr.send(JSON.stringify(data));
             }

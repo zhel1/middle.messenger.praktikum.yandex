@@ -24,10 +24,7 @@ export default class UserApi {
     }
 
     async updateAvatar(file: FormData) {
-        return userApi.put<void>('/profile/avatar', {
-            headers: {
-                "Content-Type": 'application/json'
-            },
+        return userApi.put<IUser>('/profile/avatar', {
             data: file
         })
     }

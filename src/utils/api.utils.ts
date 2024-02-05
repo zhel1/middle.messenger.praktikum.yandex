@@ -38,3 +38,15 @@ export const loadNewFileFromDrag = <TEvent>(evt: TEvent, name: string = 'avatar'
 
     return null;
 }
+
+export const addActive=(e:Event)=>{
+    e.preventDefault();
+    e.stopPropagation();
+    (e.target as HTMLElement)?.classList.add('highlight');
+}
+
+export const removeActive=(e:Event)=>{
+    e.preventDefault();
+    e.stopPropagation();
+    (e.target as HTMLElement)?.classList.remove('highlight');
+}

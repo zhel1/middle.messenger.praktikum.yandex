@@ -7,8 +7,8 @@ import {updatePassword} from "../../services/users.ts";
 interface IChangePasswordWgtProps extends IProps {
     validate: object
     opened: boolean
-    onSave: () => void
-    onCancel: () => void
+    onSave: (event: Event) => void
+    onCancel: (event: Event) => void
 }
 
 type Ref = {
@@ -24,8 +24,8 @@ export class ChangePasswordWgt extends Block<IChangePasswordWgtProps, Ref> {
             validate: {
                 password: validators.validatePassword
             },
-            onSave: () =>  { this.onSave() },
-            onCancel: () => { this.onCancel() },
+            onSave: (event: Event) =>  { this.onSave(event) },
+            onCancel: (event: Event) => { this.onCancel(event) },
         }
 
         super(newProps);
@@ -35,11 +35,13 @@ export class ChangePasswordWgt extends Block<IChangePasswordWgtProps, Ref> {
         return this._props as IChangePasswordWgtProps;
     }
 
-    private onCancel() {
+    private onCancel(event: Event) {
+        event.preventDefault()
         this.setProps({opened: false});
     }
 
-    private onSave() {
+    private onSave(event: Event) {
+        event.preventDefault()
         const old_password = this.refs.old_password.value()
         const password = this.refs.password.value()
         const repeat_password = this.refs.repeat_password.value()
@@ -63,15 +65,16 @@ export class ChangePasswordWgt extends Block<IChangePasswordWgtProps, Ref> {
 
         if (Object.values(data).findIndex(value => value === null) === -1) {
             updatePassword(data)
-                .then(() => this.onCancel())
+                .then(() => this.setProps({opened: false}))
                 .catch((error) => console.warn('change password:', error));
         }
     }
 
     protected render(): string {
-        const { opened} = this._props
+        const { opened } = this._props
         return(`
             <form class="change-password-wgt${opened ? '' : ' hide'}">
+                <h1>Change password</h1>
                    
                 {{{ InputConf 
                     label="Old password:"

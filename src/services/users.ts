@@ -28,6 +28,7 @@ const updateAvatar = async (data: FormData) => {
         throw Error(response.data.reason)
     }
 
+    window.store.set({user: response.data});
     //store -> close widget
 }
 
