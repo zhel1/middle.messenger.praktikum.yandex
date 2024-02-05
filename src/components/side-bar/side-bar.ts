@@ -1,27 +1,25 @@
 import Block, {IProps, RefsType} from "../../core/Block";
 import InputMsg from "../input-msg";
 import {IChat} from "../../models/IChat.ts";
-import {ProfileWgt} from "../profilewgt/profilewgt.ts";
 import {ChatList} from "../chat-list/chat-list.ts";
+import MenuSettings from "../menu-settings";
 
 interface ISideBarProps extends IProps {
     chat_list: Array<IChat>
     onSearchInput: () => void
-    onProfileClick: () => void
-    onProfileClose: () => void
+    onMenuSettingsClick: () => void
 }
 
 type Ref = {
     search: InputMsg
     chat_list: ChatList
-    profile: ProfileWgt
+    menuSettings: MenuSettings
 } & RefsType
 
 export class SideBar extends Block<ISideBarProps, Ref> {
     constructor(props: ISideBarProps) {
         props.onSearchInput = () => this.onSearchInput()
-        props.onProfileClick = () => this.onProfileClick()
-        props.onProfileClose = () => this.onProfileClose()
+        props.onMenuSettingsClick = () => this.onMenuSettingsClick()
         super(props);
     }
 
@@ -35,12 +33,8 @@ export class SideBar extends Block<ISideBarProps, Ref> {
         this.refs.chat_list.setProps({chat_list: new_chat_list});
     }
 
-    private onProfileClick() {
-        this.refs.profile.setProps({opened: true})
-    }
-
-    private onProfileClose() {
-        this.refs.profile.setProps({opened: false})
+    private onMenuSettingsClick() {
+        this.refs.menuSettings.setProps({opened: !this.refs.menuSettings.props.opened})
     }
 
     protected render(): string {
@@ -48,10 +42,10 @@ export class SideBar extends Block<ISideBarProps, Ref> {
             <div class="side-bar">
                 <div class="side-bar__header">
                     {{{ InputMsg onInput=onSearchInput placeholder="Search for chat..." name="searh" ref='search' }}}
-                    {{{ Button type="settings" onClick=onProfileClick }}}
+                    {{{ Button type="settings" onClick=onMenuSettingsClick }}}
+                    {{{ MenuSettings ref='menuSettings' }}}
                 </div>
                 {{{ ChatList chat_list=chat_list ref='chat_list' }}}
-                {{{ ProfileWgt onBack=onProfileClose ref='profile' }}}
             </div>
         `)
     }

@@ -15,6 +15,7 @@ export { default as Msg } from "./msg";
 export { default as ProfileWgt } from "./profilewgt";
 export { default as MenuItem } from "./menu-item";
 export { default as MenuConversation } from "./menu-conversation";
+export { default as MenuSettings } from "./menu-settings";
 export { default as MenuMsg } from "./menu-msg";
 export { default as ChangePasswordWgt } from "./change-password-wgt";
 export { default as ChangeAvatarWgt } from "./change-avatar-wgt";
