@@ -1,12 +1,13 @@
 import Block, {IProps} from "../../core/Block";
 import {addActive, loadNewFileFromDrag, removeActive} from "../../utils/api.utils.ts";
 import {updateAvatar} from "../../services/users.ts";
+import modalManager from "../../core/dialog-menedger.ts";
+import ProfileWgt from "../profilewgt";
 
 interface IChangeAvatarWgtProps extends IProps {
-    oldAvatar: string | undefined
-    newAvatar: string | undefined
-    opened: boolean
-    onCancel: (event: Event) => void
+    oldAvatar?: string | undefined
+    newAvatar?: string | undefined
+    onCancel?: (event: Event) => void
 }
 
 export class ChangeAvatarWgt extends Block<IChangeAvatarWgtProps> {
@@ -31,7 +32,7 @@ export class ChangeAvatarWgt extends Block<IChangeAvatarWgtProps> {
 
     private onCancel(event: Event) {
         event.preventDefault()
-        this.setProps({opened: false})
+        this.close()
     }
 
     private onAddFile(e: Event) {
@@ -41,15 +42,19 @@ export class ChangeAvatarWgt extends Block<IChangeAvatarWgtProps> {
         if (formData) {
             this.props.oldAvatar = window.store.getState().user?.avatar
             updateAvatar(formData)
-                .then(() => this.setProps({opened: true}))
+                .then(() => this.close())
                 .catch((error) => console.warn('change avatar:', error));
         }
     }
 
+    private close() {
+        modalManager.setModal(new ProfileWgt({editable: true}) as unknown as Block<object>);
+        modalManager.openModal();
+    }
+
     protected render(): string {
-        const { opened } = this._props
         return(`
-            <form class="change-avatar-wgt${opened ? '' : ' hide'}">
+            <form class="change-avatar-wgt">
                 <h2>Change avatar</h2>
                 
                 <img class="change-avatar-wgt__avatar" src='/assets/image_placeholder.jpg' alt="avatar image">

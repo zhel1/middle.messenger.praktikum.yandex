@@ -2,6 +2,7 @@ import {getUser} from "./auth";
 import {RoutesStrs} from "../core/config";
 import Router from "../core/router";
 import {IUser} from "../models/IUser";
+import {getChats} from "./chats";
 
 const initApp = async () => {
     let me: IUser;
@@ -12,8 +13,9 @@ const initApp = async () => {
         return;
     }
 
-    // const chats = await getChats();
-     window.store.set({user: me});
+     const chats = await getChats({});
+
+     window.store.set({user: me, chats: chats});
     // navigate('emails')
 }
 

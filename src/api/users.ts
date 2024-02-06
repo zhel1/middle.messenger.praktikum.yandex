@@ -7,18 +7,14 @@ const userApi = new HTTPTransport('/user');
 export default class UserApi {
     async updateProfile(data: IUser): Promise<TResult<IUser | ApiError>> {
         return userApi.put<IUser>('/profile', {
-            headers: {
-                "Content-Type": 'application/json'
-            },
+            headers: { "Content-Type": 'application/json'},
             data: data
         })
     }
 
     async updatePassword(data: ChangePasswordInput) {
         return userApi.put<void>('/password', {
-            headers: {
-                "Content-Type": 'application/json'
-            },
+            headers: { "Content-Type": 'application/json'},
             data: data
         })
     }
@@ -35,9 +31,7 @@ export default class UserApi {
 
     async searchUserByLogin(login: string) {
         return userApi.post<IUser[]>('/search', {
-            headers: {
-                "Content-Type": 'application/json'
-            },
+            headers: { "Content-Type": 'application/json'},
             data: { login }
         })
     }

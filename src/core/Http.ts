@@ -10,7 +10,8 @@ enum METHODS {
 type IOptionsRequest = {
     method?: METHODS.GET | METHODS.POST | METHODS.PUT | METHODS.DELETE;
     headers?: Record<string, string>;
-    data?: {[key: string]: string} | FormData;
+    //data?: {[key: string]: string | number } | FormData | object;
+    data?: object | FormData;
     timeout?: number;
     params?: object;
 }
@@ -20,11 +21,51 @@ export type TResult<TResponse> = {
     data: TResponse
 }
 
-function queryStringify(data: {[key: string]: string}) {
-    return "?" + Object.keys(data).map(key => {
-        return key + '=' + data[key];
-    }).join('&');
+// function queryStringify(data: Record<string, unknown>) {
+//     if (typeof data !== "object") {
+//         throw Error('Input must be an object')
+//     }
+//
+//     return "?" + Object.keys(data).map(key => {
+//         return key + '=' + data[key];
+//     }).join('&');
+// }
+
+export const isObject = (object: object | unknown) => {
+    return object != null && typeof object === "object";
+};
+
+export const objToString = (keyItog: string, value: object, resultArray: string[]) => {
+    Object.entries(value).map(([key, value]) => {
+        valueToString(`${keyItog}[${key}]`, value, resultArray)
+    })
 }
+
+export const arrayToString = (key: string, value: Array<unknown>, resultArray: string[]) => {
+    value.map((item, index) => {
+        valueToString(`${key}[${String(index)}]`, item, resultArray)
+    })
+}
+
+export const valueToString = (key: string, value: unknown, result: string[]) => {
+    if (Array.isArray(value))
+        return arrayToString(key, value, result);
+    if (isObject(value))
+        return objToString(key, value as NonNullable<unknown>, result);
+    result.push(`${key}=${String(value)}`);
+}
+
+export function queryStringify(data: object) {
+    if (!isObject(data)) {
+        throw Error('Input must be an object')
+    }
+    const result: string[] = [];
+    Object.entries(data).map(([key, value]) => {
+        valueToString(key, value, result)
+    })
+    return '?' + result.join("&");
+}
+
 
 export class HTTPTransport {
     private apiUrl: string = ''
@@ -32,21 +73,21 @@ export class HTTPTransport {
         this.apiUrl = `${config.HOST}${apiPath}`;
     }
 
-    get<TResponse>(url: string, options: IOptionsRequest = {}): Promise<TResult<TResponse>> {
-        return this.request<TResponse>(`${this.apiUrl}${url}`, {...options, method: METHODS.GET}, options.timeout);
-    };
+    get<TResponse>(path: string, options: IOptionsRequest = {}): Promise<TResult<TResponse>> {
+        return this.request<TResponse>(`${this.apiUrl}${path}`, {...options, method: METHODS.GET}, options.timeout);
+    }
 
-    post<TResponse>(url: string, options: IOptionsRequest = {}): Promise<TResult<TResponse>> {
-        return this.request<TResponse>(`${this.apiUrl}${url}`, {...options, method: METHODS.POST}, options.timeout);
-    };
+    post<TResponse>(path: string, options: IOptionsRequest = {}): Promise<TResult<TResponse>> {
+        return this.request<TResponse>(`${this.apiUrl}${path}`, {...options, method: METHODS.POST}, options.timeout);
+    }
 
-    put<TResponse>(url: string, options: IOptionsRequest = {}): Promise<TResult<TResponse>> {
-        return this.request(`${this.apiUrl}${url}`, {...options, method: METHODS.PUT}, options.timeout);
-    };
+    put<TResponse>(path: string, options: IOptionsRequest = {}): Promise<TResult<TResponse>> {
+        return this.request(`${this.apiUrl}${path}`, {...options, method: METHODS.PUT}, options.timeout);
+    }
 
-    delete<TResponse>(url: string, options: IOptionsRequest = {}) : Promise<TResult<TResponse>> {
-        return this.request<TResponse>(`${this.apiUrl}${url}`, {...options, method: METHODS.DELETE}, options.timeout);
-    };
+    delete<TResponse>(path: string, options: IOptionsRequest = {}) : Promise<TResult<TResponse>> {
+        return this.request<TResponse>(`${this.apiUrl}${path}`, {...options, method: METHODS.DELETE}, options.timeout);
+    }
 
     request<TResponse>(url:string, options: IOptionsRequest = {}, timeout:number = 5000) : Promise<TResult<TResponse>> {
         const { headers = {}, method, data} = options;
@@ -100,5 +141,5 @@ export class HTTPTransport {
                 xhr.send(JSON.stringify(data));
             }
         });
-    };
+    }
 }

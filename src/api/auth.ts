@@ -6,18 +6,14 @@ const authApi = new HTTPTransport('/auth');
 export default class AuthApi {
     async signup(data: IUser): Promise<TResult<SignUpResponse | ApiError>> {
         return authApi.post<SignUpResponse>('/signup', {
-            headers: {
-                "Content-Type": 'application/json'
-            },
+            headers: { "Content-Type": 'application/json'},
             data: data
         })
     }
 
     async signin(data: SignInInput): Promise<TResult<void | ApiError>> {
         return authApi.post<void>('/signin', {
-            headers: {
-                "Content-Type": 'application/json'
-            },
+            headers: { "Content-Type": 'application/json'},
             data: data
         })
     }

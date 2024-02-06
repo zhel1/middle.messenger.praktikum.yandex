@@ -3,12 +3,13 @@ import * as validators from "../../utils/validators";
 import {InputConf} from "../index.ts";
 import {ChangePasswordInput} from "../../models/IUser.ts";
 import {updatePassword} from "../../services/users.ts";
+import modalManager from "../../core/dialog-menedger.ts";
+import ProfileWgt from "../profilewgt";
 
 interface IChangePasswordWgtProps extends IProps {
-    validate: object
-    opened: boolean
-    onSave: (event: Event) => void
-    onCancel: (event: Event) => void
+    validate?: object
+    onSave?: (event: Event) => void
+    onCancel?: (event: Event) => void
 }
 
 type Ref = {
@@ -37,7 +38,7 @@ export class ChangePasswordWgt extends Block<IChangePasswordWgtProps, Ref> {
 
     private onCancel(event: Event) {
         event.preventDefault()
-        this.setProps({opened: false});
+        this.close()
     }
 
     private onSave(event: Event) {
@@ -65,15 +66,19 @@ export class ChangePasswordWgt extends Block<IChangePasswordWgtProps, Ref> {
 
         if (Object.values(data).findIndex(value => value === null) === -1) {
             updatePassword(data)
-                .then(() => this.setProps({opened: false}))
+                .then(() => this.close())
                 .catch((error) => console.warn('change password:', error));
         }
     }
 
+    private close() {
+        modalManager.setModal(new ProfileWgt({editable: true}) as unknown as Block<object>);
+        modalManager.openModal();
+    }
+
     protected render(): string {
-        const { opened } = this._props
         return(`
-            <form class="change-password-wgt${opened ? '' : ' hide'}">
+            <form class="change-password-wgt">
                 <h1>Change password</h1>
                    
                 {{{ InputConf 

@@ -1,15 +1,29 @@
 import {IUser} from "./IUser.ts";
+
 export interface IChat {
     id: number;
+    title: string;
     avatar?: string;
     type: string
-    title: string;
-    unread_msg_count: number;
+    unread_count: number;
+    created_by: number;
     last_message: ILastMessage;
 }
 
-export interface ILastMessage {
-    user: IUser;
-    text: string;
-    time: string;
+export type ILastMessage = {
+    user: IUser
+    time: string
+    content: string
 }
+
+export type IGetChatInput = {
+    offset?: number
+    limit?: number
+    title?: string
+}
+
+export type TAddDeleteUserInput = {
+    users: number[]
+    chatId: number
+}
+

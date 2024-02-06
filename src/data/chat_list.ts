@@ -6,7 +6,8 @@ export const chat_list_data: Array<IChat> = [
     avatar: `https://fikiwiki.com/uploads/posts/2022-02/1644885500_22-fikiwiki-com-p-kartinki-dlya-geimerov-na-avu-26.jpg`,
     type: "dialog",
     title: "Ivan",
-    unread_msg_count: 4,
+    unread_count: 4,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Ivan",
@@ -18,14 +19,15 @@ export const chat_list_data: Array<IChat> = [
         email: "ivanovi@yandex.ru",
       },
       time: "12.33",
-      text: "Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day."
+      content: "Generating random paragraphs can be an excellent way for writers to get their creative flow going at the beginning of the day."
     }
   },
   {
     id: 22,
     title: "Neighbors",
     type: "chat",
-    unread_msg_count: 0,
+    unread_count: 0,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Shurum",
@@ -34,14 +36,15 @@ export const chat_list_data: Array<IChat> = [
         email:"sosed@yandex.ru"
       },
       time: "12.34",
-      text: "Another productive way to use this tool to begin a daily writing routine. "
+      content: "Another productive way to use this tool to begin a daily writing routine. "
     }
   },
   {
     id: 3,
     type: "dialog",
     title: "Shurum",
-    unread_msg_count: 0,
+    unread_count: 0,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Shurum",
@@ -50,7 +53,7 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "this is message from user this is message from user this is message from user"
+      content: "this is message from user this is message from user this is message from user"
     }
   },
   {
@@ -58,7 +61,8 @@ export const chat_list_data: Array<IChat> = [
     avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
     type: "dialog",
     title: "Nina",
-    unread_msg_count: 0,
+    unread_count: 0,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Nina",
@@ -68,14 +72,15 @@ export const chat_list_data: Array<IChat> = [
         email:"anin@yandex.ru"
       },
       time: "12.34",
-      text: "Another writing challenge can be to take the individual sentences in the random paragraph"
+      content: "Another writing challenge can be to take the individual sentences in the random paragraph"
     }
   },
   {
     id: 5,
     type: "dialog",
     title: "Alena",
-    unread_msg_count: 8,
+    unread_count: 8,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Alena",
@@ -84,7 +89,7 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "It's not only writers who can benefit from this free online tool."
+      content: "It's not only writers who can benefit from this free online tool."
     }
   },
   {
@@ -92,7 +97,8 @@ export const chat_list_data: Array<IChat> = [
     avatar: `https://bipbap.ru/wp-content/uploads/2018/03/informer-castelldefels.jpg`,
     type: "dialog",
     title: "Travara",
-    unread_msg_count: 0,
+    unread_count: 0,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Travara",
@@ -102,7 +108,7 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "Above are a few examples of how the random paragraph generator can be beneficial."
+      content: "Above are a few examples of how the random paragraph generator can be beneficial."
     }
   },
   {
@@ -110,7 +116,8 @@ export const chat_list_data: Array<IChat> = [
     avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
     type: "dialog",
     title: "Pukulek",
-    unread_msg_count: 4,
+    unread_count: 4,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Pukulek",
@@ -120,14 +127,15 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "Baby wipes are made of chocolate stardust"
+      content: "Baby wipes are made of chocolate stardust"
     }
   },
   {
     id: 8,
     type: "dialog",
     title: "Kokos",
-    unread_msg_count: 0,
+    unread_count: 0,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Kokos",
@@ -136,7 +144,7 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "Fluffy pink unicorns are a popular status symbol among macho men"
+      content: "Fluffy pink unicorns are a popular status symbol among macho men"
 
     }
   },
@@ -145,7 +153,8 @@ export const chat_list_data: Array<IChat> = [
     avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
     type: "dialog",
     title: "Fatana",
-    unread_msg_count: 4,
+    unread_count: 4,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Fatana",
@@ -155,14 +164,15 @@ export const chat_list_data: Array<IChat> = [
         avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
       },
       time: "12.34",
-      text: "This is message from user this is message from user this is message from user"
+      content: "This is message from user this is message from user this is message from user"
     }
   },
   {
     id: 10,
     type: "dialog",
     title: "Tuburet",
-    unread_msg_count: 0,
+    unread_count: 0,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Tuburet",
@@ -171,7 +181,7 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "Always bring cinnamon buns on a deep-sea diving expedition"
+      content: "Always bring cinnamon buns on a deep-sea diving expedition"
     }
   },
   {
@@ -179,7 +189,8 @@ export const chat_list_data: Array<IChat> = [
     avatar: `https://i.pinimg.com/280x280_RS/80/ef/ca/80efca521e9e1b8883e06ef2e8336ed9.jpg`,
     type: "dialog",
     title: "Luka",
-    unread_msg_count: 10,
+    unread_count: 10,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Luka",
@@ -189,14 +200,15 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "You realize you're not alone as you sit in your bedroom massaging your calves after a long day of playing tug-of-war with Grandpa Joe in the hospital."
+      content: "You realize you're not alone as you sit in your bedroom massaging your calves after a long day of playing tug-of-war with Grandpa Joe in the hospital."
     }
   },
   {
     id: 12,
     type: "dialog",
     title: "Pocan",
-    unread_msg_count: 0,
+    unread_count: 0,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Pokan",
@@ -205,14 +217,15 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "Their argument could be heard across the parking lot."
+      content: "Their argument could be heard across the parking lot."
     }
   },
   {
     id: 13,
     type: "dialog",
     title: "Agand",
-    unread_msg_count: 4,
+    unread_count: 4,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Agand",
@@ -221,7 +234,7 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "You realize you're not alone as you sit in your bedroom massaging your calves after a long day of playing tug-of-war with Grandpa Joe in the hospital."
+      content: "You realize you're not alone as you sit in your bedroom massaging your calves after a long day of playing tug-of-war with Grandpa Joe in the hospital."
     }
   },
   {
@@ -229,7 +242,8 @@ export const chat_list_data: Array<IChat> = [
     avatar: `https://klike.net/uploads/posts/2023-01/1673594987_3-24.jpg`,
     type: "dialog",
     title: "Kriss",
-    unread_msg_count: 4,
+    unread_count: 4,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Kriss",
@@ -239,7 +253,7 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "As he waited for the shower to warm, he noticed that he could hear water change temperature."
+      content: "As he waited for the shower to warm, he noticed that he could hear water change temperature."
     }
   },
   {
@@ -247,7 +261,8 @@ export const chat_list_data: Array<IChat> = [
     avatar: `https://i.pinimg.com/280x280_RS/fa/f1/e5/faf1e580505eebd1d5e6fd1bad2dcdf3.jpg`,
     type: "dialog",
     title: "Sofi",
-    unread_msg_count: 4,
+    unread_count: 4,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Sofi",
@@ -257,7 +272,7 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "The knives were out and she was sharpening hers."
+      content: "The knives were out and she was sharpening hers."
     }
   },
   {
@@ -265,7 +280,8 @@ export const chat_list_data: Array<IChat> = [
     avatar: `https://alyoshaminded.files.wordpress.com/2016/08/download1.jpg`,
     type: "dialog",
     title: "Pandalon",
-    unread_msg_count: 4,
+    unread_count: 4,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Pandalon",
@@ -275,7 +291,7 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "He enjoys practicing his ballet in the bathroom."
+      content: "He enjoys practicing his ballet in the bathroom."
     }
   },
   {
@@ -283,7 +299,8 @@ export const chat_list_data: Array<IChat> = [
     avatar: `https://cs6.pikabu.ru/avatars/957/v957648-838777683.jpg`,
     type: "dialog",
     title: "Incognit",
-    unread_msg_count: 4,
+    unread_count: 4,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Incognit",
@@ -293,7 +310,7 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "The toddler’s endless tantrum caused the entire plane anxiety."
+      content: "The toddler’s endless tantrum caused the entire plane anxiety."
     }
   },
   {
@@ -301,7 +318,8 @@ export const chat_list_data: Array<IChat> = [
     avatar: `https://cs6.pikabu.ru/avatars/1782/v1782200-838218673.jpg`,
     type: "dialog",
     title: "Danil",
-    unread_msg_count: 4,
+    unread_count: 4,
+    created_by: 1,
     last_message: {
       user: {
         first_name: "Danil",
@@ -311,7 +329,7 @@ export const chat_list_data: Array<IChat> = [
         email:"shurum@yandex.ru"
       },
       time: "12.34",
-      text: "She finally understood that grief was her love with no place for it to go."
+      content: "She finally understood that grief was her love with no place for it to go."
     }
   },
 ]

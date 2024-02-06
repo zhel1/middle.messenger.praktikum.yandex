@@ -1,17 +1,14 @@
-import Block, {IProps, RefsType} from "../../core/Block";
-import {ProfileWgt} from "../profilewgt/profilewgt";
+import Block, {IProps} from "../../core/Block";
+import modalManager from "../../core/dialog-menedger.ts";
+import ProfileWgt from "../profilewgt";
+
 interface IMenuSettingsProps extends IProps {
     opened: boolean
     openProfile: () => void
     createChat: () => void
 }
 
-type Ref = {
-    profile: ProfileWgt
-} & RefsType
-
-
-export class MenuSettings extends Block<IMenuSettingsProps, Ref> {
+export class MenuSettings extends Block<IMenuSettingsProps> {
     constructor(props:IMenuSettingsProps) {
         props.opened = false
         props.openProfile = () => this.OpenProfile()
@@ -24,7 +21,8 @@ export class MenuSettings extends Block<IMenuSettingsProps, Ref> {
     }
 
     private OpenProfile() {
-        this.refs.profile.setProps({opened: true})
+        modalManager.setModal(new ProfileWgt({}) as unknown as Block<object>);
+        modalManager.openModal();
         this.close()
     }
 
@@ -43,8 +41,6 @@ export class MenuSettings extends Block<IMenuSettingsProps, Ref> {
              <ul class="menu-settings${opened ? '' : ' hide'}">
                 {{{ MenuItem name='Open profile' icon='profile' onClick=openProfile }}}
                 {{{ MenuItem name='Create chat' icon='chat' onClick=createChat}}}
-                
-                {{{ ProfileWgt ref='profile' }}}
             </ul>
         `)
     }
