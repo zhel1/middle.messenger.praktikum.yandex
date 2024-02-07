@@ -11,7 +11,7 @@ export type IUser = {
     password?: string;
     display_name?: string;
     avatar?: string;
-    id?:string
+    id?:number
 }
 
 export type SignUpResponse = {

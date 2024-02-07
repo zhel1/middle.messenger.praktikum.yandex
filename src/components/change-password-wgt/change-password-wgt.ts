@@ -4,7 +4,7 @@ import {InputConf} from "../index.ts";
 import {ChangePasswordInput} from "../../models/IUser.ts";
 import {updatePassword} from "../../services/users.ts";
 import modalManager from "../../core/dialog-menedger.ts";
-import ProfileWgt from "../profilewgt";
+import ProfileWgt from "../profile-wgt";
 
 interface IChangePasswordWgtProps extends IProps {
     validate?: object

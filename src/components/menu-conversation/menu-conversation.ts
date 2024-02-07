@@ -1,10 +1,15 @@
 import Block, {IProps} from "../../core/Block";
+import {deleteChat, getChats} from "../../services/chats.ts";
+import modalManager from "../../core/dialog-menedger.ts";
+import AddUserWgt from "../add-user-wgt";
+import RemoveUserWgt from "../remove-user-wgt";
+import {ChangeAvatarWgt} from "../index";
 
 interface IMenuConversationProps extends IProps {
     opened: boolean
     addUser: () => void
     removeUser: () => void
-    openUserProfile: () => void
+    loadChatAvatar: () => void
     removeConversation: () => void
 }
 
@@ -13,7 +18,7 @@ export class MenuConversation extends Block<IMenuConversationProps> {
         props.opened = false
         props.addUser = () => this.addUser()
         props.removeUser = () => this.removeUser()
-        props.openUserProfile = () => this.openUserProfile()
+        props.loadChatAvatar = () => this.loadChatAvatar()
         props.removeConversation = () => this.removeConversation()
         super(props);
     }
@@ -23,22 +28,41 @@ export class MenuConversation extends Block<IMenuConversationProps> {
     }
 
     private addUser() {
-        console.log("addUser")
+        if (window.store.getState().currentChatID) {
+            modalManager.setModal(new AddUserWgt({}) as unknown as Block<object>);
+            modalManager.openModal();
+        }
         this.close()
     }
 
     private removeUser() {
-        console.log("removeUser")
+        if (window.store.getState().currentChatID) {
+            modalManager.setModal(new RemoveUserWgt({}) as unknown as Block<object>);
+            modalManager.openModal();
+        }
         this.close()
     }
 
-    private openUserProfile() {
-        console.log("openUserProfile")
+    private loadChatAvatar() {
+        if (window.store.getState().currentChatID) {
+            modalManager.setModal(new ChangeAvatarWgt({}) as unknown as Block<object>);
+            modalManager.openModal()
+        }
         this.close()
     }
 
     private removeConversation() {
-        console.log("removeConversation")
+        const currentChatID = window.store.getState().currentChatID
+        if (currentChatID) {
+            deleteChat(currentChatID)
+                .then(() => {
+                    getChats({})
+                        .then((chats) => {window.store.set({chats: chats});})
+                        .catch((error) => console.warn('create chat:', error));
+                })
+                .catch((error) => console.warn('delete chat:', error));
+        }
+
         this.close()
     }
 
@@ -50,9 +74,9 @@ export class MenuConversation extends Block<IMenuConversationProps> {
         const { opened} = this._props
         return (`            
              <ul class="menu-conversation ${opened ? '' : 'hide'}">
-                {{{ MenuItem name='Add user' icon='add' onClick=addUser }}}
-                {{{ MenuItem name='Remove user' icon='remove' onClick=removeUser}}}
-                {{{ MenuItem name='Profile' icon='profile' onClick=openUserProfile}}}
+                {{{ MenuItem name='Add users' icon='add' onClick=addUser }}}
+                {{{ MenuItem name='Remove users' icon='remove' onClick=removeUser}}}
+                {{{ MenuItem name='Load chat avatar' icon='profile' onClick=loadChatAvatar}}}
                 {{{ MenuItem name='Delete chat' icon='delete' onClick=removeConversation}}}
             </ul>
         `)

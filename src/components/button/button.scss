@@ -40,3 +40,21 @@
   box-sizing: content-box;
   opacity: 0.5;
 }
+
+.button__add {
+  background-color: transparent;
+  background-image: url("/icons/add.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  box-sizing: content-box;
+  filter: invert(64%) sepia(22%) saturate(1179%) hue-rotate(194deg) brightness(104%) contrast(101%);
+}
+
+.button__remove {
+  background-color: transparent;
+  background-image: url("/icons/remove.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  box-sizing: content-box;
+  filter: invert(64%) sepia(22%) saturate(1179%) hue-rotate(194deg) brightness(104%) contrast(101%);
+}

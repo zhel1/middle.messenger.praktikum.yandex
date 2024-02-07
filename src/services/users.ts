@@ -32,8 +32,18 @@ const updateAvatar = async (data: FormData) => {
     //store -> close widget
 }
 
+const searchUserByLogin = async (login: string) => {
+    const response = await userApi.searchUserByLogin(login);
+    if (responseHasError(response)) {
+        throw Error(response.data.reason)
+    }
+
+    return response.data as IUser[]
+}
+
 export {
     updateProfile,
     updatePassword,
-    updateAvatar
+    updateAvatar,
+    searchUserByLogin
 }

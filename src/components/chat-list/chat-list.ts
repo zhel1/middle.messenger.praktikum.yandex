@@ -1,13 +1,13 @@
 import Block, {IProps} from "../../core/Block";
 import ChatItem from "../chat-item";
+import {IChat} from "../../models/IChat.ts";
 
 interface IChatListProps extends IProps {
-    chat_list: Array<object>
+    chat_list: IChat[]
     onChatSelected: (chatID: number) => void
 }
 
 export class ChatList extends Block<IChatListProps> {
-    private selectedChatID: number = -1
 
     constructor(props: IChatListProps) {
         props.onChatSelected = (chatID: number) => this.onChatSelected(chatID);
@@ -19,10 +19,13 @@ export class ChatList extends Block<IChatListProps> {
     }
 
     private onChatSelected(chatID: number) {
+        const selectedChatID = window.store.getState().currentChatID
+        if (selectedChatID) {
+            this.getChatItemByID(selectedChatID)?.setProps({isSelected: false})
+        }
+
         this.getChatItemByID(chatID).setProps({isSelected: true})
-        this.getChatItemByID(this.selectedChatID)?.setProps({isSelected: false})
-        this.selectedChatID = chatID
-        console.log("current chat id: ", chatID)
+        window.store.set({ currentChatID: chatID})
     }
 
     protected render(): string {

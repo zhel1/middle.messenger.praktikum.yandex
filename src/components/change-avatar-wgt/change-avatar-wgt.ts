@@ -2,7 +2,7 @@ import Block, {IProps} from "../../core/Block";
 import {addActive, loadNewFileFromDrag, removeActive} from "../../utils/api.utils.ts";
 import {updateAvatar} from "../../services/users.ts";
 import modalManager from "../../core/dialog-menedger.ts";
-import ProfileWgt from "../profilewgt";
+import ProfileWgt from "../profile-wgt";
 
 interface IChangeAvatarWgtProps extends IProps {
     oldAvatar?: string | undefined

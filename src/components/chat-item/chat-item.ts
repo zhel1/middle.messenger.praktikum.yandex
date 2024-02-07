@@ -36,7 +36,7 @@ export class ChatItem extends Block<IChatItemProps> {
                             <span>12:23</span>
                         </div>
                         <div class="chat-item__info-bottom">
-                            <p>${last_message.content}</p>
+                            <p>${last_message?.content}</p>
                             <div class="chat-item__info-bottom-count ${unread_count < 1 ? "invisible" : ""}">
                                 ${ unread_count > 0 ? unread_count : "" } 
                             </div>
