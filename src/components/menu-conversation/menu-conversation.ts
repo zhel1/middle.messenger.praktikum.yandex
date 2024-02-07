@@ -1,7 +1,9 @@
 import Block, {IProps} from "../../core/Block";
 import {deleteChat, getChats} from "../../services/chats.ts";
 import modalManager from "../../core/dialog-menedger.ts";
+import AddUserWgt from "../add-user-wgt";
 import RemoveUserWgt from "../remove-user-wgt";
+import {ChangeAvatarWgt} from "../index";
 
 interface IMenuConversationProps extends IProps {
     opened: boolean
@@ -26,7 +28,10 @@ export class MenuConversation extends Block<IMenuConversationProps> {
     }
 
     private addUser() {
-        console.log("addUser")
+        if (window.store.getState().currentChatID) {
+            modalManager.setModal(new AddUserWgt({}) as unknown as Block<object>);
+            modalManager.openModal();
+        }
         this.close()
     }
 
@@ -39,7 +44,10 @@ export class MenuConversation extends Block<IMenuConversationProps> {
     }
 
     private loadChatAvatar() {
-        console.log("loadChatAvatar")
+        if (window.store.getState().currentChatID) {
+            modalManager.setModal(new ChangeAvatarWgt({}) as unknown as Block<object>);
+            modalManager.openModal()
+        }
         this.close()
     }
 
