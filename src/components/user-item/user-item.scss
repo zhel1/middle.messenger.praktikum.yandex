@@ -1,0 +1,42 @@
+@import "/src/scss/variables";
+
+.user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid $main-color;
+  border-radius: 20px;
+  width: auto;
+
+  &__icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: 1px;
+    background-position: center;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &_plus {
+      filter: invert(64%) sepia(22%) saturate(1179%) hue-rotate(194deg) brightness(104%) contrast(101%);
+      background-image: url("/icons/add.svg");
+    }
+
+    &_delete {
+      filter: invert(64%) sepia(22%) saturate(1179%) hue-rotate(194deg) brightness(104%) contrast(101%);
+      background-image: url("/icons/remove.svg");
+    }
+  }
+
+  &__name {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    margin-right: 10px ;
+  }
+}

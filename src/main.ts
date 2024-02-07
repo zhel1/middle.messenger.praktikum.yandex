@@ -50,7 +50,7 @@ declare global {
 const initState: IAppState = {
     error: null,
     user: null,
-    currentChat: null,
+    currentChatID: null,
     chats: [],
 }
 

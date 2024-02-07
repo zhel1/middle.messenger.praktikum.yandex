@@ -1,6 +1,7 @@
 import Block, {IProps} from "../../core/Block";
 import modalManager from "../../core/dialog-menedger.ts";
-import ProfileWgt from "../profilewgt";
+import ProfileWgt from "../profile-wgt";
+import CreateChatWgt from "../create-chat-wgt";
 
 interface IMenuSettingsProps extends IProps {
     opened: boolean
@@ -27,7 +28,8 @@ export class MenuSettings extends Block<IMenuSettingsProps> {
     }
 
     private CreateChat() {
-        console.log("create chat")
+        modalManager.setModal(new CreateChatWgt({}) as unknown as Block<object>);
+        modalManager.openModal();
         this.close()
     }
 

@@ -3,9 +3,10 @@ import InputMsg from "../input-msg";
 import {IChat} from "../../models/IChat.ts";
 import {ChatList} from "../chat-list/chat-list.ts";
 import MenuSettings from "../menu-settings";
+import {StoreEvents} from "../../core/Store.ts";
 
 interface ISideBarProps extends IProps {
-    chat_list: Array<IChat>
+    chat_list: IChat[]
     onSearchInput: () => void
     onMenuSettingsClick: () => void
 }
@@ -18,6 +19,8 @@ type Ref = {
 
 export class SideBar extends Block<ISideBarProps, Ref> {
     constructor(props: ISideBarProps) {
+        window.store.on(StoreEvents.Updated, () => this.onChatsUpdated())
+
         props.onSearchInput = () => this.onSearchInput()
         props.onMenuSettingsClick = () => this.onMenuSettingsClick()
         super(props);
@@ -35,6 +38,11 @@ export class SideBar extends Block<ISideBarProps, Ref> {
 
     private onMenuSettingsClick() {
         this.refs.menuSettings.setProps({opened: !this.refs.menuSettings.props.opened})
+    }
+
+    private onChatsUpdated(){
+        this.setProps({chat_list:  window.store.getState().chats})
+        this.onSearchInput()
     }
 
     protected render(): string {

@@ -1,6 +1,6 @@
 import {HTTPTransport, TResult} from "../core/Http.ts";
-import {ApiError} from "../models/IUser.ts";
-import {IChat, IGetChatInput, TAddDeleteUserInput} from "../models/IChat.ts";
+import {ApiError, IUser} from "../models/IUser.ts";
+import {CreateChatResponse, IChat, IGetChatInput, TAddDeleteUserInput} from "../models/IChat.ts";
 
 const chatsApi = new HTTPTransport('/chats');
 
@@ -11,14 +11,14 @@ export default class ChatsApi {
         })
     }
 
-    async createChat(title: string) {
-        return chatsApi.post('', {
+    async createChat(title: string): Promise<TResult<CreateChatResponse | ApiError>> {
+        return chatsApi.post<CreateChatResponse>('', {
             headers: { "Content-Type": 'application/json' },
             data: { title: title }
         });
     }
 
-    async deleteChat(id: number) {
+    async deleteChat(id: number): Promise<TResult<object | ApiError>> {
         return chatsApi.delete('', {
             headers: { "Content-Type": 'application/json'},
             data: { chatId: id }}
@@ -39,11 +39,11 @@ export default class ChatsApi {
         });
     }
 
-    async getChatUsers(id: string) {
-        return chatsApi.get(`/${id}/users`);
+    async getChatUsers(id: number) {
+        return chatsApi.get<IUser[]>(`/${id}/users`);
     }
 
-    async getChatToken(id: string) {
+    async getChatToken(id: number) {
         return chatsApi.post(`/token/${id}`);
     }
 

@@ -22,6 +22,10 @@ export type IGetChatInput = {
     title?: string
 }
 
+export type CreateChatResponse = {
+    id: number
+}
+
 export type TAddDeleteUserInput = {
     users: number[]
     chatId: number

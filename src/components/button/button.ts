@@ -1,7 +1,7 @@
 import Block, {IProps} from "../../core/Block";
 
 interface IButtonProps extends IProps {
-    type: 'primary' | 'secondary' | 'settings' | 'sendmsg',
+    type: 'primary' | 'secondary' | 'settings' | 'sendmsg' | 'add' | 'remove',
     label: string,
     onClick?: () => void,
 }

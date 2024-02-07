@@ -12,13 +12,14 @@ export { default as Conversation } from "./conversation";
 export { default as MsgList } from "./msg-list";
 export { default as SideBar } from "./side-bar";
 export { default as Msg } from "./msg";
-export { default as ProfileWgt } from "./profilewgt";
+export { default as ProfileWgt } from "./profile-wgt";
 export { default as MenuItem } from "./menu-item";
 export { default as MenuConversation } from "./menu-conversation";
 export { default as MenuSettings } from "./menu-settings";
 export { default as MenuMsg } from "./menu-msg";
 export { default as ChangePasswordWgt } from "./change-password-wgt";
 export { default as ChangeAvatarWgt } from "./change-avatar-wgt";
+export { default as UserItem } from "./user-item";
 
 export { FormAuth } from './form-auth'
 export { FormProfile } from './form-profile'
