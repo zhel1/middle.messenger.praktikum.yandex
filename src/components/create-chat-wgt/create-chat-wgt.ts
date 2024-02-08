@@ -41,7 +41,7 @@ export class CreateChatWgt extends Block<ICreateChatWgtProps, Ref> {
             createChat(title)
                 .then(() => {
                     getChats({})
-                        .then((chats) => {window.store.set({chats: chats});})
+                        .then()
                         .catch((error) => console.warn('create chat:', error));
                 })
                 .catch((error) => console.warn('create chat:', error));

@@ -3,9 +3,14 @@ import InputMsg from "../input-msg";
 import * as validators from "../../utils/validators";
 import MenuConversation from "../menu-conversation";
 import {MenuMsg} from "../index.ts";
+import {sendMessage} from "../../services/message.ts";
+import {StoreEvents} from "../../core/Store";
+import {IChat} from "../../models/IChat";
 
 interface IConversationProps extends IProps {
-    onSend : (event:Event) => void
+    chat?: IChat
+    selectedChatID: number
+    onSend: (event:Event) => void
     onMenuConversationClick: (event:Event) => void
     onMenuMessageClick: (event:Event) => void
 }
@@ -18,11 +23,25 @@ type Ref = {
 
 export class Conversation extends Block<IConversationProps, Ref> {
     constructor(props: IConversationProps) {
+        window.store.on(StoreEvents.Updated, () => this.onCurrentChatUpdated())
+
         props.onMenuConversationClick = (event) => this.onMenuConversationClick(event)
         props.onMenuMessageClick = (event) => this.onMenuMessageClick(event)
         props.onSend = (event) => this.onSend(event)
 
         super(props);
+    }
+
+    private onCurrentChatUpdated() {
+        const currentChatID = window.store.getState().currentChatID
+        if (currentChatID && this._props.selectedChatID !== currentChatID) {
+            this.setProps({selectedChatID: currentChatID})
+        }
+
+        const state = window.store.getState()
+        if (state.currentChatID) {
+            this.setProps({chat: state.chats.find((chat) => chat.id === state.currentChatID )})
+        }
     }
 
     private getMenuMsg() {
@@ -47,6 +66,8 @@ export class Conversation extends Block<IConversationProps, Ref> {
             return
         }
 
+        sendMessage(message);
+
         this.refs.input.setValue('')
 
         console.log({
@@ -55,27 +76,31 @@ export class Conversation extends Block<IConversationProps, Ref> {
     }
 
     protected render(): string {
+        const { selectedChatID } = this._props
         return (`
             <div class="conversation">
-                <div class="conversation__header">
-                    <div class="conversation__header--user">
-                        {{{ Avatar user=conversation.user}}}
-                        <b>{{conversation.user.first_name}} {{conversation.user.second_name}}</b>
+                <span class="conversation__placeholder ${selectedChatID ? "hide" : ""}">Choose a chat to start messaging.</span>
+                <div class="conversation__body ${selectedChatID ? "" : "hide"}">
+                    <div class="conversation__header">
+                        <div class="conversation__header--user">
+                            {{{ Avatar avatar=chat.avatar first_name=chat.title second_name=chat.title}}}
+                            <b>{{chat.title}}</b>
+                        </div>
+                        {{{ Button type="settings" onClick=onMenuConversationClick }}}
+                        {{{ MenuConversation ref='menuConversation'}}}
                     </div>
-                    {{{ Button type="settings" onClick=onMenuConversationClick }}}
-                    {{{ MenuConversation ref='menuConversation'}}}
+                    <div class="conversation__scroll">
+                        {{{ MsgList msgList=chat.messages}}}
+                    </div>
+                    <div class="conversation__footer">
+                        {{{ Button type="settings" onClick=onMenuMessageClick }}}
+                        {{{ InputMsg placeholder="Message..." name="message" ref='input' }}}
+                        {{{ Button type="sendmsg" onClick=onSend }}}
+                        {{{ MenuMsg ref='menuMsg' }}}
+                    </div>
                 </div>
-                <div class="conversation__scroll">
-                    {{{ MsgList msgList=msg_list}}}
-                </div>
-                <div class="conversation__footer">
-                    {{{ Button type="settings" onClick=onMenuMessageClick }}}
-                    {{{ InputMsg placeholder="Message..." name="message" ref='input' }}}
-                    {{{ Button type="sendmsg" onClick=onSend }}}
-                    {{{ MenuMsg ref='menuMsg' }}}
-                </div>
+
             </div>
-            
         `)
     }
 }

@@ -4,12 +4,4 @@
   display: flex;
   flex-direction: row;
   background-color: $background-color;
-
-  &__placeholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    color: $text-secondary-color;
-  }
 }

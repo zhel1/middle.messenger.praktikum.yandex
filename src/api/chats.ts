@@ -1,6 +1,6 @@
 import {HTTPTransport, TResult} from "../core/Http.ts";
 import {ApiError, IUser} from "../models/IUser.ts";
-import {CreateChatResponse, IChat, IGetChatInput, TAddDeleteUserInput} from "../models/IChat.ts";
+import {CreateChatResponse, GetTokenResponse, IChat, IGetChatInput, TAddDeleteUserInput} from "../models/IChat.ts";
 
 const chatsApi = new HTTPTransport('/chats');
 
@@ -44,7 +44,7 @@ export default class ChatsApi {
     }
 
     async getChatToken(id: number) {
-        return chatsApi.post(`/token/${id}`);
+        return chatsApi.post<GetTokenResponse>(`/token/${id}`);
     }
 
     async updateChatAvatar(file: FormData, chatId: number) {

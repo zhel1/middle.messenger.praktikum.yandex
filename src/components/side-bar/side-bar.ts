@@ -6,7 +6,7 @@ import MenuSettings from "../menu-settings";
 import {StoreEvents} from "../../core/Store.ts";
 
 interface ISideBarProps extends IProps {
-    chat_list: IChat[]
+    chatList: IChat[]
     onSearchInput: () => void
     onMenuSettingsClick: () => void
 }
@@ -14,13 +14,14 @@ interface ISideBarProps extends IProps {
 type Ref = {
     search: InputMsg
     chat_list: ChatList
-    menuSettings: MenuSettings
+    menu_settings: MenuSettings
 } & RefsType
 
 export class SideBar extends Block<ISideBarProps, Ref> {
     constructor(props: ISideBarProps) {
         window.store.on(StoreEvents.Updated, () => this.onChatsUpdated())
 
+        props.chatList = window.store.getState().chats
         props.onSearchInput = () => this.onSearchInput()
         props.onMenuSettingsClick = () => this.onMenuSettingsClick()
         super(props);
@@ -29,19 +30,19 @@ export class SideBar extends Block<ISideBarProps, Ref> {
     private onSearchInput() {
         //Should I ask server to send chat list with current filter or do filter here?
         const searchText = this.refs.search.value()
-        const new_chat_list = this._props.chat_list.filter((chat: IChat) => {
+        const new_chat_list = this._props.chatList.filter((chat: IChat) => {
             return chat.title.startsWith(searchText)
         })
 
-        this.refs.chat_list.setProps({chat_list: new_chat_list});
+        this.refs.chat_list.setProps({chatList: new_chat_list});
     }
 
     private onMenuSettingsClick() {
-        this.refs.menuSettings.setProps({opened: !this.refs.menuSettings.props.opened})
+        this.refs.menu_settings.setProps({opened: !this.refs.menu_settings.props.opened})
     }
 
-    private onChatsUpdated(){
-        this.setProps({chat_list:  window.store.getState().chats})
+    private onChatsUpdated() {
+        this.setProps({chatList: window.store.getState().chats})
         this.onSearchInput()
     }
 
@@ -51,9 +52,9 @@ export class SideBar extends Block<ISideBarProps, Ref> {
                 <div class="side-bar__header">
                     {{{ InputMsg onInput=onSearchInput placeholder="Search for chat..." name="searh" ref='search' }}}
                     {{{ Button type="settings" onClick=onMenuSettingsClick }}}
-                    {{{ MenuSettings ref='menuSettings' }}}
+                    {{{ MenuSettings ref='menu_settings' }}}
                 </div>
-                {{{ ChatList chat_list=chat_list ref='chat_list' }}}
+                {{{ ChatList chatList=chatList ref='chat_list' }}}
             </div>
         `)
     }

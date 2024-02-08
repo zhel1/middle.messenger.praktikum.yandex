@@ -13,9 +13,11 @@ const initApp = async () => {
         return;
     }
 
-     const chats = await getChats({});
+    await getChats({});
 
-     window.store.set({user: me, chats: chats});
+    window.store.set({user: me});
+
+
     // navigate('emails')
 }
 

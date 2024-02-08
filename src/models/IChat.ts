@@ -1,4 +1,6 @@
 import {IUser} from "./IUser.ts";
+import SocketIO from "../api/socket.ts";
+import {IChatMessage} from "./IChatMessage.ts";
 
 export interface IChat {
     id: number;
@@ -8,6 +10,11 @@ export interface IChat {
     unread_count: number;
     created_by: number;
     last_message: ILastMessage;
+
+    token?: string;
+    users?: IUser[];
+    connection?: SocketIO | null;
+    messages?: IChatMessage[] | null;
 }
 
 export type ILastMessage = {
@@ -25,6 +32,11 @@ export type IGetChatInput = {
 export type CreateChatResponse = {
     id: number
 }
+
+export type GetTokenResponse = {
+    token: string
+}
+
 
 export type TAddDeleteUserInput = {
     users: number[]

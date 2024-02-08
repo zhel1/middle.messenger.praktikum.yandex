@@ -1,5 +1,5 @@
 <form class="profile-form">
-    {{{ Avatar user=user editable=editable onEdit=onChangeAvatar}}}
+    {{{ Avatar avatar=user.avatar first_name=user.first_name second_name=user.second_name editable=editable onEdit=onChangeAvatar}}}
     <h1>{{user.display_name}}</h1>
         {{> @partial-block}}
     <div class="profile-form__buttons">

@@ -1,13 +1,14 @@
 import Block, {IProps} from "../../core/Block";
 import {addActive, loadNewFileFromDrag, removeActive} from "../../utils/api.utils.ts";
 import {updateAvatar} from "../../services/users.ts";
-import modalManager from "../../core/dialog-menedger.ts";
-import ProfileWgt from "../profile-wgt";
+import {updateChatAvatar} from "../../services/chats.ts";
 
 interface IChangeAvatarWgtProps extends IProps {
+    mode: 'user' | 'chat'
     oldAvatar?: string | undefined
     newAvatar?: string | undefined
     onCancel?: (event: Event) => void
+    close?: () => void
 }
 
 export class ChangeAvatarWgt extends Block<IChangeAvatarWgtProps> {
@@ -41,15 +42,25 @@ export class ChangeAvatarWgt extends Block<IChangeAvatarWgtProps> {
         const formData = loadNewFileFromDrag<typeof e>(e);
         if (formData) {
             this.props.oldAvatar = window.store.getState().user?.avatar
-            updateAvatar(formData)
-                .then(() => this.close())
-                .catch((error) => console.warn('change avatar:', error));
+            if (this._props.mode === 'user') {
+                updateAvatar(formData)
+                    .then(() => this.close())
+                    .catch((error) => console.warn('change user avatar:', error));
+            } else if (this._props.mode === 'chat') {
+                const currentChatID = window.store.getState().currentChatID
+                if (currentChatID) {
+                    updateChatAvatar(formData, currentChatID)
+                        .then(() => this.close())
+                        .catch((error) => console.warn('change chat avatar:', error));
+                }
+            }
         }
     }
 
     private close() {
-        modalManager.setModal(new ProfileWgt({editable: true}) as unknown as Block<object>);
-        modalManager.openModal();
+        if (this._props.close) {
+            this._props.close()
+        }
     }
 
     protected render(): string {

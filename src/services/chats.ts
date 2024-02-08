@@ -2,6 +2,8 @@ import ChatsApi from "../api/chats";
 import {CreateChatResponse, IChat, IGetChatInput, TAddDeleteUserInput} from "../models/IChat";
 import {responseHasError} from "../utils/api.utils";
 import {IUser} from "../models/IUser";
+import {Indexed, merge} from "../utils/merge.ts";
+import {openConnectMessages} from "./message.ts";
 
 const chatsApi = new ChatsApi()
 
@@ -11,7 +13,30 @@ const getChats = async (data: IGetChatInput) => {
         throw Error(response.data.reason)
     }
 
-    return response.data as IChat[]
+    const oldChats = window.store.getState().chats
+    const newChats= response.data as IChat[]
+
+    const connectedChats = await Promise.all(newChats.map(async (newChat) => {
+        const oldChat = oldChats.find((oldChat) => newChat.id === oldChat.id)
+        if (oldChat) { //if old chat with the same id exists
+            oldChat.users = await getChatUsers(oldChat.id)
+            //todo update messages
+            return merge(oldChat as object as Indexed, newChat as object as Indexed) as object as IChat
+        } else { //if new chat was created
+            const me = window.store.getState().user
+            newChat.token = await getChatToken(newChat.id)
+            newChat.users = await getChatUsers(newChat.id)
+            //todo update messages
+            if (me) {
+                const newConnectedChat = openConnectMessages(newChat, me)
+                return newConnectedChat ? newConnectedChat : newChat
+            } else {
+                return newChat
+            }
+        }
+    }))
+
+    window.store.set({chats: connectedChats });
 }
 
 const createChat = async (title: string) => {
@@ -42,6 +67,9 @@ const deleteUsersFromChat = async (data: TAddDeleteUserInput) => {
     if (responseHasError(response)) {
         throw Error(response.data.reason)
     }
+
+    await getChats({});
+
 }
 
 const getChatUsers = async (chatID: number) => {
@@ -59,7 +87,18 @@ const updateChatAvatar = async (file: FormData, chatID: number) => {
         throw Error(response.data.reason)
     }
 
+    await getChats({});
+
     return response.data as IUser[]
+}
+
+const getChatToken = async (chatID: number) => {
+    const response = await chatsApi.getChatToken(chatID)
+    if (responseHasError(response)) {
+        throw Error(response.data.reason)
+    }
+
+    return response.data.token
 }
 
 export {
@@ -69,5 +108,6 @@ export {
     addUserToChat,
     deleteUsersFromChat,
     getChatUsers,
-    updateChatAvatar
+    updateChatAvatar,
+    getChatToken,
 }

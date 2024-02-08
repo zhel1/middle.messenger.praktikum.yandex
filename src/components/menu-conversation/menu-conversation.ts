@@ -45,7 +45,10 @@ export class MenuConversation extends Block<IMenuConversationProps> {
 
     private loadChatAvatar() {
         if (window.store.getState().currentChatID) {
-            modalManager.setModal(new ChangeAvatarWgt({}) as unknown as Block<object>);
+            modalManager.setModal(new ChangeAvatarWgt({
+                mode: 'chat',
+                close: () => modalManager.closeModal()
+            }) as unknown as Block<object>);
             modalManager.openModal()
         }
         this.close()
@@ -57,7 +60,7 @@ export class MenuConversation extends Block<IMenuConversationProps> {
             deleteChat(currentChatID)
                 .then(() => {
                     getChats({})
-                        .then((chats) => {window.store.set({chats: chats});})
+                        .then()
                         .catch((error) => console.warn('create chat:', error));
                 })
                 .catch((error) => console.warn('delete chat:', error));

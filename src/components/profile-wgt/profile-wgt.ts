@@ -50,7 +50,13 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
             },
             onChangeAvatar: (event: Event) => {
                 event.preventDefault();
-                modalManager.setModal(new ChangeAvatarWgt({}) as unknown as Block<object>);
+                modalManager.setModal(new ChangeAvatarWgt({
+                    mode: 'user',
+                    close: () => {
+                        modalManager.setModal(new ProfileWgt({editable: true}) as unknown as Block<object>);
+                        modalManager.openModal()
+                    }
+                }) as unknown as Block<object>);
             },
             onEditCancel: (event: Event) => {
                 event.preventDefault();

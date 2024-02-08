@@ -23,12 +23,13 @@ export class ChatItem extends Block<IChatItemProps> {
     }
 
     protected render(): string {
-        const { unread_count, last_message } = this._props.chat
+        //const { unread_count, last_message, avatar } = this._props.chat
+        const chat = this._props.chat
         return (`
             <li class="chat-item {{#if isSelected}}chat-item--selected{{/if}}">
                 {{#with chat}}
                     <div class="chat-item__avatar">
-                        {{{ Avatar user=last_message.user}}}
+                        {{{ Avatar avatar=../chat.avatar first_name=../chat.title second_name=../chat.title}}}
                     </div>
                     <div class="chat-item__info">
                         <div class="chat-item__info-top">
@@ -36,9 +37,9 @@ export class ChatItem extends Block<IChatItemProps> {
                             <span>12:23</span>
                         </div>
                         <div class="chat-item__info-bottom">
-                            <p>${last_message?.content}</p>
-                            <div class="chat-item__info-bottom-count ${unread_count < 1 ? "invisible" : ""}">
-                                ${ unread_count > 0 ? unread_count : "" } 
+                            <p>${chat.last_message?.content}</p>
+                            <div class="chat-item__info-bottom-count ${chat.unread_count < 1 ? "invisible" : ""}">
+                                ${ chat.unread_count > 0 ? chat.unread_count : "" } 
                             </div>
                         </div>
                     </div>

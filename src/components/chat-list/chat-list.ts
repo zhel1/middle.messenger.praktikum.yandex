@@ -3,7 +3,7 @@ import ChatItem from "../chat-item";
 import {IChat} from "../../models/IChat.ts";
 
 interface IChatListProps extends IProps {
-    chat_list: IChat[]
+    chatList: IChat[]
     onChatSelected: (chatID: number) => void
 }
 
@@ -31,7 +31,7 @@ export class ChatList extends Block<IChatListProps> {
     protected render(): string {
         return (`
             <ul class="chat-list">
-                {{#each chat_list as |chat|}}
+                {{#each chatList as |chat|}}
                     {{{ ChatItem chat=chat onClick=../onChatSelected isSelected=chat.isSelected ref=(concat 'chat' chat.id)}}}
                 {{/each}}
             </ul>

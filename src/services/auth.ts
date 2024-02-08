@@ -20,6 +20,7 @@ const signin = async (data: SignInInput) => {
         throw Error(response.data.reason)
     }
     const me = await getUser();
+
     window.store.set({user: me});
 }
 
