@@ -42,4 +42,3 @@ export type TAddDeleteUserInput = {
     users: number[]
     chatId: number
 }
-

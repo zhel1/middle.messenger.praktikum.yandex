@@ -18,8 +18,6 @@ const updatePassword = async (data: ChangePasswordInput) => {
     if (responseHasError(response)) {
         throw Error(response.data.reason)
     }
-
-    //store -> close widget
 }
 
 const updateAvatar = async (data: FormData) => {
@@ -29,7 +27,6 @@ const updateAvatar = async (data: FormData) => {
     }
 
     window.store.set({user: response.data});
-    //store -> close widget
 }
 
 const searchUserByLogin = async (login: string) => {
