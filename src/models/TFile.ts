@@ -1,4 +1,4 @@
-export interface IFile {
+export interface TFile {
     id: number;
     user_id: number;
     path: string;

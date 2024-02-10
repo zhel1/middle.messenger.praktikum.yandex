@@ -4,7 +4,7 @@ import * as validators from "../../utils/validators";
 import {RoutesStrs} from "../../core/config.ts";
 import Router from "../../core/router.ts";
 import {signup} from "../../services/auth.ts";
-import {IUser} from "../../models/IUser.ts";
+import {TUser} from "../../models/TUser.ts";
 
 export interface ISignUpPageProps extends IProps {
     validate: object
@@ -69,7 +69,7 @@ export class SignUpPage extends Block<ISignUpPageProps, Ref> {
             email,
             password,
             phone
-        } as IUser;
+        } as TUser;
 
         if (Object.values(data).findIndex(value => value === null) === -1) {
             signup(data)

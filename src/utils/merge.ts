@@ -3,8 +3,8 @@ export type Indexed<T = unknown> = {
 };
 
 export function merge(lhs: Indexed, rhs: Indexed): Indexed {
-    for (let p in rhs) {
-        if (!rhs.hasOwnProperty(p)) {
+    for (const p in rhs) {
+        if (!Object.prototype.hasOwnProperty.call(rhs, p)) {
             continue;
         }
         lhs[p] = rhs[p];
@@ -12,24 +12,3 @@ export function merge(lhs: Indexed, rhs: Indexed): Indexed {
 
     return lhs;
 }
-
-// export function merge(lhs: Indexed, rhs: Indexed): Indexed {
-//     for (let p in rhs) {
-//         if (!rhs.hasOwnProperty(p)) {
-//             continue;
-//         }
-//
-//         try {
-//             if ((rhs[p] as object).constructor === Object) {
-//                 rhs[p] = merge(lhs[p] as Indexed, rhs[p] as Indexed);
-//             } else {
-//                 lhs[p] = rhs[p];
-//             }
-//         } catch(e) {
-//             lhs[p] = rhs[p];
-//         }
-//     }
-//
-//     return lhs;
-// }
-

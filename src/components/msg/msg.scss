@@ -44,15 +44,15 @@
   .msg__time {
     position: relative;
 
-    &::before {
+    &::after {
       content: "";
       background-image: url("/icons/msg_read_mark.svg");
       background-repeat: no-repeat;
       width: 25px;
       height: 20px;
-      position: absolute;
       top:-3px;
       right:100px;
+      margin-left: 5px;
     }
   }
 }

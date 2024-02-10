@@ -4,11 +4,10 @@ import * as validators from "../../utils/validators";
 import MenuConversation from "../menu-conversation";
 import {MenuMsg} from "../index.ts";
 import {sendMessage} from "../../services/message.ts";
-import {StoreEvents} from "../../core/Store";
-import {IChat} from "../../models/IChat";
+import {TChat} from "../../models/TChat";
 
 interface IConversationProps extends IProps {
-    chat?: IChat
+    chat?: TChat
     selectedChatID: number
     onSend: (event:Event) => void
     onMenuConversationClick: (event:Event) => void
@@ -23,25 +22,11 @@ type Ref = {
 
 export class Conversation extends Block<IConversationProps, Ref> {
     constructor(props: IConversationProps) {
-        window.store.on(StoreEvents.Updated, () => this.onCurrentChatUpdated())
-
         props.onMenuConversationClick = (event) => this.onMenuConversationClick(event)
         props.onMenuMessageClick = (event) => this.onMenuMessageClick(event)
         props.onSend = (event) => this.onSend(event)
 
         super(props);
-    }
-
-    private onCurrentChatUpdated() {
-        const currentChatID = window.store.getState().currentChatID
-        if (currentChatID && this._props.selectedChatID !== currentChatID) {
-            this.setProps({selectedChatID: currentChatID})
-        }
-
-        const state = window.store.getState()
-        if (state.currentChatID) {
-            this.setProps({chat: state.chats.find((chat) => chat.id === state.currentChatID )})
-        }
     }
 
     private getMenuMsg() {
@@ -90,12 +75,14 @@ export class Conversation extends Block<IConversationProps, Ref> {
                         {{{ MenuConversation ref='menuConversation'}}}
                     </div>
                     <div class="conversation__scroll">
-                        {{{ MsgList msgList=chat.messages}}}
+                        {{{ MsgList msgList=chat.messages }}}
                     </div>
                     <div class="conversation__footer">
                         {{{ Button type="settings" onClick=onMenuMessageClick }}}
-                        {{{ InputMsg placeholder="Message..." name="message" ref='input' }}}
-                        {{{ Button type="sendmsg" onClick=onSend }}}
+                        <form>
+                            {{{ InputMsg placeholder="Message..." name="message" ref='input' }}}
+                            {{{ Button type="sendmsg" onClick=onSend }}}
+                        </form>
                         {{{ MenuMsg ref='menuMsg' }}}
                     </div>
                 </div>

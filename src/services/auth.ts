@@ -1,17 +1,17 @@
-import {IUser, SignInInput} from "../models/IUser.ts";
+import {TUser, SignInInput} from "../models/TUser.ts";
 import AuthApi from "../api/auth.ts";
 import {responseHasError} from "../utils/api.utils.ts";
+import {getChats} from "./chats";
 
 const authApi = new AuthApi();
 
-const signup = async (data: IUser) => {
+const signup = async (data: TUser) => {
     const response = await authApi.signup(data);
     if (responseHasError(response)) {
         throw Error(response.data.reason)
     }
 
-    const me = await getUser();
-    window.store.set({user: me});
+    await getUser();
 }
 
 const signin = async (data: SignInInput) => {
@@ -19,9 +19,8 @@ const signin = async (data: SignInInput) => {
     if (responseHasError(response)) {
         throw Error(response.data.reason)
     }
-    const me = await getUser();
-
-    window.store.set({user: me});
+    await getUser();
+    await getChats({});
 }
 
 const getUser = async () => {
@@ -30,7 +29,7 @@ const getUser = async () => {
         throw Error(response.data.reason)
     }
 
-    return response.data as IUser
+    window.store.set({user:  response.data as TUser});
 }
 
 const logout = async () => {

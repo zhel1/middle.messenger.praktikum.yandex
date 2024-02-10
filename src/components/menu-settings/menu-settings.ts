@@ -1,7 +1,8 @@
 import Block, {IProps} from "../../core/Block";
 import modalManager from "../../core/dialog-menedger.ts";
-import ProfileWgt from "../profile-wgt";
 import CreateChatWgt from "../create-chat-wgt";
+import Router from "../../core/router";
+import {RoutesStrs} from "../../core/config";
 
 interface IMenuSettingsProps extends IProps {
     opened: boolean
@@ -22,8 +23,7 @@ export class MenuSettings extends Block<IMenuSettingsProps> {
     }
 
     private OpenProfile() {
-        modalManager.setModal(new ProfileWgt({}) as unknown as Block<object>);
-        modalManager.openModal();
+        Router.getRouter().go(RoutesStrs.settings)
         this.close()
     }
 

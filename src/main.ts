@@ -5,7 +5,7 @@ import Router from "./core/router";
 import * as Pages from "./pages";
 import Block from "./core/Block";
 import {RoutesStrs} from "./core/config.ts";
-import {IAppState} from "./models/IAppState.ts";
+import {TAppState} from "./models/TAppState.ts";
 import {Store} from "./core/Store.ts";
 import {initApp} from "./services/initApp";
 
@@ -41,13 +41,13 @@ Object.entries(Components).forEach(
 
 declare global {
     interface Window {
-        store: Store<IAppState>;
+        store: Store<TAppState>;
     }
 
     type Nullable<T> = T | null;
 }
 
-const initState: IAppState = {
+const initState: TAppState = {
     error: null,
     user: null,
     currentChatID: null,
@@ -56,12 +56,13 @@ const initState: IAppState = {
 
 initApp()
 
-window.store = new Store<IAppState>(initState);
+window.store = new Store<TAppState>(initState);
 
 new Router(".app")
     .use(RoutesStrs['signin'], Pages.SignInPage as typeof Block)
     .use(RoutesStrs['signup'], Pages.SignUpPage as typeof Block)
     .use(RoutesStrs['messenger'], Pages.MessengerPage as typeof Block)
+    .use(RoutesStrs['settings'], Pages.MessengerPage as typeof Block, Components.ProfileWgt as typeof Block)
     .use(RoutesStrs['404'], Pages.Error404Page as typeof Block)
     .start();
 

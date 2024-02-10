@@ -1,8 +1,9 @@
 import Block, {IProps} from "../../core/Block";
+import {TChatMessage} from "../../models/TChatMessage";
+import {RESOURCES_HOST} from "../../core/config";
 
 interface IMsgProps extends IProps {
-    chat: object
-    onClick: (chatID: number) => void
+    message: TChatMessage
 }
 
 export class Msg extends Block<IMsgProps> {
@@ -11,26 +12,40 @@ export class Msg extends Block<IMsgProps> {
     }
 
     protected render(): string {
+        const { message } = this._props
+
+        let userName = ""
+        const chat = window.store.getState().chats.find(chat => chat.id === message.chat_id)
+        if (chat && chat.users) {
+            const user = chat.users.find(user => {
+                return user.id === message.user_id
+            })
+
+            if (user && user.id !== window.store.getState().user?.id) {
+                userName = user.first_name + ":"
+            }
+        }
+
         return (`
-            <li class="msg {{#if myMessage}}my-msg{{/if}}">
-                {{#with msg}}
-                    {{#if file}}
-                        <article class="msg__file">
-                            <p>{{content}}</p>
-                            <img src={{file.path}} alt="included_file"/>
-                            <div class="msg__time">
-                                <span>{{time}}</span>
-                            </div>
-                        </article>
-                    {{else}}
-                        <article class="msg__text">
-                            <p>{{content}}</p>
-                            <div class="msg__time">
-                                <span>{{time}}</span>
-                            </div>
-                        </article>
-                    {{/if}}
-                {{/with}}
+            <li class="msg ${ message && message.user_id == window.store.getState().user?.id ? 'my-msg' : ''}">
+                ${message.file ? `
+                    <article class="msg__file">
+                        <b>${userName}</b>
+                        <p>${message.content ? message.content : ""}</p>
+                        <img src=${RESOURCES_HOST + message.file.path} alt="included_file"/>
+                        <div class="msg__time">
+                            <span>${new Date(message.time).toLocaleTimeString()}</span>
+                        </div>
+                    </article>
+                `:`
+                    <article class="msg__text">
+                        <b>${userName}</b>
+                        <p>${message.content}</p>
+                        <div class="msg__time">
+                            <span>${new Date(message.time).toLocaleTimeString()}</span>
+                        </div>
+                    </article>
+                `}
             </li>
         `)
     }

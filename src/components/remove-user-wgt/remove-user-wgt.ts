@@ -1,16 +1,16 @@
 import Block, {IProps} from "../../core/Block";
 import modalManager from "../../core/dialog-menedger.ts";
-import {IUser} from "../../models/IUser.ts";
+import {TUser} from "../../models/TUser.ts";
 import {deleteUsersFromChat, getChatUsers} from "../../services/chats";
-import {TAddDeleteUserInput} from "../../models/IChat";
+import {TAddDeleteUserInput} from "../../models/TChat";
 
 interface IRemoveUserWgtProps extends IProps {
-    usersToChoose?: IUser[]
-    usersToRemove?: IUser[]
+    usersToChoose?: TUser[]
+    usersToRemove?: TUser[]
     onRemove?: (event: Event) => void
     onCancel?: (event: Event) => void
-    onRemoveUser?: (event: Event, user: IUser) => void
-    onAddUser?: (event: Event, user: IUser) => void
+    onRemoveUser?: (event: Event, user: TUser) => void
+    onAddUser?: (event: Event, user: TUser) => void
 }
 
 export class RemoveUserWgt extends Block<IRemoveUserWgtProps> {
@@ -19,8 +19,8 @@ export class RemoveUserWgt extends Block<IRemoveUserWgtProps> {
             ...props,
             onRemove: (event: Event) =>  { this.onRemove(event) },
             onCancel: (event: Event) => { this.onCancel(event) },
-            onRemoveUser: (event: Event, user: IUser) =>  { this.onRemoveUser(event, user) },
-            onAddUser: (event: Event, user: IUser) =>  { this.onAddUser(event, user) },
+            onRemoveUser: (event: Event, user: TUser) =>  { this.onRemoveUser(event, user) },
+            onAddUser: (event: Event, user: TUser) =>  { this.onAddUser(event, user) },
             usersToChoose: [],
             usersToRemove: []
         }
@@ -40,26 +40,26 @@ export class RemoveUserWgt extends Block<IRemoveUserWgtProps> {
         modalManager.closeModal()
     }
 
-    private onAddUser(event: Event, user: IUser) {
+    private onAddUser(event: Event, user: TUser) {
         event.preventDefault()
 
         const usersToChoose = this._props.usersToChoose
         usersToChoose?.push(user)
 
-        const usersToRemove = this._props.usersToRemove?.filter((u: IUser) => {
+        const usersToRemove = this._props.usersToRemove?.filter((u: TUser) => {
             return u.id !== user.id
         })
 
         this.setProps({usersToRemove: usersToRemove, usersToChoose: usersToChoose})
     }
 
-    private onRemoveUser(event: Event, user: IUser) {
+    private onRemoveUser(event: Event, user: TUser) {
         event.preventDefault()
 
         const usersToRemove = this._props.usersToRemove
         usersToRemove?.push(user)
 
-        const usersToChoose = this._props.usersToChoose?.filter((u: IUser) => {
+        const usersToChoose = this._props.usersToChoose?.filter((u: TUser) => {
             return u.id !== user.id
         })
 

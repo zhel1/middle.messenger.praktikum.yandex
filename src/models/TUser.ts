@@ -2,7 +2,7 @@ export type ApiError = {
     reason: string;
 };
 
-export type IUser = {
+export type TUser = {
     first_name: string;
     second_name: string;
     phone: string;

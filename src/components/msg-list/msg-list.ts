@@ -8,15 +8,17 @@ export class MsgList extends Block<IMsgListProps> {
     constructor(props: IMsgListProps) {
         super(props);
     }
+
     protected render(): string {
         return (`
             <div class="message-list">
                 <ul class="message-list__main">
-                    {{#each msgList as |msg|}}
+                    {{#each msgList as |message|}}
                         <div class="message-list__main__message">
-                            {{{ Msg msg=msg myMessage=msg.main }}}
+                            {{{ Msg message=message }}}
                         </div>
                     {{/each}}
+                     <li class="scroll-bottom"></li> 
                 </ul>
             </div>
         `)

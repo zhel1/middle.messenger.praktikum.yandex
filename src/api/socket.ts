@@ -75,8 +75,6 @@ class SocketIO {
             type: "ping"
         }));
     }
-
-
 }
 
 export default SocketIO;

@@ -1,7 +1,7 @@
 import Router from "../core/router.ts";
 import {RoutesStrs} from "../core/config.ts";
 import {TResult} from "../core/Http.ts";
-import {ApiError} from "../models/IUser.ts";
+import {ApiError} from "../models/TUser.ts";
 
 export const responseHasError = (response: TResult<unknown>): response is TResult<ApiError> => {
     switch (response.status) {

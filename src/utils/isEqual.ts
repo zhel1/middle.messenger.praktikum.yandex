@@ -49,7 +49,7 @@ function isEqual<T extends object>(lhs:  T , rhs: T ) {
     for (const [key, value] of Object.entries(lhs)) {
         const rightValue = rhs[key as keyof T];
         if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-            if (isEqual<object>(value as { [index: string]: object }, rightValue as { [index: string]: object })) {
+            if (isEqual<object>(value as { [index: string | number | symbol]: object }, rightValue as { [index: string | number | symbol]: object })) {
                 continue;
             }
             return false;

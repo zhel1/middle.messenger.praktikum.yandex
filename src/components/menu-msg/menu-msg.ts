@@ -42,9 +42,9 @@ export class MenuMsg extends Block<IMenuMsgProps> {
         const { opened} = this._props
         return (`
              <ul class="menu-msg${opened ? '' : ' hide'}">
-                {{{ MenuItem name='Add file' icon='file' onClick=addFile }}}
-                {{{ MenuItem name='Add image' icon='image' onClick=addImage}}}
-                {{{ MenuItem name='Add location' icon='location' onClick=addLocation}}}
+                {{{ MenuItem name='Send file' icon='file' onClick=addFile }}}
+                {{{ MenuItem name='Send image' icon='image' onClick=addImage}}}
+                {{{ MenuItem name='Send location' icon='location' onClick=addLocation}}}
             </ul>
         `)
     }

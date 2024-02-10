@@ -16,7 +16,9 @@ type Ref = {
 
 export class InputMsg extends Block<IInputMsgProps, Ref> {
     constructor(props:IInputMsgProps) {
-        super(props);
+        super({
+            ...props,
+        });
     }
 
     public value() {
@@ -44,6 +46,7 @@ export class InputMsg extends Block<IInputMsgProps, Ref> {
                     type="${type}" 
                     placeholder="${placeholder || ''}"
                     onInput=onInput
+                    onEnter=onEnter
                     ref="input"
                 }}}
             </label>

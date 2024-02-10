@@ -1,10 +1,10 @@
 import Block, {IProps} from "../../core/Block.ts";
-import {IUser} from "../../models/IUser.ts";
+import {TUser} from "../../models/TUser.ts";
 
 export interface IUserItemProps extends IProps {
-    user: IUser,
+    user: TUser,
     icon: 'plus'|'delete';
-    onClick?: (e: Event, user: IUser) => void;
+    onClick?: (e: Event, user: TUser) => void;
 }
 
 export class UserItem extends Block<IUserItemProps> {

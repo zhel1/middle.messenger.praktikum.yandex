@@ -1,29 +1,29 @@
-import {IUser} from "./IUser.ts";
+import {TUser} from "./TUser.ts";
 import SocketIO from "../api/socket.ts";
-import {IChatMessage} from "./IChatMessage.ts";
+import {TChatMessage} from "./TChatMessage.ts";
 
-export interface IChat {
+export interface TChat {
     id: number;
     title: string;
     avatar?: string;
     type: string
     unread_count: number;
     created_by: number;
-    last_message: ILastMessage;
+    last_message: TLastMessage;
 
     token?: string;
-    users?: IUser[];
+    users?: TUser[];
     connection?: SocketIO | null;
-    messages?: IChatMessage[] | null;
+    messages?: TChatMessage[] | null;
 }
 
-export type ILastMessage = {
-    user: IUser
+export type TLastMessage = {
+    user: TUser
     time: string
     content: string
 }
 
-export type IGetChatInput = {
+export type TGetChatInput = {
     offset?: number
     limit?: number
     title?: string

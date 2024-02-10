@@ -45,8 +45,6 @@ export class CreateChatWgt extends Block<ICreateChatWgtProps, Ref> {
                         .catch((error) => console.warn('create chat:', error));
                 })
                 .catch((error) => console.warn('create chat:', error));
-
-
         }
     }
 

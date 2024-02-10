@@ -1,7 +1,7 @@
 import Block, {IProps, RefsType} from "../../core/Block";
 import * as validators from "../../utils/validators";
 import {InputConf} from "../index.ts";
-import {ChangePasswordInput} from "../../models/IUser.ts";
+import {ChangePasswordInput} from "../../models/TUser.ts";
 import {updatePassword} from "../../services/users.ts";
 import modalManager from "../../core/dialog-menedger.ts";
 import ProfileWgt from "../profile-wgt";

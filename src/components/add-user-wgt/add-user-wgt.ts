@@ -2,18 +2,18 @@ import Block, {IProps, RefsType} from "../../core/Block";
 import {InputConf} from "../index.ts";
 import modalManager from "../../core/dialog-menedger.ts";
 import {searchUserByLogin} from "../../services/users.ts";
-import {IUser} from "../../models/IUser.ts";
+import {TUser} from "../../models/TUser.ts";
 import {addUserToChat} from "../../services/chats";
-import {TAddDeleteUserInput} from "../../models/IChat";
+import {TAddDeleteUserInput} from "../../models/TChat";
 
 interface IAddUserWgtProps extends IProps {
-    usersToChoose?: IUser[]
-    usersToAdd?: IUser[]
+    usersToChoose?: TUser[]
+    usersToAdd?: TUser[]
     onSearch?: (event: Event) => void
     onAdd?: (event: Event) => void
     onCancel?: (event: Event) => void
-    onAddUser?: (event: Event, user: IUser) => void
-    onRemoveUser?: (event: Event, user: IUser) => void
+    onAddUser?: (event: Event, user: TUser) => void
+    onRemoveUser?: (event: Event, user: TUser) => void
 }
 
 type Ref = {
@@ -27,8 +27,8 @@ export class AddUserWgt extends Block<IAddUserWgtProps, Ref> {
             onSearch: (event: Event) =>  { this.onSearch(event) },
             onAdd: (event: Event) =>  { this.onAdd(event) },
             onCancel: (event: Event) => { this.onCancel(event) },
-            onAddUser: (event: Event, user: IUser) =>  { this.onAddUser(event, user) },
-            onRemoveUser: (event: Event, user: IUser) =>  { this.onRemoveUser(event, user) },
+            onAddUser: (event: Event, user: TUser) =>  { this.onAddUser(event, user) },
+            onRemoveUser: (event: Event, user: TUser) =>  { this.onRemoveUser(event, user) },
             usersToChoose: [],
             usersToAdd: []
         }
@@ -53,26 +53,26 @@ export class AddUserWgt extends Block<IAddUserWgtProps, Ref> {
         modalManager.closeModal()
     }
 
-    private onAddUser(event: Event, user: IUser) {
+    private onAddUser(event: Event, user: TUser) {
         event.preventDefault()
 
         const usersToAdd = this._props.usersToAdd
         usersToAdd?.push(user)
 
-        const usersToChoose = this._props.usersToChoose?.filter((u: IUser) => {
+        const usersToChoose = this._props.usersToChoose?.filter((u: TUser) => {
             return u.id !== user.id
         })
 
         this.setProps({usersToAdd: usersToAdd, usersToChoose: usersToChoose})
     }
 
-    private onRemoveUser(event: Event, user: IUser) {
+    private onRemoveUser(event: Event, user: TUser) {
         event.preventDefault()
 
         const usersToChoose = this._props.usersToChoose
         usersToChoose?.push(user)
 
-        const usersToAdd = this._props.usersToAdd?.filter((u: IUser) => {
+        const usersToAdd = this._props.usersToAdd?.filter((u: TUser) => {
             return u.id !== user.id
         })
 

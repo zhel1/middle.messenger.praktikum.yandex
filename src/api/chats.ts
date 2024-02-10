@@ -1,12 +1,12 @@
 import {HTTPTransport, TResult} from "../core/Http.ts";
-import {ApiError, IUser} from "../models/IUser.ts";
-import {CreateChatResponse, GetTokenResponse, IChat, IGetChatInput, TAddDeleteUserInput} from "../models/IChat.ts";
+import {ApiError, TUser} from "../models/TUser.ts";
+import {CreateChatResponse, GetTokenResponse, TChat, TGetChatInput, TAddDeleteUserInput} from "../models/TChat.ts";
 
 const chatsApi = new HTTPTransport('/chats');
 
 export default class ChatsApi {
-    async getChats(data: IGetChatInput): Promise<TResult<IChat[] | ApiError>> {
-        return chatsApi.get<IChat[]>('', {
+    async getChats(data: TGetChatInput): Promise<TResult<TChat[] | ApiError>> {
+        return chatsApi.get<TChat[]>('', {
             data: data
         })
     }
@@ -40,7 +40,7 @@ export default class ChatsApi {
     }
 
     async getChatUsers(id: number) {
-        return chatsApi.get<IUser[]>(`/${id}/users`);
+        return chatsApi.get<TUser[]>(`/${id}/users`);
     }
 
     async getChatToken(id: number) {

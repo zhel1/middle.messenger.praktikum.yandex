@@ -1,12 +1,12 @@
 import Block, {IProps, RefsType} from "../../core/Block";
 import InputMsg from "../input-msg";
-import {IChat} from "../../models/IChat.ts";
+import {TChat} from "../../models/TChat.ts";
 import {ChatList} from "../chat-list/chat-list.ts";
 import MenuSettings from "../menu-settings";
 import {StoreEvents} from "../../core/Store.ts";
 
 interface ISideBarProps extends IProps {
-    chatList: IChat[]
+    chatList: TChat[]
     onSearchInput: () => void
     onMenuSettingsClick: () => void
 }
@@ -30,7 +30,7 @@ export class SideBar extends Block<ISideBarProps, Ref> {
     private onSearchInput() {
         //Should I ask server to send chat list with current filter or do filter here?
         const searchText = this.refs.search.value()
-        const new_chat_list = this._props.chatList.filter((chat: IChat) => {
+        const new_chat_list = this._props.chatList.filter((chat: TChat) => {
             return chat.title.startsWith(searchText)
         })
 
@@ -41,7 +41,7 @@ export class SideBar extends Block<ISideBarProps, Ref> {
         this.refs.menu_settings.setProps({opened: !this.refs.menu_settings.props.opened})
     }
 
-    private onChatsUpdated() {
+    private async onChatsUpdated() {
         this.setProps({chatList: window.store.getState().chats})
         this.onSearchInput()
     }

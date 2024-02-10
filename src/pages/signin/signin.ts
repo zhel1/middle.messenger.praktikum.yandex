@@ -3,7 +3,7 @@ import {InputAuth} from "../../components";
 import * as validators from '../../utils/validators';
 import Router from "../../core/router.ts";
 import {RoutesStrs} from "../../core/config.ts";
-import {SignInInput} from "../../models/IUser";
+import {SignInInput} from "../../models/TUser";
 import {signin} from "../../services/auth";
 
 export interface ISignInPageProps extends IProps {
@@ -46,10 +46,8 @@ export class SignInPage extends Block<ISignInPageProps,Ref> {
             signin(data)
                 .then(() => {
                     Router.getRouter().go(RoutesStrs.messenger)
-                    console.log("signin signin 1")
                 })
                 .catch((error) => console.warn('signin:', error));
-            console.log("signin signin 2")
         }
     }
 

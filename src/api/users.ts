@@ -1,12 +1,12 @@
 import {HTTPTransport, TResult} from "../core/Http.ts";
-import {ApiError, ChangePasswordInput, IUser} from "../models/IUser.ts";
+import {ApiError, ChangePasswordInput, TUser} from "../models/TUser.ts";
 
 
 const userApi = new HTTPTransport('/user');
 
 export default class UserApi {
-    async updateProfile(data: IUser): Promise<TResult<IUser | ApiError>> {
-        return userApi.put<IUser>('/profile', {
+    async updateProfile(data: TUser): Promise<TResult<TUser | ApiError>> {
+        return userApi.put<TUser>('/profile', {
             headers: { "Content-Type": 'application/json'},
             data: data
         })
@@ -20,17 +20,17 @@ export default class UserApi {
     }
 
     async updateAvatar(file: FormData) {
-        return userApi.put<IUser>('/profile/avatar', {
+        return userApi.put<TUser>('/profile/avatar', {
             data: file
         })
     }
 
     async getUserByID(id: number) {
-        return userApi.get<IUser>(`/${id}`)
+        return userApi.get<TUser>(`/${id}`)
     }
 
     async searchUserByLogin(login: string) {
-        return userApi.post<IUser[]>('/search', {
+        return userApi.post<TUser[]>('/search', {
             headers: { "Content-Type": 'application/json'},
             data: { login }
         })

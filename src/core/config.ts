@@ -6,6 +6,7 @@ export const RoutesStrs = {
     'signin' : "/",
     'signup' : "/sign-up",
     'messenger' : "/messenger",
+    'settings' : "/settings",
     '404' : "/404",
     '500' : "/500",
 }

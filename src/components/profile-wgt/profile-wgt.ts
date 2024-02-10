@@ -4,7 +4,7 @@ import {InputConf, ChangePasswordWgt, ChangeAvatarWgt} from "../../components";
 import Router from "../../core/router.ts";
 import {RoutesStrs} from "../../core/config.ts";
 import {StoreEvents} from "../../core/Store.ts";
-import {IUser} from "../../models/IUser.ts";
+import {TUser} from "../../models/TUser.ts";
 import {logout} from "../../services/auth.ts";
 import {updateProfile} from "../../services/users.ts";
 import modalManager from "../../core/dialog-menedger.ts";
@@ -12,7 +12,7 @@ import modalManager from "../../core/dialog-menedger.ts";
 interface IProfileWgtProps extends IProps {
     validate?: object
     editable?: boolean
-    user?: IUser | null
+    user?: TUser | null
     onChangePassword?: (event:Event) => void
     onChangeAvatar?: (event:Event) => void
     onEditCancel?: (event:Event) => void
@@ -72,7 +72,7 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
                     login: this.refs.login.value(),
                     email: this.refs.email.value(),
                     phone: this.refs.phone.value()
-                } as IUser;
+                } as TUser;
 
                 if (Object.values(data).findIndex(value => value === null) === -1) {
                     updateProfile(data)
@@ -83,7 +83,10 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
             onLogOut: (event: Event) => {
                 event.preventDefault();
                 logout()
-                    .then(() => Router.getRouter().go(RoutesStrs.signin))
+                    .then(() => {
+                        Router.getRouter().go(RoutesStrs.signin)
+                        modalManager.closeModal();
+                    })
                     .catch((error) => console.warn('logout:', error));
             },
             onEdit: (event: Event) => {
@@ -94,6 +97,7 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
                 event.preventDefault();
                 this.setProps({ editable: false });
                 modalManager.closeModal();
+                Router.getRouter().go(RoutesStrs.messenger)
             },
         }
 

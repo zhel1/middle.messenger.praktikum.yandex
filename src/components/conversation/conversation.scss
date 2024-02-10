@@ -47,7 +47,11 @@
 
   &__footer {
     display: grid;
-    grid-template-columns:  40px auto 40px;
+    grid-template-columns:  40px auto;
     border-top: 1px $border-color solid;
+    form {
+      display: grid;
+      grid-template-columns: auto 40px;
+    }
   }
 }

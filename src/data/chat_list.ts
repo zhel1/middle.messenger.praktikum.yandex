@@ -1,6 +1,6 @@
-import {IChat} from "../models/IChat.ts";
+import {TChat} from "../models/TChat.ts";
 
-export const chat_list_data: Array<IChat> = [
+export const chat_list_data: Array<TChat> = [
   {
     id: 1,
     avatar: `https://fikiwiki.com/uploads/posts/2022-02/1644885500_22-fikiwiki-com-p-kartinki-dlya-geimerov-na-avu-26.jpg`,

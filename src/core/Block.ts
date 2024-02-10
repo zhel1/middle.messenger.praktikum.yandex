@@ -106,7 +106,7 @@ class Block<Props extends IProps, Refs extends RefsType = RefsType> {
     }
 
     protected componentDidUpdate(oldProps: Props, newProps: Props) {
-         return !isEqual(oldProps, newProps);
+        return !isEqual(oldProps, newProps) || true;
     }
 
     setProps = (nextProps: Partial<Props>) => {

@@ -1,13 +1,15 @@
-import {IChat} from "../models/IChat.ts";
-import {IUser} from "../models/IUser.ts";
+import {TChat} from "../models/TChat.ts";
+import {TUser} from "../models/TUser.ts";
 import {SOCKET_CHAT} from "../core/config.ts";
 import SocketIO from "../api/socket.ts";
+import {TChatMessage} from "../models/TChatMessage.ts";
+import {getChats} from "./chats.ts";
+import {scrollToEnd} from "../utils/scroll";
 
-export const openConnectMessages = (chat: IChat, currentUser: IUser) => {
+export const openConnectMessages = (chat: TChat, currentUser: TUser) => {
     if (!chat.id) return;
     if (!chat.users) return;
     if (!chat.token) return;
-    if (chat.users.length < 2) return chat;
     if (chat.connection && chat.connection.getState() === 'OPEN') return;
     if (!currentUser.id) return;
 
@@ -17,12 +19,10 @@ export const openConnectMessages = (chat: IChat, currentUser: IUser) => {
         setInterval(() => {
             socket.ping();
         }, 15000);
-
     })
 
-    socket.message((event: MessageEvent) => {
-        console.log("new message")
-        let message = null;
+    socket.message(async (event: MessageEvent) => {
+        let message: TChatMessage | null = null;
         try {
             message = JSON.parse(event.data);
         } catch (e) {
@@ -31,6 +31,8 @@ export const openConnectMessages = (chat: IChat, currentUser: IUser) => {
 
         if (!message)
             return;
+
+        message.chat_id = chat.id
 
         if (message.type === 'message' || Array.isArray(message) || message.type === 'file') {
             if (!chat.messages) {
@@ -44,32 +46,12 @@ export const openConnectMessages = (chat: IChat, currentUser: IUser) => {
                 chat.messages.push(message);
             }
 
-            // if (chat.id === window.store.getState().currentChatID) {
-            //     window.store.set({currentChatID: chat.id});
-            // } else {
-            //     const foundedChat = window.store.getState().chats?.find(_chat => _chat.id === chat.id);
-            //     if (foundedChat) {
-            //         foundedChat.unread_count += 1;
-            //         window.store.set({chats: window.store.getState().chats});
-            //     }
-            // }
-
-            window.store.getState().chats?.map((storedChat) => storedChat.id === chat.id ? chat : storedChat)
+            await getChats({})
             window.store.set({chats: window.store.getState().chats});
 
-            // const foundedChat = window.store.getState().chats?.find(_chat => _chat.id === chat.id);
-            // if (foundedChat) {
-            //     foundedChat.unread_count += 1;
-            //     window.store.set({chats: window.store.getState().chats});
-            // }
-
-            const element = document.querySelector('.scroll-bottom');
-            if (element)
-                element.scrollIntoView({
-                    behavior: 'auto',
-                    block: 'end',
-                });
+            scrollToEnd()
         }
+
         if (event.data.type === 'user connected') {
             console.log('user connected', event.data)
         }
@@ -95,7 +77,7 @@ export const sendMessage = (message: string) => {
     }
 }
 
-export const getAllNewMessage = (limit: number, chat: IChat | null) => {
+export const getAllNewMessage = (limit: number, chat: TChat | null) => {
     if (!chat) {
         throw Error('Select Chat!');
     }

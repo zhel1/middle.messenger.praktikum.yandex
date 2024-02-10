@@ -1,32 +1,30 @@
 import ChatsApi from "../api/chats";
-import {CreateChatResponse, IChat, IGetChatInput, TAddDeleteUserInput} from "../models/IChat";
+import {CreateChatResponse, TChat, TGetChatInput, TAddDeleteUserInput} from "../models/TChat";
 import {responseHasError} from "../utils/api.utils";
-import {IUser} from "../models/IUser";
+import {TUser} from "../models/TUser";
 import {Indexed, merge} from "../utils/merge.ts";
 import {openConnectMessages} from "./message.ts";
 
 const chatsApi = new ChatsApi()
 
-const getChats = async (data: IGetChatInput) => {
+const getChats = async (data: TGetChatInput) => {
     const response = await chatsApi.getChats(data)
     if (responseHasError(response)) {
         throw Error(response.data.reason)
     }
 
     const oldChats = window.store.getState().chats
-    const newChats= response.data as IChat[]
+    const newChats= response.data as TChat[]
 
     const connectedChats = await Promise.all(newChats.map(async (newChat) => {
         const oldChat = oldChats.find((oldChat) => newChat.id === oldChat.id)
         if (oldChat) { //if old chat with the same id exists
             oldChat.users = await getChatUsers(oldChat.id)
-            //todo update messages
-            return merge(oldChat as object as Indexed, newChat as object as Indexed) as object as IChat
+            return merge(oldChat as object as Indexed, newChat as object as Indexed) as object as TChat
         } else { //if new chat was created
             const me = window.store.getState().user
             newChat.token = await getChatToken(newChat.id)
             newChat.users = await getChatUsers(newChat.id)
-            //todo update messages
             if (me) {
                 const newConnectedChat = openConnectMessages(newChat, me)
                 return newConnectedChat ? newConnectedChat : newChat
@@ -78,7 +76,7 @@ const getChatUsers = async (chatID: number) => {
         throw Error(response.data.reason)
     }
 
-    return response.data as IUser[]
+    return response.data as TUser[]
 }
 
 const updateChatAvatar = async (file: FormData, chatID: number) => {
@@ -89,7 +87,7 @@ const updateChatAvatar = async (file: FormData, chatID: number) => {
 
     await getChats({});
 
-    return response.data as IUser[]
+    return response.data as TUser[]
 }
 
 const getChatToken = async (chatID: number) => {
