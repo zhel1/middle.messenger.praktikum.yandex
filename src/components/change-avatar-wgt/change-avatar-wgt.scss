@@ -1,6 +1,5 @@
 .change-avatar-wgt {
   position: relative;
-  background-color: rgba(0,0,0,0.5);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -17,10 +16,6 @@
     width: 150px;
     height: 150px;
     border-radius: 50%;
-  }
-
-  h2 {
-
   }
 
   &.highlight {
