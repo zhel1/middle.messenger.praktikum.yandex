@@ -47,7 +47,7 @@ export class SignInPage extends Block<ISignInPageProps,Ref> {
                 .then(() => {
                     Router.getRouter().go(RoutesStrs.messenger)
                 })
-                .catch((error) => console.warn('signin:', error));
+                .catch((error) => console.log('signin:', error));
         }
     }
 
