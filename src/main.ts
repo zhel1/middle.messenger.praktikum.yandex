@@ -54,8 +54,6 @@ const initState: TAppState = {
     chats: [],
 }
 
-initApp()
-
 window.store = new Store<TAppState>(initState);
 
 new Router(".app")
@@ -66,3 +64,4 @@ new Router(".app")
     .use(RoutesStrs['404'], Pages.Error404Page as typeof Block)
     .start();
 
+initApp()

@@ -72,6 +72,10 @@ class Router {
         this.history?.forward();
     }
 
+    public currentRoutePathName() {
+        return this._currentRoute?this._currentRoute.pathname:null;
+    }
+
     private getRoute(pathname: string) {
         return this.routes?.find(route => route.match(pathname));
     }
