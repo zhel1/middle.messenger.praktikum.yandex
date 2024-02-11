@@ -67,7 +67,10 @@ export class ChangePasswordWgt extends Block<IChangePasswordWgtProps, Ref> {
         if (Object.values(data).findIndex(value => value === null) === -1) {
             updatePassword(data)
                 .then(() => this.close())
-                .catch((error) => console.warn('change password:', error));
+                .catch((error) => {
+                    this.refs.repeat_password.setProps({error: true, errorText: error})
+                    console.log('change password:', error)
+                });
         }
     }
 

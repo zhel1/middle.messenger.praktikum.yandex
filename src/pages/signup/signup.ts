@@ -74,7 +74,10 @@ export class SignUpPage extends Block<ISignUpPageProps, Ref> {
         if (Object.values(data).findIndex(value => value === null) === -1) {
             signup(data)
                 .then(() => Router.getRouter().go(RoutesStrs.messenger))
-                .catch((error) => console.warn('signup:', error));
+                .catch((error) => {
+                        this.refs.password2.setProps({error: true, errorText: error})
+                        console.log('signup:', error)
+                    });
         }
     }
 

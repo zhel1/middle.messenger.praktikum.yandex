@@ -89,7 +89,10 @@ export class AddUserWgt extends Block<IAddUserWgtProps, Ref> {
                 chatId: currentChatID
             } as TAddDeleteUserInput)
                 .then(() => modalManager.closeModal())
-                .catch((error) => console.warn('add users to chat:', error));
+                .catch((error) => {
+                    this.refs.search.setProps({error: true, errorText: error})
+                    console.log('add users to chat:', error)
+                });
         }
     }
 

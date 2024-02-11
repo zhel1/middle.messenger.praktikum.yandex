@@ -1,6 +1,7 @@
 @import '/src/components/form-auth/form-auth';
 @import '/src/components/form-profile/form-profile';
 
+
 .invisible {
   visibility: hidden;
 }
@@ -13,4 +14,8 @@
 .dialog {
   border: none;
   background: transparent;
+}
+
+body {
+  margin: 0;
 }
