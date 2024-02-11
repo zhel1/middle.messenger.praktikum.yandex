@@ -208,7 +208,7 @@ class Block<Props extends IProps, Refs extends RefsType = RefsType> {
         }
 
         const htmlElement = this.getContent();
-        if (htmlElement) {
+        if (htmlElement && app?.firstElementChild) {
             app?.firstElementChild?.replaceWith(htmlElement);
         }
     }

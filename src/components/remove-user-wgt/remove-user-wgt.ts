@@ -5,6 +5,7 @@ import {deleteUsersFromChat, getChatUsers} from "../../services/chats";
 import {TAddDeleteUserInput} from "../../models/TChat";
 
 interface IRemoveUserWgtProps extends IProps {
+    errorText?: string
     usersToChoose?: TUser[]
     usersToRemove?: TUser[]
     onRemove?: (event: Event) => void
@@ -70,18 +71,27 @@ export class RemoveUserWgt extends Block<IRemoveUserWgtProps> {
         event.preventDefault()
         const usersToRemove = this._props.usersToRemove
         const currentChatID = window.store.getState().currentChatID
+
+        if (usersToRemove?.length === 0) {
+            this.setProps({errorText: "select users!"})
+            return
+        }
+
         if (usersToRemove && currentChatID) {
             deleteUsersFromChat({
                 users: usersToRemove.map((u) => u.id),
                 chatId: currentChatID
             } as TAddDeleteUserInput)
                 .then(() => modalManager.closeModal())
-                .catch((error) => console.warn('remove users from chat:', error));
+                .catch((error) => {
+                    this.setProps({errorText: error})
+                    console.log('remove users from chat:', error)
+                });
         }
     }
 
     protected render(): string {
-        const {usersToChoose, usersToRemove } = this._props
+        const {usersToChoose, usersToRemove, errorText } = this._props
         return(`
             <form class="remove-user-wgt">
                 <h1>Remove users</h1>
@@ -107,6 +117,8 @@ export class RemoveUserWgt extends Block<IRemoveUserWgtProps> {
                         {{{ UserItem user=user icon='plus' onClick=../onAddUser}}}
                     {{/each}}
                 </div>  
+                    
+                <span class="remove-user-wgt__text-error">${errorText ? errorText : ""}</span>
                     
                 {{{ Button 
                     type='secondary'

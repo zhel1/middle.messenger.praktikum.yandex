@@ -1,5 +1,5 @@
 import Block, {IProps, RefsType} from "../../core/Block";
-import {InputConf} from "../index.ts";
+import {InputMsg} from "../index.ts";
 import modalManager from "../../core/dialog-menedger.ts";
 import {searchUserByLogin} from "../../services/users.ts";
 import {TUser} from "../../models/TUser.ts";
@@ -14,10 +14,11 @@ interface IAddUserWgtProps extends IProps {
     onCancel?: (event: Event) => void
     onAddUser?: (event: Event, user: TUser) => void
     onRemoveUser?: (event: Event, user: TUser) => void
+    errorText?: string
 }
 
 type Ref = {
-    search: InputConf
+    search: InputMsg
 } & RefsType
 
 export class AddUserWgt extends Block<IAddUserWgtProps, Ref> {
@@ -42,9 +43,17 @@ export class AddUserWgt extends Block<IAddUserWgtProps, Ref> {
         if (login) {
             searchUserByLogin(login)
                 .then(users => {
-                    this.setProps({usersToChoose: users})
+                    console.log("users", users.length, users)
+                    if (!users.length) {
+                        this.setProps({errorText: "Users are not found. Change request string"})
+                    } else {
+                        this.setProps({usersToChoose: users, errorText: ""})
+                    }
                 })
-                .catch((error) => console.warn('search users:', error));
+                .catch((error) => {
+                    this.setProps({errorText: error})
+                    console.log('search users:', error)
+                });
         }
     }
 
@@ -83,6 +92,12 @@ export class AddUserWgt extends Block<IAddUserWgtProps, Ref> {
         event.preventDefault()
         const usersToAdd = this._props.usersToAdd
         const currentChatID = window.store.getState().currentChatID
+
+        if (usersToAdd?.length === 0) {
+            this.setProps({errorText: "select users!"})
+            return
+        }
+
         if (usersToAdd && currentChatID) {
             addUserToChat({
                 users: usersToAdd.map((u) => u.id),
@@ -90,14 +105,14 @@ export class AddUserWgt extends Block<IAddUserWgtProps, Ref> {
             } as TAddDeleteUserInput)
                 .then(() => modalManager.closeModal())
                 .catch((error) => {
-                    this.refs.search.setProps({error: true, errorText: error})
+                    this.setProps({errorText: error})
                     console.log('add users to chat:', error)
                 });
         }
     }
 
     protected render(): string {
-        const {usersToChoose, usersToAdd } = this._props
+        const {usersToChoose, usersToAdd, errorText } = this._props
         return(`
             <form class="add-user-wgt">
                 <h1>Add users</h1>
@@ -108,9 +123,10 @@ export class AddUserWgt extends Block<IAddUserWgtProps, Ref> {
                     name="title"
                     value=''
                     editable=true
-                    validate=validate.title
                     placeholder="login..."
                     ref='search'}}}
+                    
+                <span class="add-user-wgt__text-error">${errorText ? errorText : ""}</span>
                    
                 {{{ Button 
                     type='primary'
