@@ -22,4 +22,4 @@ app.listen(PORT, () => {
 
 app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use('*', express.static(path.join(__dirname, 'dist/index.html')));
-app.use('/sign-up', express.static(path.join(__dirname, 'dist/index.html/sign-up')));
+app.use('/sign-up', express.static(path.join(__dirname, 'dist/index.html')));
