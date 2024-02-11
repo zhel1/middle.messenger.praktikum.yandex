@@ -10,7 +10,7 @@ const PORT = 3000;
 
 express.static.mime.define({'application/wasm': ['wasm']});
 
-app.use(express.static(__dirname + '/dist'));
+app.use(express.static(__dirname + '/dist/'));
 
 // app.get('*', (_req, res) => {
 //     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
@@ -22,3 +22,4 @@ app.listen(PORT, () => {
 
 app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use('*', express.static(path.join(__dirname, 'dist/index.html')));
+app.use('/sign-up', express.static(path.join(__dirname, 'dist/index.html/sign-up')));
