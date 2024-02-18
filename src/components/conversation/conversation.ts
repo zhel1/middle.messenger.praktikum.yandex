@@ -54,10 +54,6 @@ export class Conversation extends Block<IConversationProps, Ref> {
         sendMessage(message);
 
         this.refs.input.setValue('')
-
-        console.log({
-            message
-        })
     }
 
     protected render(): string {
