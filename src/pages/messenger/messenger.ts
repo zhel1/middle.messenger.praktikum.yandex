@@ -1,34 +1,40 @@
-import Block, {IProps} from "../../core/Block";
-import * as Data from "../../data";
+import Block, {IProps, RefsType} from "../../core/Block";
+import {Conversation} from "../../components";
+import {StoreEvents} from "../../core/Store.ts";
 
 export interface IMessengerPageProps extends IProps {
-    chat_list: Array<object>
-    conversation: object
-    msg_list: Array<object>
+    selectedChatID?: number | null
 }
 
-export class MessengerPage extends Block {
+type Ref = {
+    conversation: Conversation
+} & RefsType
+
+export class MessengerPage extends Block<IMessengerPageProps, Ref> {
     constructor() {
-        const props : IMessengerPageProps = {
-            events:{},
-            chat_list: Data.ChatListData,
-            conversation: Data.ConversationData,
-            msg_list: Data.MsgListData
+        window.store.on(StoreEvents.Updated, () => this.onCurrentChatUpdated())
+        super();
+    }
+
+    private onCurrentChatUpdated() {
+        const currentChatID = window.store.getState().currentChatID
+        if (currentChatID && this._props.selectedChatID !== currentChatID) {
+            this.refs.conversation.setProps({selectedChatID: currentChatID})
         }
-        super(props);
+
+        const state = window.store.getState()
+        if (state.currentChatID) {
+            this.refs.conversation.setProps({chat: state.chats.find((chat) => chat.id === state.currentChatID )})
+        }
     }
 
     protected render(): string {
-        const msgListIsNotEmpty = (this._props as IMessengerPageProps).msg_list.length > 0
         return(`
             <div class="messenger">
-                {{{ SideBar chat_list=chat_list}}}
-                {{#if ${msgListIsNotEmpty} }}
-                    {{{ Conversation conversation=conversation msg_list=msg_list}}}
-                {{^}}
-                    <span class="messenger__placeholder">Choose a chat to start messaging.</span>
-                {{/if}}
+                {{{ SideBar }}}
+                {{{ Conversation ref='conversation' }}}
             </div>
         `)
     }
+
 }

@@ -1,19 +1,16 @@
 <form class="profile-form">
-    {{#if editable}}
-        <div class="profile-form__avatar-mask"></div>
-    {{/if}}
-    <input class="profile-form__avatar" type="image" name="avatar" src="{{user.avatar}}" alt="User avatar">
+    {{{ Avatar avatar=user.avatar first_name=user.first_name second_name=user.second_name editable=editable onEdit=onChangeAvatar}}}
     <h1>{{user.display_name}}</h1>
         {{> @partial-block}}
     <div class="profile-form__buttons">
         {{#if editable}}
-            {{{ Button label="Change password" onClick=onChangePassword type="link"}}}
+            {{{ Button label="Change password" onClick=onChangePassword type="secondary"}}}
             {{{ Button label="Cancel" onClick=onEditCancel type="primary"}}}
             {{{ Button label="Save" onClick=onSave type="primary"}}}
         {{^}}
-            {{{ Button label="edit" onClick=onEdit type="link"}}}
-            {{{ Button label="Log out" onClick=onLogOut type="link"}}}
-            {{{ Button label="Back" onClick=onBack page="messenger" type="primary"}}}
+            {{{ Button label="edit" onClick=onEdit type="secondary"}}}
+            {{{ Button label="Log out" onClick=onLogOut type="secondary"}}}
+            {{{ Button label="Back" onClick=onBack type="primary"}}}
         {{/if}}
     </div>
 </form>

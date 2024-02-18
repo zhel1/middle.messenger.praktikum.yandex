@@ -1,6 +1,7 @@
 {
   "extends": "stylelint-config-recommended-scss",
   "rules": {
+    "block-no-empty": true,
     "color-hex-length": "long"
   },
   "ignoreFiles": [

@@ -1,16 +1,31 @@
-import Block, {IProps} from "../../core/Block";
+import Block, {IProps, RefsType} from "../../core/Block";
 import {InputAuth} from "../../components";
 import * as validators from "../../utils/validators";
+import {RoutesStrs} from "../../core/config.ts";
+import Router from "../../core/router.ts";
+import {signup} from "../../services/auth.ts";
+import {TUser} from "../../models/TUser.ts";
 
 export interface ISignUpPageProps extends IProps {
     validate: object
     onSignUp : (event:Event) => void
+    onSignIn : (event:Event) => void
 }
 
-export class SignUpPage extends Block {
+type Ref = {
+    first_name: InputAuth
+    second_name: InputAuth
+    login: InputAuth
+    email: InputAuth
+    phone: InputAuth
+    password: InputAuth
+    password2:InputAuth
+
+} & RefsType
+
+export class SignUpPage extends Block<ISignUpPageProps, Ref> {
     constructor() {
         const props : ISignUpPageProps = {
-            events:{},
             validate: {
                 name: validators.validateName,
                 login: validators.validateLogin,
@@ -18,32 +33,57 @@ export class SignUpPage extends Block {
                 phone: validators.validatePhone,
                 password: validators.validatePassword
             },
-            onSignUp: (event:Event) => {
-                event.preventDefault();
-
-                const first_name = (this.getRefs().first_name as InputAuth).value()
-                const second_name = (this.getRefs().second_name as InputAuth).value()
-                const login = (this.getRefs().login as InputAuth).value()
-                const email = (this.getRefs().email as InputAuth).value()
-                const phone = (this.getRefs().phone as InputAuth).value()
-                const password =  (this.getRefs().password as InputAuth).value()
-                const password2 =  (this.getRefs().password2 as InputAuth).value()
-
-                //check if success
-
-                console.log({
-                    first_name,
-                    second_name,
-                    login,
-                    email,
-                    phone,
-                    password,
-                    password2
-                })
-            }
+            onSignUp: (event: Event) => this.onSignUp(event),
+            onSignIn: (event: Event) => this.onSignIn(event)
         }
 
         super(props);
+    }
+
+    private onSignUp(event: Event) {
+        event.preventDefault()
+
+        const first_name = this.refs.first_name.value()
+        const second_name = this.refs.second_name.value()
+        const login = this.refs.login.value()
+        const email = this.refs.email.value()
+        const phone = this.refs.phone.value()
+        const password = this.refs.password.value()
+        const password2 = this.refs.password2.value()
+
+        if (password !== password2) {
+            const p = {
+                error: true,
+                errorText: "passwords are not equal"
+            }
+            this.refs.password.setProps(p)
+            this.refs.password2.setProps(p)
+
+            return;
+        }
+
+        const data = {
+            first_name,
+            second_name,
+            login,
+            email,
+            password,
+            phone
+        } as TUser;
+
+        if (Object.values(data).findIndex(value => value === null) === -1) {
+            signup(data)
+                .then(() => Router.getRouter().go(RoutesStrs.messenger))
+                .catch((error) => {
+                        this.refs.password2.setProps({error: true, errorText: error})
+                        console.log('signup:', error)
+                    });
+        }
+    }
+
+    private onSignIn(event: Event) {
+        event.preventDefault()
+        Router.getRouter().go(RoutesStrs.signin)
     }
 
     protected render(): string {
@@ -54,7 +94,7 @@ export class SignUpPage extends Block {
                      caption="Sign up"
                      textOk="Sign up"
                      textCancel="Sign in"
-                     pageCancel="signin"
+                     onClickCancelButton=onSignIn
                      onClickOkButton=onSignUp }}
                      
                     {{{ InputAuth

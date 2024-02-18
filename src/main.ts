@@ -1,42 +1,13 @@
 import Handlebars from 'handlebars';
 import * as Components from './components';
 import { registerComponent } from './core/registerComponent';
-import { navigate } from './core/navigate';
-
-Handlebars.registerPartial('FormAuth', Components.FormAuth);
-Handlebars.registerPartial('FormProfile', Components.FormProfile);
-
-registerComponent('Button', Components.Button);
-registerComponent('Input', Components.Input);
-registerComponent('InputAuth', Components.InputAuth);
-registerComponent('InputConf', Components.InputConf);
-registerComponent('Logo', Components.Logo);
-registerComponent('Error', Components.Error);
-registerComponent('ChatList', Components.ChatList);
-registerComponent('ChatItem', Components.ChatItem);
-registerComponent('Avatar', Components.Avatar);
-registerComponent('InputMsg', Components.InputMsg);
-registerComponent('Conversation', Components.Conversation);
-registerComponent('MsgList', Components.MsgList);
-registerComponent('SideBar', Components.SideBar);
-registerComponent('Msg', Components.Msg);
-registerComponent('Navigator', Components.Navigator);
-registerComponent('ProfileWgt', Components.ProfileWgt);
-
-document.addEventListener('DOMContentLoaded', () => navigate('messenger'));
-
-document.addEventListener('click', e => {
-    if (!e) return;
-    if(!e.target)return;
-
-    const page = (e.target as HTMLElement).getAttribute('page');
-    if (page) {
-        navigate(page);
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-    }
-});
+import Router from "./core/router";
+import * as Pages from "./pages";
+import Block from "./core/Block";
+import {RoutesStrs} from "./core/config.ts";
+import {TAppState} from "./models/TAppState.ts";
+import {Store} from "./core/Store.ts";
+import {initApp} from "./services/initApp";
 
 //helpers
 Handlebars.registerHelper('firstLetter', function (aString) {
@@ -60,3 +31,37 @@ Handlebars.registerHelper('concat', function(...args) {
     }
     return outStr;
 });
+
+Handlebars.registerPartial('FormAuth', Components.FormAuth);
+Handlebars.registerPartial('FormProfile', Components.FormProfile);
+
+Object.entries(Components).forEach(
+    ([componentName, component]) => registerComponent(componentName, component as typeof Block)
+)
+
+declare global {
+    interface Window {
+        store: Store<TAppState>;
+    }
+
+    type Nullable<T> = T | null;
+}
+
+const initState: TAppState = {
+    error: null,
+    user: null,
+    currentChatID: null,
+    chats: [],
+}
+
+window.store = new Store<TAppState>(initState);
+
+new Router(".app")
+    .use(RoutesStrs['signin'], Pages.SignInPage as typeof Block)
+    .use(RoutesStrs['signup'], Pages.SignUpPage as typeof Block)
+    .use(RoutesStrs['messenger'], Pages.MessengerPage as typeof Block)
+    .use(RoutesStrs['settings'], Pages.MessengerPage as typeof Block, Components.ProfileWgt as typeof Block)
+    .use(RoutesStrs['404'], Pages.Error404Page as typeof Block)
+    .start();
+
+initApp()

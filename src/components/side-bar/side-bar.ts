@@ -1,54 +1,49 @@
-import Block, {IProps} from "../../core/Block";
+import Block, {IProps, RefsType} from "../../core/Block";
 import InputMsg from "../input-msg";
-import IChatListProps from "../chat-list"
-import {IChat} from "../../models/IChat.ts";
-import {ProfileWgt} from "../profilewgt/profilewgt.ts";
+import {TChat} from "../../models/TChat.ts";
+import {ChatList} from "../chat-list/chat-list.ts";
+import MenuSettings from "../menu-settings";
+import {StoreEvents} from "../../core/Store.ts";
 
-interface ISideBarProps extends IProps{
-    chat_list: Array<IChat>
+interface ISideBarProps extends IProps {
+    chatList: TChat[]
     onSearchInput: () => void
-    onProfileClick: () => void
-    onProfileClose: () => void
+    onMenuSettingsClick: () => void
 }
 
-export class SideBar extends Block {
+type Ref = {
+    search: InputMsg
+    chat_list: ChatList
+    menu_settings: MenuSettings
+} & RefsType
+
+export class SideBar extends Block<ISideBarProps, Ref> {
     constructor(props: ISideBarProps) {
+        window.store.on(StoreEvents.Updated, () => this.onChatsUpdated())
+
+        props.chatList = window.store.getState().chats
         props.onSearchInput = () => this.onSearchInput()
-        props.onProfileClick = () => this.onProfileClick()
-        props.onProfileClose = () => this.onProfileClose()
-
-
+        props.onMenuSettingsClick = () => this.onMenuSettingsClick()
         super(props);
-    }
-
-    public get props() {
-        return this._props as ISideBarProps;
-    }
-
-    private getProfile() {
-        return this.refs.profile as ProfileWgt
     }
 
     private onSearchInput() {
         //Should I ask server to send chat list with current filter or do filter here?
-        const searchText = (this.refs.search as InputMsg).value()
-        const new_chat_list = this.props.chat_list.filter((chat: IChat) => {
+        const searchText = this.refs.search.value()
+        const new_chat_list = this._props.chatList.filter((chat: TChat) => {
             return chat.title.startsWith(searchText)
         })
 
-        const chatListProps = (this.refs.chat_list as IChatListProps).props
-        chatListProps.chat_list = new_chat_list
-        this.refs.chat_list.setProps(chatListProps);
+        this.refs.chat_list.setProps({chatList: new_chat_list});
     }
 
-    private onProfileClick() {
-        this.getProfile().props.opened = true
-        this.getProfile().setProps(this.getProfile().props)
+    private onMenuSettingsClick() {
+        this.refs.menu_settings.setProps({opened: !this.refs.menu_settings.props.opened})
     }
 
-    private onProfileClose() {
-        this.getProfile().props.opened = false
-        this.getProfile().setProps(this.getProfile().props)
+    private async onChatsUpdated() {
+        this.setProps({chatList: window.store.getState().chats})
+        this.onSearchInput()
     }
 
     protected render(): string {
@@ -56,10 +51,10 @@ export class SideBar extends Block {
             <div class="side-bar">
                 <div class="side-bar__header">
                     {{{ InputMsg onInput=onSearchInput placeholder="Search for chat..." name="searh" ref='search' }}}
-                    {{{ Button type="settings" onClick=onProfileClick }}}
+                    {{{ Button type="settings" onClick=onMenuSettingsClick }}}
+                    {{{ MenuSettings ref='menu_settings' }}}
                 </div>
-                {{{ ChatList chat_list=chat_list ref='chat_list' }}}
-                {{{ ProfileWgt ref='profile' onBack=onProfileClose }}}
+                {{{ ChatList chatList=chatList ref='chat_list' }}}
             </div>
         `)
     }

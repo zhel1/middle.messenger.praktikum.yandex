@@ -1,0 +1,60 @@
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 5px 15px;
+
+  &:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  &:hover {
+    background-color: #cfe0ff;
+  }
+
+  &__icon {
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: 2px;
+    filter: invert(64%) sepia(22%) saturate(1179%) hue-rotate(194deg) brightness(104%) contrast(101%);
+
+    &-add {
+      background-image: url("/icons/add.svg");
+    }
+    &-remove {
+      background-image: url("/icons/remove.svg");
+    }
+    &-profile {
+      background-image: url("/icons/profile.svg");
+    }
+    &-delete {
+      background-image: url("/icons/delete.svg");
+      filter: invert(12%) sepia(100%) saturate(7453%) hue-rotate(358deg) brightness(115%) contrast(116%);
+    }
+    &-file {
+      background-image: url("/icons/file.svg");
+    }
+    &-image {
+      background-image: url("/icons/image.svg");
+    }
+    &-location {
+      background-image: url("/icons/location.svg");
+    }
+    &-chat {
+      background-image: url("/icons/chat.svg");
+    }
+  }
+
+  &__name {
+    margin: 0;
+    padding: 0;
+  }
+}

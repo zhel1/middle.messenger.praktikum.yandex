@@ -1,6 +1,8 @@
 import Block, {IProps} from "../../core/Block";
+import Input from "../input";
+import {RefsType} from "../../core/Block.ts";
 
-interface IInputMsgfProps extends IProps {
+export interface IInputMsgProps extends IProps {
     placeholder: string
     name:string
     value:string
@@ -8,21 +10,23 @@ interface IInputMsgfProps extends IProps {
     onInput: () => void
 }
 
-export class InputMsg extends Block {
-    constructor(props:IInputMsgfProps) {
-        super(props);
-    }
+type Ref = {
+    input: Input
+} & RefsType
 
-    public get props() {
-        return this._props as IInputMsgfProps;
+export class InputMsg extends Block<IInputMsgProps, Ref> {
+    constructor(props:IInputMsgProps) {
+        super({
+            ...props,
+        });
     }
 
     public value() {
-        return (this.refs.input.element as HTMLInputElement).value
+        return this.refs.input.value()
     }
 
     public setValue(value: string) {
-        (this.refs.input.element as HTMLInputElement).value = value
+        this.refs.input.setValue(value)
     }
 
     protected render(): string {
@@ -31,7 +35,7 @@ export class InputMsg extends Block {
             name,
             value,
             type
-        } = this.props as IInputMsgfProps;
+        } = this._props;
 
         return (`            
             <label class="input">
@@ -42,6 +46,7 @@ export class InputMsg extends Block {
                     type="${type}" 
                     placeholder="${placeholder || ''}"
                     onInput=onInput
+                    onEnter=onEnter
                     ref="input"
                 }}}
             </label>

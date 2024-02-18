@@ -4,7 +4,7 @@ interface ILogoProps extends IProps {
 
 }
 
-export class Logo extends Block {
+export class Logo extends Block<ILogoProps> {
     constructor(props: ILogoProps) {
         super(props);
     }
