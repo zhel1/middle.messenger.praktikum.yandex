@@ -1,6 +1,6 @@
 import * as config from "./config.ts";
 
-enum METHODS {
+export enum METHODS {
     GET = 'GET',
     POST = 'POST',
     PUT = 'PUT',

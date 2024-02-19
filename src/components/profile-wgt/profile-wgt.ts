@@ -7,7 +7,7 @@ import {StoreEvents} from "../../core/Store.ts";
 import {TUser} from "../../models/TUser.ts";
 import {logout} from "../../services/auth.ts";
 import {updateProfile} from "../../services/users.ts";
-import modalManager from "../../core/dialog-menedger.ts";
+import ModalManager from "../../core/dialog-menedger.ts";
 
 interface IProfileWgtProps extends IProps {
     validate?: object
@@ -46,15 +46,15 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
             },
             onChangePassword: (event: Event) => {
                 event.preventDefault();
-                modalManager.setModal(new ChangePasswordWgt({}) as unknown as Block<object>);
+                ModalManager.getInstance().setModal(new ChangePasswordWgt({}) as unknown as Block<object>);
             },
             onChangeAvatar: (event: Event) => {
                 event.preventDefault();
-                modalManager.setModal(new ChangeAvatarWgt({
+                ModalManager.getInstance().setModal(new ChangeAvatarWgt({
                     mode: 'user',
                     close: () => {
-                        modalManager.setModal(new ProfileWgt({editable: true}) as unknown as Block<object>);
-                        modalManager.openModal()
+                        ModalManager.getInstance().setModal(new ProfileWgt({editable: true}) as unknown as Block<object>);
+                        ModalManager.getInstance().openModal()
                     }
                 }) as unknown as Block<object>);
             },
@@ -85,7 +85,7 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
                 logout()
                     .then(() => {
                         Router.getRouter().go(RoutesStrs.signin)
-                        modalManager.closeModal();
+                        ModalManager.getInstance().closeModal();
                     })
                     .catch((error) => console.warn('logout:', error));
             },
@@ -96,7 +96,7 @@ export class ProfileWgt extends Block<IProfileWgtProps, Ref> {
             onBack: (event: Event) => {
                 event.preventDefault();
                 this.setProps({ editable: false });
-                modalManager.closeModal();
+                ModalManager.getInstance().closeModal();
                 Router.getRouter().go(RoutesStrs.messenger)
             },
         }

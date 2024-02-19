@@ -1,9 +1,9 @@
 import Block, {IProps} from "../../core/Block";
 import {deleteChat, getChats} from "../../services/chats.ts";
-import modalManager from "../../core/dialog-menedger.ts";
 import AddUserWgt from "../add-user-wgt";
 import RemoveUserWgt from "../remove-user-wgt";
 import {ChangeAvatarWgt} from "../index";
+import ModalManager from "../../core/dialog-menedger.ts";
 
 interface IMenuConversationProps extends IProps {
     opened: boolean
@@ -29,27 +29,27 @@ export class MenuConversation extends Block<IMenuConversationProps> {
 
     private addUser() {
         if (window.store.getState().currentChatID) {
-            modalManager.setModal(new AddUserWgt({}) as unknown as Block<object>);
-            modalManager.openModal();
+            ModalManager.getInstance().setModal(new AddUserWgt({}) as unknown as Block<object>);
+            ModalManager.getInstance().openModal();
         }
         this.close()
     }
 
     private removeUser() {
         if (window.store.getState().currentChatID) {
-            modalManager.setModal(new RemoveUserWgt({}) as unknown as Block<object>);
-            modalManager.openModal();
+            ModalManager.getInstance().setModal(new RemoveUserWgt({}) as unknown as Block<object>);
+            ModalManager.getInstance().openModal();
         }
         this.close()
     }
 
     private loadChatAvatar() {
         if (window.store.getState().currentChatID) {
-            modalManager.setModal(new ChangeAvatarWgt({
+            ModalManager.getInstance().setModal(new ChangeAvatarWgt({
                 mode: 'chat',
-                close: () => modalManager.closeModal()
+                close: () => ModalManager.getInstance().closeModal()
             }) as unknown as Block<object>);
-            modalManager.openModal()
+            ModalManager.getInstance().openModal()
         }
         this.close()
     }

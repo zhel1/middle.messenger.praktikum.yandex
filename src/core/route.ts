@@ -1,5 +1,5 @@
 import Block, {IProps} from "./Block";
-import modalManager from "./dialog-menedger";
+import ModalManager from "./dialog-menedger";
 
 class Route {
     private _pathname: string;
@@ -47,8 +47,8 @@ class Route {
         this._block.show();
 
         if (this._modalClass) {
-            modalManager.setModal(new this._modalClass() as unknown as Block<object>);
-            modalManager.openModal();
+            ModalManager.getInstance().setModal(new this._modalClass() as unknown as Block<object>);
+            ModalManager.getInstance().openModal();
         }
     }
 }

@@ -1,10 +1,10 @@
 import Block, {IProps, RefsType} from "../../core/Block";
 import {InputMsg} from "../index.ts";
-import modalManager from "../../core/dialog-menedger.ts";
 import {searchUserByLogin} from "../../services/users.ts";
 import {TUser} from "../../models/TUser.ts";
 import {addUserToChat} from "../../services/chats";
 import {TAddDeleteUserInput} from "../../models/TChat";
+import ModalManager from "../../core/dialog-menedger.ts";
 
 interface IAddUserWgtProps extends IProps {
     usersToChoose?: TUser[]
@@ -59,7 +59,7 @@ export class AddUserWgt extends Block<IAddUserWgtProps, Ref> {
 
     private onCancel(event: Event) {
         event.preventDefault()
-        modalManager.closeModal()
+        ModalManager.getInstance().closeModal()
     }
 
     private onAddUser(event: Event, user: TUser) {
@@ -103,7 +103,7 @@ export class AddUserWgt extends Block<IAddUserWgtProps, Ref> {
                 users: usersToAdd.map((u) => u.id),
                 chatId: currentChatID
             } as TAddDeleteUserInput)
-                .then(() => modalManager.closeModal())
+                .then(() => ModalManager.getInstance().closeModal())
                 .catch((error) => {
                     this.setProps({errorText: error})
                     console.log('add users to chat:', error)

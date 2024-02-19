@@ -3,8 +3,8 @@ import * as validators from "../../utils/validators";
 import {InputConf} from "../index.ts";
 import {ChangePasswordInput} from "../../models/TUser.ts";
 import {updatePassword} from "../../services/users.ts";
-import modalManager from "../../core/dialog-menedger.ts";
 import ProfileWgt from "../profile-wgt";
+import ModalManager from "../../core/dialog-menedger.ts";
 
 interface IChangePasswordWgtProps extends IProps {
     validate?: object
@@ -75,8 +75,8 @@ export class ChangePasswordWgt extends Block<IChangePasswordWgtProps, Ref> {
     }
 
     private close() {
-        modalManager.setModal(new ProfileWgt({editable: true}) as unknown as Block<object>);
-        modalManager.openModal();
+        ModalManager.getInstance().setModal(new ProfileWgt({editable: true}) as unknown as Block<object>);
+        ModalManager.getInstance().openModal();
     }
 
     protected render(): string {

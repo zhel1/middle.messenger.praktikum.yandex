@@ -1,8 +1,8 @@
 import Block, {IProps} from "../../core/Block";
-import modalManager from "../../core/dialog-menedger.ts";
 import {TUser} from "../../models/TUser.ts";
 import {deleteUsersFromChat, getChatUsers} from "../../services/chats";
 import {TAddDeleteUserInput} from "../../models/TChat";
+import ModalManager from "../../core/dialog-menedger.ts";
 
 interface IRemoveUserWgtProps extends IProps {
     errorText?: string
@@ -38,7 +38,7 @@ export class RemoveUserWgt extends Block<IRemoveUserWgtProps> {
 
     private onCancel(event: Event) {
         event.preventDefault()
-        modalManager.closeModal()
+        ModalManager.getInstance().closeModal()
     }
 
     private onAddUser(event: Event, user: TUser) {
@@ -82,7 +82,7 @@ export class RemoveUserWgt extends Block<IRemoveUserWgtProps> {
                 users: usersToRemove.map((u) => u.id),
                 chatId: currentChatID
             } as TAddDeleteUserInput)
-                .then(() => modalManager.closeModal())
+                .then(() => ModalManager.getInstance().closeModal())
                 .catch((error) => {
                     this.setProps({errorText: error})
                     console.log('remove users from chat:', error)

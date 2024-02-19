@@ -1,8 +1,8 @@
 import Block, {IProps} from "../../core/Block";
-import modalManager from "../../core/dialog-menedger.ts";
 import CreateChatWgt from "../create-chat-wgt";
 import Router from "../../core/router";
 import {RoutesStrs} from "../../core/config";
+import ModalManager from "../../core/dialog-menedger.ts";
 
 interface IMenuSettingsProps extends IProps {
     opened: boolean
@@ -28,8 +28,8 @@ export class MenuSettings extends Block<IMenuSettingsProps> {
     }
 
     private CreateChat() {
-        modalManager.setModal(new CreateChatWgt({}) as unknown as Block<object>);
-        modalManager.openModal();
+        ModalManager.getInstance().setModal(new CreateChatWgt({}) as unknown as Block<object>);
+        ModalManager.getInstance().openModal();
         this.close()
     }
 

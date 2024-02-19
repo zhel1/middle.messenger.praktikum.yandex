@@ -8,6 +8,7 @@ import {RoutesStrs} from "./core/config.ts";
 import {TAppState} from "./models/TAppState.ts";
 import {Store} from "./core/Store.ts";
 import {initApp} from "./services/initApp";
+import ModalManager from "./core/dialog-menedger";
 
 //helpers
 Handlebars.registerHelper('firstLetter', function (aString) {
@@ -63,5 +64,7 @@ new Router(".app")
     .use(RoutesStrs['settings'], Pages.MessengerPage as typeof Block, Components.ProfileWgt as typeof Block)
     .use(RoutesStrs['404'], Pages.Error404Page as typeof Block)
     .start();
+
+new ModalManager()
 
 initApp()
