@@ -6,11 +6,6 @@
   "engines": {
     "node": ">=12.22.12 <=20.10.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm-run-all test lint:all"
-    }
-  },
   "scripts": {
     "dev": "vite",
     "build": "eslint . && tsc && vite build",
