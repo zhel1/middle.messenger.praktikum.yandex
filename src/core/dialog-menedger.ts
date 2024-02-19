@@ -19,7 +19,7 @@ class ModalManager {
         return this.__instance;
     }
 
-    public get opened(){
+    public get opened() {
         return this._opened;
     }
 
@@ -46,5 +46,5 @@ class ModalManager {
 
 }
 
-const modalManager = new ModalManager();
-export default modalManager;
+// const modalManager = new ModalManager();
+export default ModalManager;

@@ -1,8 +1,8 @@
 import Block, {IProps, RefsType} from "../../core/Block";
 import * as validators from "../../utils/validators";
 import {InputConf} from "../index.ts";
-import modalManager from "../../core/dialog-menedger.ts";
 import {createChat, getChats} from "../../services/chats.ts";
+import ModalManager from "../../core/dialog-menedger.ts";
 
 interface ICreateChatWgtProps extends IProps {
     validate?: object
@@ -30,7 +30,7 @@ export class CreateChatWgt extends Block<ICreateChatWgtProps, Ref> {
 
     private onCancel(event: Event) {
         event.preventDefault()
-        modalManager.closeModal()
+        ModalManager.getInstance().closeModal()
     }
 
     private onAdd(event: Event) {

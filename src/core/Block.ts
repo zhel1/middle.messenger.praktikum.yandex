@@ -86,7 +86,6 @@ class Block<Props extends IProps, Refs extends RefsType = RefsType> {
 
     public dispatchComponentDidMount() {
         this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-
         Object.values(this.children).forEach(child => child.dispatchComponentDidMount());
     }
 
@@ -171,7 +170,20 @@ class Block<Props extends IProps, Refs extends RefsType = RefsType> {
         return '';
     }
 
+    protected render1(): string {
+        return '';
+    }
+
     public getContent() {
+        if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+            setTimeout(() => {
+                if (
+                    this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE
+                ) {
+                    this.dispatchComponentDidMount();
+                }
+            }, 100);
+        }
         return this.element;
     }
 
