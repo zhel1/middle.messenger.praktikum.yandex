@@ -1,4 +1,4 @@
-import {HTTPTransport} from "./Http";
+import {HTTPTransport, TResult} from "./Http";
 import sinon, {SinonStub} from "sinon";
 import {assert} from "chai";
 
@@ -8,7 +8,7 @@ describe('HttpTransport', () => {
 
     beforeEach(() => {
         http = new HTTPTransport('/test');
-        stubRequest = sinon.stub(http,'request').callsFake(() => Promise.resolve())
+        stubRequest = sinon.stub(http,'request').callsFake( () => Promise.resolve<TResult<string>>({status: 200, data: "lala"}))
     });
 
     afterEach(() => {
